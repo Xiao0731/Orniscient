@@ -1,0 +1,32 @@
+digraph checklist_crosswalk_Accipitriformes {
+	bgcolor=white fontname="Helvetica-Bold" fontsize=20 label="Checklist Crosswalk: AviList Canonical Backbone and Clements Compatibility Layer" labelloc=t newrank=true nodesep=0.45 pad=0.3 rankdir=LR ranksep=1.1 splines=spline
+	subgraph cluster_avilist {
+		color="#A7B7C7" label="AviList Canonical" style=rounded
+		rank=same
+		taxon_family_21fa5b594630895e [label="Accipitridae\nKites, Old World Vultures, Eagles, and Hawks | [family]" color="#5C7285" fillcolor="#1F7A8C" fontcolor="#FFFFFF" fontname=Helvetica margin="0.14,0.1" penwidth=1.1 shape=box style="rounded,filled"]
+		taxon_family_d3817ee651d6b7a4 [label="Pandionidae\nOsprey | [family]" color="#5C7285" fillcolor="#1F7A8C" fontcolor="#FFFFFF" fontname=Helvetica margin="0.14,0.1" penwidth=1.1 shape=box style="rounded,filled"]
+		taxon_family_b35f2d0ad960dc27 [label="Sagittariidae\nSecretarybird | [family]" color="#5C7285" fillcolor="#1F7A8C" fontcolor="#FFFFFF" fontname=Helvetica margin="0.14,0.1" penwidth=1.1 shape=box style="rounded,filled"]
+		taxon_species_fcc2523ace71f958 [label="Elanus axillaris\nBlack-shouldered Kite | [species]" color="#5C7285" fillcolor="#FFFFFF" fontcolor="#0F172A" fontname=Helvetica margin="0.14,0.1" penwidth=1.1 shape=box style="rounded,filled"]
+		taxon_species_d5814074e595a261 [label="Aquila gurneyi\nGurney's Eagle | [species]" color="#5C7285" fillcolor="#FFFFFF" fontcolor="#0F172A" fontname=Helvetica margin="0.14,0.1" penwidth=1.1 shape=box style="rounded,filled"]
+	}
+	subgraph cluster_clements {
+		color="#A7B7C7" label="Clements / BOW-compatible" style=rounded
+		rank=same
+		external_e74a8f5ec7909990 [label="Accipitridae\nHawks, Eagles, and Kites | [family]" color="#7C8B9C" fillcolor="#F8F6F2" fontcolor="#0F172A" fontname=Helvetica margin="0.14,0.1" penwidth=1.0 shape=box style="rounded,filled"]
+		external_28d6619459dcf4ea [label="Pandionidae\nOsprey | [family]" color="#7C8B9C" fillcolor="#F8F6F2" fontcolor="#0F172A" fontname=Helvetica margin="0.14,0.1" penwidth=1.0 shape=box style="rounded,filled"]
+		external_97764081ce4ea141 [label="Sagittariidae\nSecretarybird | [family]" color="#7C8B9C" fillcolor="#F8F6F2" fontcolor="#0F172A" fontname=Helvetica margin="0.14,0.1" penwidth=1.0 shape=box style="rounded,filled"]
+		external_alias_bda665f0c2a968fb [label="Hawks, Eagles, and Kites\n[english_name] | Clements english_name" color="#7C8B9C" fillcolor="#F8F6F2" fontcolor="#0F172A" fontname=Helvetica margin="0.14,0.1" penwidth=1.0 shape=box style="rounded,filled"]
+		external_alias_6b1fa5dfe82a6eaf [label="Osprey\n[english_name] | Clements english_name" color="#7C8B9C" fillcolor="#F8F6F2" fontcolor="#0F172A" fontname=Helvetica margin="0.14,0.1" penwidth=1.0 shape=box style="rounded,filled"]
+		external_alias_27560a27d791a9e5 [label="Secretarybird\n[english_name] | Clements english_name" color="#7C8B9C" fillcolor="#F8F6F2" fontcolor="#0F172A" fontname=Helvetica margin="0.14,0.1" penwidth=1.0 shape=box style="rounded,filled"]
+		external_conflict_3acb7f48f946523b [label="Elanus axillaris\n[Clements] | Split Lump Drift" color="#7C8B9C" fillcolor="#F8F6F2" fontcolor="#0F172A" fontname=Helvetica margin="0.14,0.1" penwidth=1.0 shape=box style="rounded,filled"]
+		external_conflict_f3f8d967974d478d [label="Aquila gurneyi\n[Clements] | Split Lump Drift" color="#7C8B9C" fillcolor="#F8F6F2" fontcolor="#0F172A" fontname=Helvetica margin="0.14,0.1" penwidth=1.0 shape=box style="rounded,filled"]
+	}
+	taxon_family_21fa5b594630895e -> external_e74a8f5ec7909990 [label="Exact Match" arrowsize=0.75 color="#2E8B57" fontcolor="#2E8B57" penwidth=1.7 style=solid]
+	taxon_family_d3817ee651d6b7a4 -> external_28d6619459dcf4ea [label="Exact Match" arrowsize=0.75 color="#2E8B57" fontcolor="#2E8B57" penwidth=1.7 style=solid]
+	taxon_family_b35f2d0ad960dc27 -> external_97764081ce4ea141 [label="Exact Match" arrowsize=0.75 color="#2E8B57" fontcolor="#2E8B57" penwidth=1.7 style=solid]
+	taxon_family_21fa5b594630895e -> external_alias_bda665f0c2a968fb [label=Alias arrowsize=0.75 color="#1D70B8" fontcolor="#1D70B8" penwidth=1.7 style=dashed]
+	taxon_family_d3817ee651d6b7a4 -> external_alias_6b1fa5dfe82a6eaf [label=Alias arrowsize=0.75 color="#1D70B8" fontcolor="#1D70B8" penwidth=1.7 style=dashed]
+	taxon_family_b35f2d0ad960dc27 -> external_alias_27560a27d791a9e5 [label=Alias arrowsize=0.75 color="#1D70B8" fontcolor="#1D70B8" penwidth=1.7 style=dashed]
+	taxon_species_fcc2523ace71f958 -> external_conflict_3acb7f48f946523b [label="Split Lump Drift" arrowsize=0.75 color="#E68A00" fontcolor="#E68A00" penwidth=1.7 style=dashed]
+	taxon_species_d5814074e595a261 -> external_conflict_f3f8d967974d478d [label="Split Lump Drift" arrowsize=0.75 color="#E68A00" fontcolor="#E68A00" penwidth=1.7 style=dashed]
+}

@@ -1,0 +1,132 @@
+Generation/
+├── question/
+│   ├── QA-SC/QA-SC_questions.jsonl
+│   ├── QA-MC/QA-MC_questions.jsonl
+│   ├── QA-SA/QA-SA_questions.jsonl
+│   ├── Bird-Geo/Bird-Geo_questions.jsonl
+│   ├── Bird-Taxonomy/
+│   │   ├── Bird-Taxonomy_questions.jsonl
+│   │   ├── Bird-Taxonomy_accepted.jsonl
+│   │   └── Bird-Taxonomy_rejected.jsonl
+│   ├── Bird-Life/Bird-Life_questions.jsonl
+│   ├── Bird-Eco/Bird-Eco_questions.jsonl
+│   ├── Bird-Con/
+│   │   ├── Bird-Con_questions.jsonl
+│   │   └── Bird-Con_rejected.jsonl
+│   ├── Bird-Comp/Bird-Comp_questions.jsonl
+│   ├── Bird-Reason/Bird-Reason_questions.jsonl
+│   ├── Bird-Plan/Bird-Plan_questions.jsonl
+│   ├── List-Global/List-Global_questions.jsonl
+│   ├── Bird-ID/Bird-ID_questions.jsonl
+│   └── Bird-Classify/Bird-Classify_questions.jsonl
+├── data/
+│   ├── BOW/
+│   │   └── *.xlsx  (BOW species batches, 1-200 through 11001-11167)
+│   ├── BIRDBASE.xlsx
+│   ├── Order.xlsx
+│   ├── AviList-v2025-11Jun-extended.xlsx
+│   └── Clements_v2025-October-2025.xlsx
+├── kg_v2/
+│   ├── Step1_taxonomy/
+│   │   ├── run_build_taxonomy_backbone.py
+│   │   ├── builders/
+│   │   ├── parsers/
+│   │   ├── schema/
+│   │   └── validators/
+│   ├── Step2_attachment/
+│   │   ├── run_build_taxonomy_attachment.py
+│   │   ├── species_attachment.py
+│   │   ├── family_attachment.py
+│   │   ├── loaders.py
+│   │   └── reporting.py
+│   ├── Step3_extraction/
+│   │   ├── run_extract_claims_and_facts.py
+│   │   ├── llm_extractors.py
+│   │   ├── fact_builder.py
+│   │   ├── evidence_builder.py
+│   │   ├── chapter_router.py
+│   │   ├── predicate_registry.py
+│   │   ├── normalizers.py
+│   │   └── loaders.py
+│   ├── Step4_graph/
+│   │   ├── smoke_v3_kg_e2e.py
+│   │   ├── export_lightrag_docs.py
+│   │   ├── lightrag_ingest_v3.py
+│   │   └── README.md
+│   ├── builders/
+│   ├── extractors/
+│   ├── parsers/
+│   ├── rag/
+│   ├── renderers/
+│   ├── schema/
+│   ├── utils/
+│   ├── validators/
+│   ├── outputs/
+│   │   ├── intermediate/
+│   │   ├── jsonl/
+│   │   ├── graph_v3_smoke/
+│   │   ├── neo4j_csv/
+│   │   └── logs/
+│   ├── run_build_kb_v2.py
+│   └── README.md
+├── evaluation/
+│   ├── objective_eval.py
+│   ├── run_subjective_pipeline.py
+│   ├── structured_eval.py
+│   ├── subjective_answer.py
+│   ├── subjective_judge.py
+│   ├── subjective_aggregate.py
+│   ├── subjective_common.py
+│   ├── subjective_rubrics.py
+│   ├── model_registry.py
+│   ├── fewshot_examples/
+│   ├── text_RAG/
+│   │   ├── text_rag_runtime.py
+│   │   ├── text_rag_objective_eval.py
+│   │   ├── text_rag_subjective_answer.py
+│   │   ├── text_rag_structured_eval.py
+│   │   └── README.md
+│   ├── kg_RAG/
+│   │   ├── kg_objective_eval.py
+│   │   ├── kg_subjective_answer.py
+│   │   ├── kg_structured_eval.py
+│   │   ├── neo4j_direct_retriever.py
+│   │   ├── bird_id_reverse_retriever.py
+│   │   ├── list_global_table_retriever.py
+│   │   ├── family_table_retriever.py
+│   │   ├── lightrag_v3_adapter.py
+│   │   └── README.md
+│   ├── knowledge_RAG/
+│   │   ├── cli/
+│   │   │   ├── common.py
+│   │   │   ├── doctor.py
+│   │   │   ├── dry_run.py
+│   │   │   ├── run_objective.py
+│   │   │   ├── run_subjective.py
+│   │   │   ├── run_structured.py
+│   │   │   └── run_all.py
+│   │   ├── retrievers/
+│   │   ├── routing/
+│   │   ├── formatting/
+│   │   ├── logging/
+│   │   ├── config.py
+│   │   ├── registry.py
+│   │   ├── runtime.py
+│   │   └── README.md
+│   └── figures/
+├── scripts/
+│   ├── visualize_taxonomy_backbone.py
+│   ├── make_question_sample.py
+│   ├── audit_unused_files.py
+│   └── archive_unused_files.py
+├── reports/
+│   ├── smoke_v3_kg_e2e_report.md
+│   ├── smoke_v3_kg_e2e_report.json
+│   ├── unused_file_audit.md
+│   ├── unused_file_audit.json
+│   └── project_tree.txt
+├── tests/
+├── used/
+├── .env.example
+├── docker-compose.yml
+└── README/evaluation/KG helper scripts at repo root

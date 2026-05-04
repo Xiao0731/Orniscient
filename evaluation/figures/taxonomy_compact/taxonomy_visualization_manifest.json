@@ -1,0 +1,57 @@
+{
+  "generated_at_utc": "2026-04-27T09:04:56.325373+00:00",
+  "root_order": "Accipitriformes",
+  "parameters": {
+    "max_families": 3,
+    "max_genera_per_family": 3,
+    "max_species_per_genus": 3
+  },
+  "inputs": {
+    "avilist_xlsx": "data\\AviList-v2025-11Jun-extended.xlsx",
+    "clements_xlsx": "data\\Clements_v2025-October-2025.xlsx",
+    "artifact_root": "D:\\软工作业\\鸟类文本库\\题目生成脚本\\Generation\\kg_v2\\outputs"
+  },
+  "reuse": {
+    "backbone": {
+      "backbone_source": "artifact",
+      "backbone_nodes_path": "D:\\软工作业\\鸟类文本库\\题目生成脚本\\Generation\\kg_v2\\outputs\\intermediate\\taxonomy\\canonical_taxon_nodes.jsonl",
+      "backbone_edges_path": "D:\\软工作业\\鸟类文本库\\题目生成脚本\\Generation\\kg_v2\\outputs\\intermediate\\taxonomy\\canonical_taxon_edges.jsonl"
+    },
+    "crosswalk": {
+      "crosswalk_source": "artifact",
+      "crosswalk_path": "D:\\软工作业\\鸟类文本库\\题目生成脚本\\Generation\\kg_v2\\outputs\\intermediate\\taxonomy\\taxonomy_crosswalks.jsonl",
+      "alias_path": "D:\\软工作业\\鸟类文本库\\题目生成脚本\\Generation\\kg_v2\\outputs\\intermediate\\taxonomy\\taxonomy_aliases.jsonl",
+      "conflict_path": "D:\\软工作业\\鸟类文本库\\题目生成脚本\\Generation\\kg_v2\\outputs\\intermediate\\taxonomy\\taxonomy_conflicts.jsonl"
+    }
+  },
+  "taxonomy_tree": {
+    "outputs": {
+      "dot": "evaluation\\figures\\taxonomy_compact\\taxonomy_tree_Accipitriformes.dot",
+      "dot_binary": "C:\\Program Files\\Graphviz\\bin\\dot.EXE",
+      "svg": "evaluation\\figures\\taxonomy_compact\\taxonomy_tree_Accipitriformes.svg",
+      "png": "evaluation\\figures\\taxonomy_compact\\taxonomy_tree_Accipitriformes.png"
+    },
+    "node_count": 16,
+    "edge_count": 15,
+    "counts_by_rank": {
+      "genus": 5,
+      "species": 7,
+      "order": 1,
+      "family": 3
+    }
+  },
+  "crosswalk": {
+    "outputs": {
+      "dot": "evaluation\\figures\\taxonomy_compact\\checklist_crosswalk_Accipitriformes.dot",
+      "dot_binary": "C:\\Program Files\\Graphviz\\bin\\dot.EXE",
+      "svg": "evaluation\\figures\\taxonomy_compact\\checklist_crosswalk_Accipitriformes.svg",
+      "png": "evaluation\\figures\\taxonomy_compact\\checklist_crosswalk_Accipitriformes.png"
+    },
+    "relation_count": 8,
+    "counts_by_relation": {
+      "exact": 3,
+      "alias": 3,
+      "conflict": 2
+    }
+  }
+}
