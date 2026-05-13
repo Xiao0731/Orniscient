@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from typing import Any
+
 from kg_v2.utils.hash_utils import stable_hash
 
 QUALIFIER_KEYS = [
@@ -47,8 +49,10 @@ def canonicalize_object(claim: dict) -> tuple[str, str]:
     return "", ""
 
 
-def short_quote(text: str, max_chars: int = 240) -> str:
-    quote = " ".join((text or "").strip().split())
+def short_quote(text: str | list[Any] | tuple[Any, ...], max_chars: int = 240) -> str:
+    if isinstance(text, (list, tuple)):
+        text = " ".join(str(item) for item in text)
+    quote = " ".join(str(text or "").strip().split())
     if len(quote) <= max_chars:
         return quote
     return quote[: max_chars - 1].rstrip() + "…"

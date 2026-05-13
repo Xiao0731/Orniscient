@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import re
 from typing import Any
 
 from kg_v2.Step3_extraction.normalizers import QUALIFIER_KEYS
@@ -162,7 +163,66 @@ def build_prompt(metadata: dict, allowed_domains: list[str], allowed_predicates:
     )
 
 
-def _coerce_wrapper(wrapper: dict, metadata: dict) -> dict:
+VALID_OBJECT_TYPES = {"concept", "numeric", "text", "relation"}
+NUMERIC_OBJECT_TYPES = {"number", "measurement", "range", "value", "count", "length", "mass", "size"}
+RELATION_OBJECT_TYPES = {"species", "taxon", "genus", "family", "order", "subspecies", "organism", "entity"}
+CONCEPT_OBJECT_TYPES = {
+    "habitat",
+    "location",
+    "region",
+    "country",
+    "place",
+    "biome",
+    "behavior",
+    "food",
+    "diet",
+    "threat",
+    "status",
+    "trait",
+    "morphology",
+    "vocalization",
+    "breeding",
+    "nest",
+}
+TEXT_OBJECT_TYPES = {"sentence", "description", "note", "unknown", ""}
+
+
+def _is_number(value: Any) -> bool:
+    if value in ("", None):
+        return False
+    try:
+        float(value)
+    except (TypeError, ValueError):
+        return False
+    return True
+
+
+def _looks_like_taxon_id(value: Any) -> bool:
+    text = str(value or "").strip().lower()
+    return bool(re.match(r"^(taxon[_:-]|avibase[_:-]|clements[_:-])", text))
+
+
+def _normalize_object_type(claim: dict) -> str:
+    raw = str(claim.get("object_type", "") or "").strip().lower()
+    raw = raw.replace("-", "_").replace(" ", "_")
+    if raw in VALID_OBJECT_TYPES:
+        return raw
+    if _is_number(claim.get("value_min")) or _is_number(claim.get("value_max")):
+        return "numeric"
+    if _looks_like_taxon_id(claim.get("object_canonical_id")):
+        return "relation"
+    if raw in NUMERIC_OBJECT_TYPES:
+        return "numeric"
+    if raw in RELATION_OBJECT_TYPES:
+        return "relation"
+    if raw in CONCEPT_OBJECT_TYPES:
+        return "concept"
+    if raw in TEXT_OBJECT_TYPES:
+        return "text"
+    return "text"
+
+
+def _coerce_wrapper(wrapper: dict, metadata: dict, *, debug: bool = False) -> dict:
     if not isinstance(wrapper, dict):
         raise ValueError("LLM response root must be an object")
 
@@ -184,16 +244,27 @@ def _coerce_wrapper(wrapper: dict, metadata: dict) -> dict:
     for claim in claims[:4]:
         if not isinstance(claim, dict):
             continue
+        evidence_quote = claim.get("evidence_quote", "") or ""
+        if isinstance(evidence_quote, (list, tuple)):
+            evidence_quote = " ".join(str(item) for item in evidence_quote)
         qualifiers = claim.get("qualifiers_raw") if isinstance(claim.get("qualifiers_raw"), dict) else {}
         qualifiers = {k: str(qualifiers.get(k, "") or "") for k in QUALIFIER_KEYS}
         try:
             confidence = float(claim.get("confidence", 0.8))
         except Exception:
             confidence = 0.8
+        original_object_type = claim.get("object_type", "text")
+        object_type = _normalize_object_type(claim)
+        if debug and str(original_object_type or "").strip().lower() != object_type:
+            _debug_print(
+                "[DEBUG_OBJECT_TYPE_NORMALIZED] "
+                f"chunk_id={metadata.get('source_chunk_id', '')} "
+                f"raw={original_object_type!r} normalized={object_type!r}"
+            )
         out["claims"].append({
             "fact_domain": claim.get("fact_domain") or claim.get("domain", ""),
             "predicate": claim.get("predicate", ""),
-            "object_type": claim.get("object_type", "text"),
+            "object_type": object_type,
             "object_text": claim.get("object_text", ""),
             "object_canonical_id": claim.get("object_canonical_id", "") or "",
             "object_canonical_name": claim.get("object_canonical_name", "") or "",
@@ -201,7 +272,7 @@ def _coerce_wrapper(wrapper: dict, metadata: dict) -> dict:
             "value_max": claim.get("value_max", None),
             "unit": claim.get("unit", "") or "",
             "qualifiers_raw": qualifiers,
-            "evidence_quote": claim.get("evidence_quote", "") or "",
+            "evidence_quote": evidence_quote,
             "confidence": confidence,
         })
     return out
@@ -278,7 +349,7 @@ class StructuredLLMExtractor:
                 if self.debug:
                     _debug_print("[DEBUG_LLM_RAW_RESPONSE]")
                     _debug_print(raw_response)
-                wrapper = _coerce_wrapper(wrapper, metadata)
+                wrapper = _coerce_wrapper(wrapper, metadata, debug=self.debug)
                 validate_extraction_wrapper(wrapper, routing)
                 return wrapper
             except LLMResponseError as exc:

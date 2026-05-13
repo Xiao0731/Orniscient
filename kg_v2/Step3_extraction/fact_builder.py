@@ -11,11 +11,19 @@ from kg_v2.Step3_extraction.predicate_registry import FAMILY_DOMAIN_FACT_QUOTAS,
 from kg_v2.utils.hash_utils import stable_hash
 
 
+def _hashable_key_part(value):
+    if isinstance(value, (list, tuple)):
+        return tuple(_hashable_key_part(item) for item in value)
+    if isinstance(value, dict):
+        return tuple(sorted((str(key), _hashable_key_part(item)) for key, item in value.items()))
+    return value
+
+
 def _fact_group_key(claim: dict) -> tuple:
     qualifiers_norm = normalize_qualifiers(claim.get("qualifiers_raw", {}))
     object_id, object_name = canonicalize_object(claim)
     object_key = object_id or object_name or claim.get("object_text", "")
-    return (
+    key = (
         claim.get("subject_taxon_id", ""),
         claim.get("subject_rank", ""),
         claim.get("fact_domain", ""),
@@ -27,6 +35,7 @@ def _fact_group_key(claim: dict) -> tuple:
         claim.get("unit", ""),
         json.dumps(qualifiers_norm, sort_keys=True, ensure_ascii=False),
     )
+    return tuple(_hashable_key_part(part) for part in key)
 
 
 def _fact_id_for_group(group_key: tuple) -> str:
@@ -115,4 +124,3 @@ def build_facts_and_evidence(claims: list[dict], *, subject_rank: str) -> tuple[
             seen_evidence.add(evidence_id)
 
     return selected_facts, list(evidence_by_id.values()), fact_evidence_links
-

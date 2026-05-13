@@ -141,3 +141,6 @@ checkpoints/
 *.gguf
 # Rejected benchmark drafts
 question/**/*_rejected.jsonl
+
+# 忽略知识图谱数据
+/KG/

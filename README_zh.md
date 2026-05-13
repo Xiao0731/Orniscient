@@ -1,13 +1,15 @@
 # Orniscient
 
-**Orniscient** 是一个面向鸟类生态知识推理的大语言模型评测与知识增强项目，集成了领域 Benchmark、多源知识库原型与 knowledge_RAG 评测 Harness。
+**Orniscient** 是一个面向鸟类生态知识推理的异构 Benchmark 与知识增强评测框架。它结合 **14 个任务型数据集**、**多源鸟类知识库** 和统一的 **knowledge_RAG Harness**，用于研究：
 
-> **Orniscient = Ornithology + Omniscient**  
-> 目标是构建一个可验证、可追溯、可扩展的鸟类生态知识推理基础设施。
+> **多源鸟类知识在何种条件下、通过何种方式提升大语言模型在鸟类生态任务中的推理能力？**
+
+**Orniscient = Ornithology + Omniscient**  
+目标是构建一个可验证、可追溯、可扩展的鸟类生态知识推理基础设施。
 
 <div align="center">
 
-[English](./README.md) | 简体中文
+[English](./README.md) | [简体中文](./README_zh.md)
 
 </div>
 
@@ -15,48 +17,722 @@
 
 ## 项目概览
 
-Orniscient 围绕 **Benchmark–Knowledge Base–Harness** 三个核心部分展开：一方面构建覆盖多层次能力的鸟类生态评测基准，另一方面组织多源知识库，并通过统一的评测 Harness 比较裸模型与知识增强设置下的大语言模型表现。
+大语言模型在通用问答中表现较强，但鸟类生态知识具有层级性、动态性、证据依赖性和多源异构性，普通 LLM 容易出现知识过时、事实幻觉、分类混淆和证据不可追溯等问题。
 
-本项目来自本科毕业设计《基于大语言模型智能体的物种知识库自动构建与知识推理方法研究》。项目与康奈尔鸟类相关团队/数据资源方向开展合作，并已获得 **Birds of the World (BOW)** 的科研使用授权。由于 BOW 等数据源具有授权限制，仓库中不会公开原始 BOW 文本、完整派生 chunks、完整知识库产物或大规模评测日志。
+Orniscient 围绕三个核心部分展开：
 
-![Framework Overview](docs/assets/framework_overview.png)
+| 模块 | 作用 |
+|---|---|
+| **Bird Ecology Benchmark** | 评估 LLM 在事实检索、领域推理、反向物种识别、保护规划和结构化枚举等任务上的能力。 |
+| **Multi-source Knowledge Base** | 对齐分类体系、BOW 文本证据、事实级图谱结构和结构化 trait 表格。 |
+| **knowledge_RAG Harness** | 在统一评测协议下比较裸模型和知识增强的效果对比。 |
+
+系统整体流程如下：
+
+![Knowledge Graph Subgraph Example](docs/assets/kg_subgraph_example.png)
 
 ---
 
-## 项目背景
+## 为什么选择鸟类生态？
 
-大语言模型在通用问答、文本生成和复杂推理任务中已经展现出较强能力，但在鸟类生态等专业领域中，模型仍容易受到以下问题影响：
+鸟类生态不是普通问答。它需要模型理解分类体系、自然史文本、地理分布、生境、行为、繁殖、迁徙和保护证据。
 
-- **知识过时**：鸟类分类体系、命名体系和保护状态会随 checklist 和权威数据库更新而变化；
-- **事实幻觉**：模型可能生成看似合理但无法回溯到权威来源的描述；
-- **分类混淆**：相近物种、亚种、科属关系和历史分类变更容易造成错误；
-- **证据利用不足**：模型即使拿到原文证据，也不一定能正确抽取与推理；
-- **长上下文不稳定**：BOW 中的自然史文本篇幅较长，关键信息可能分散在多个章节中；
-- **结构化任务困难**：如全局物种集合枚举、反向物种识别和约束保护规划，不能仅依赖自由生成完成。
+| 挑战 | 说明 |
+|---|---|
+| **动态分类体系** | 物种命名、checklist、split/lump 会持续变化。 |
+| **层级结构明显** | 鸟类知识天然组织在目、科、属、种、亚种等层级中。 |
+| **长文本证据** | 关键信息分散在 BOW 物种和科级长文本记录中。 |
+| **多源不一致** | BOW、AviList、Clements 和 trait 数据库可能采用不同分类视角。 |
+| **证据可追溯需求** | 专业生态回答需要回到权威来源和原文证据。 |
+| **结构化约束** | 全局物种筛选等任务不能只依赖自由生成，需要结构化统计。 |
 
-鸟类生态知识具有明显的领域复杂性：它同时包含严格的分类层级、动态变化的 checklist、复杂的地理分布、迁徙和生境信息，以及大量分散在长文本中的自然史知识。因此，Orniscient 不只是一个问答题库，而是尝试构建一个从数据组织、题库设计、知识库构建到自动化评测的系统框架。
+因此，Orniscient 将鸟类生态作为一个用于研究 **异构科学知识源下 LLM 知识推理能力** 的代表性场景。
 
 ---
 
 ## 核心贡献
 
-Orniscient 当前阶段主要包含四个部分：
+1. **构建 14 个数据集的鸟类生态 Benchmark**  
+   覆盖事实回忆、分类学推理、地理分布判断、生态综合、保护分析、反向识别和结构化枚举。
 
-1. **Bird Ecology Benchmark**  
-   构建覆盖 14 个数据集的鸟类生态 LLM 评测基准，覆盖知识检索、领域推理分析和复杂逻辑推理三个层级。
+2. **设计多源鸟类知识库原型**  
+   通过稳定分类锚点对齐 AviList、Clements、BOW records、BOW chunks、事实证据和结构化 trait 表格。
 
-2. **Multi-source Knowledge Base Prototype**  
-   设计多源知识库原型，包括 canonical taxonomy backbone、BOW 文本证据库、Claim–Fact–Evidence–Qualifier 事实证据链、BIRDBASE 表格知识库和 Taxon–Fact–Evidence–Chunk 图谱链路。
+3. **搭建统一 knowledge_RAG Harness**  
+   统一管理题库读取、任务路由、知识检索、模型答题、评分、日志和结果聚合。
 
-3. **knowledge_RAG Harness**  
-   实现统一的知识增强评测框架，支持客观题、开放生成题和结构化任务的自动化评测，并能够比较裸模型与知识增强设置。
-
-4. **Evaluation-driven Analysis**  
-   通过多模型对比实验分析知识库接入在不同任务上的提升、下降和不稳定现象，进一步诊断知识覆盖率、检索召回、上下文构造和模型证据利用能力。
+4. **进行知识增强对比分析**  
+   比较 Vanilla、Text-RAG、KG-RAG 和 Hybrid KG-RAG，分析外部知识何时有效、何时失效以及为什么失效。
 
 ---
 
-## 目录结构
+# Benchmark 设计
+
+## 设计原则
+
+Orniscient Benchmark 不是普通题目集合，而是面向鸟类生态推理的异构评测基准。
+
+| 原则 | 说明 |
+|---|---|
+| **知识覆盖性** | 覆盖分类、形态、分布、生境、行为、繁殖、食性、生态功能和保护状态。 |
+| **推理层级性** | 从基础的知识获取扩展到领域综合、多跳推理、保护规划和结构化检索。 |
+| **证据可追溯性** | 问题和答案尽可能回溯到权威数据源。 |
+| **评价多样性** | 使用自动指标、LLM-as-a-Judge、Recall、Top-k 和层级准确率等评价方式。 |
+
+## 任务分类体系
+
+Orniscient 将鸟类的专业知识划分为两大类别，知识获取和逻辑推理两个不同难度的层级。其中知识获取板块分为形态识别、分类与系统发育、生态功能与食性、保护现状、声音与发声行为、日常行为和生态与生命史八大板块，每个板块下都有关于该领域的相关细节的分支；而逻辑推理则将复杂任务归为四大类，基于长文档推理的多跳推理、溯因推理等，特定条件下制定鸟类保护指南，根据掩码描述反向识别物种以及多条件下的宏观检索。
+
+![知识获取](docs/assets/知识获取.png)
+![逻辑推理](docs/assets/逻辑推理.png)
+
+根据不同任务的难易程度以及考察模型的能力，Orniscient 将 14 个数据集划分为三层能力：
+
+1. **Level 1：事实知识检索**  
+   考察模型对鸟类物种、科级类群、属性、生境、行为和保护状态等基础事实的掌握，对应鸟类知识体系知识获取里的八大板块。
+
+2. **Level 2：领域推理与综合分析**  
+   考察模型对分类学、地理分布、生态功能、保护状态、生活史和相似种比较等领域知识的归纳、比较和解释能力，对应知识获取导图中对应的其中一个板块的知识，并且考察的内容会比Level 1更为深入，涉及到分支细节。
+
+3. **Level 3：复杂推理与结构化检索**  
+   考察反向识别、多跳推理、约束规划和全局物种集合枚举，对应鸟类知识体系里的逻辑推理层级。
+
+## Dataset 总览
+
+| 数据集 | 子任务分类 | 评估层级 | 数据量 | 任务描述 | 知识领域 | 数据构建方法 | 评测指标 |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| QA-SC | | L1 | 2400 | 单选题 (1选4)： 从四个选项中选择唯一正确的属性（如体重、体长、IUCN保护等级），评估模型对基础事实的检索能力。 | 基础属性 | 基于BOW与SciQ，按鸟类科级分层程序化抽取题目 | Accuracy |
+| QA-MC | | L1 | 1200 | 多选题 (多选)： 从多个选项中选出所有正确的描述，评估模型的综合信息验证能力。 | 食性与栖息地 | 基于BOW由LLM生成多项选择题 | EM / F1 |
+| QA-SA | | L1 | 1200 | 简答题： 不提供选项，要求模型直接输出具体的实体名称或数值，评估模型的精准抽取能力。 | 形态学与冷知识 | 从BOW、SciQ与TriviaQA中抽取特定实体和数值信息构建的关键词短答题 | EM / F1 |
+| Bird-Geo | 地理分布与时空 | L2 | 400 | 要求模型理解物种跨大洲的分布、特定栖息地偏好及季节性迁徙模式，评估空间推理与时空逻辑能力。 | 分布与栖息地 | 基于BOW并采用程序化地理干扰项生成的题目 | Accuracy |
+| Bird-Taxonomy | 鸟类分类学 | L2 | 800 | 基于单型种、亚种变迁、过时名称或命名法与词源学生成判断题，检测模型对过时生物学知识的“幻觉”与盲从程度。 | 分类与系统发育 | 基于BOW中历史分类陷阱与单型种标记构造的问题 | Accuracy |
+| Bird-Classify | 层级分类推理 | L2 | 500 | 给定隐去物种名的形态或行为描述，要求模型将其准确归入相应的生物分类“目”或“科”，评估层级分类推理能力。 | 形态、生态与行为 | 基于BOW综合生成的匿名化科级特征描述 | Accuracy / LLM-Eval |
+| Bird-Comp | 形态对比分析 | L2 | 1000 | 要求模型区分相似物种，并明确指出亚种或近缘姐妹种之间的具体形态和习性差异，测试比较推理能力。 | 相似种与亚种 | 从BOW的显式相似物种中抽取对比性特征摘要 | LLM-Eval |
+| Bird-Life | 生态与生命史 | L2 | 400 | 评估模型是否理解不同鸟类的完整繁殖周期、亲代育雏分工以及各发育阶段的特征。 | 繁殖与生命史 | 基于BOW、ARC与OBQA构建的按时间顺序组织的繁殖时间线任务 | LLM-Eval |
+| Bird-Con | 保护现状评估 | L2 | 200 | 要求模型识别主要人为威胁因素及外来入侵物种对特定物种的影响，评估模型的风险评估与归纳能力。 | 保护与栖息地 | 从BOW与ARC中抽取的匿名化威胁因素摘要 | Recall / Accuracy |
+| Bird-Eco | 生态功能推理 | L2 | 200 | 要求模型分析鸟类在当地生态系统中的角色，及其局部灭绝可能导致的营养级联后果，评估生态功能推理。 | 食性与栖息地 | 基于BOW与ARC构建的从食性到生态功能映射的推理链任务 | LLM-Eval |
+| Bird-ID | 溯因物种诊断 | L3 | 1000 | 要求模型仅凭一段深度脱敏的形态或行为描述文本，逆向确诊出唯一的目标物种，评估溯因识别能力。 | 识别与行为特征 | 基于BOW与CUB综合生成并去地理化处理的诊断性描述 | Top-5 准确率 |
+| Bird-Reason | 长文本逻辑推理 | L3 | 200 | 输入完整的物种志长文档，要求模型回答需要跨段落整合的复杂问题（如归因、纠错、多跳），评估长文档推理。 | 复杂逻辑推理 | 基于BOW构建并注入逻辑谬误的全文匿名化物种专论 | LLM-Eval |
+| Bird-Plan | 保护规划制定 | L3 | 100 | 输入濒危物种数据，要求模型在被系统注入的严苛现实约束条件（如预算不足、地形受限）下，生成针对性的保护行动计划书。 | 保护规划与战略 | 基于BOW中濒危物种档案并注入显式约束条件构建的保护规划任务 | LLM-Eval |
+| List-Global | 宏观条件检索 | L3 | 200 | 评估模型在跨地域、跨物种、多重属性条件交集（如食性+迁徙+等级）下的大规模全局数据综合检索能力。 | 全局数据综合 | 基于BIRDBASE使用多条件DataFrame逻辑程序化筛选生成的物种列表 | Recall / Accuracy |
+
+## Benchmark 构建流程
+
+Orniscient 围绕 BOW、SciQ、TriviaQA、ARC、OBQA、CUB 与 BIRDBASE 等数据源构建题目，并采用任务模板约束题目构造：对于 QA-SC、QA-SA、Bird-Geo 和 List-Global 等可程序化生成或校验的任务，系统优先使用规则或表格逻辑生成题目与标准答案；对于 Bird-Comp、Bird-Life、Bird-Eco、Bird-Con、Bird-Reason 和 Bird-Plan 等开放生成任务，则在明确任务模板、输入约束和参考证据的基础上进行 LLM 辅助生成。
+
+在答案处理上，客观题和结构化任务会进行答案规范化，例如选项标准化、关键词归一、物种名匹配和列表去重；开放生成任务则保留参考答案、证据摘要或评价维度，用于后续 LLM-as-a-Judge。对于依赖外部知识的题目，系统尽量保留可回溯的数据来源、目标实体和证据片段，使 Benchmark 不只是题目集合，而是能够支持知识增强检索和 bad case 定位的评测资源。
+
+其中，LLM-as-a-Judge 主要用于难以用精确匹配评价的开放生成任务。评测时，Judge 会根据参考答案、关键事实、证据覆盖、逻辑一致性和任务完成度等维度进行打分，而不是只判断表面文本相似度。对于 Bird-ID 和 List-Global 等结构化任务，系统更关注候选集合是否包含正确答案、输出列表是否完整，以及分类层级是否匹配。
+
+---
+
+# 知识库设计
+
+## 设计动机
+
+单一固定 RAG 流程难以稳定支持所有鸟类生态任务。鸟类知识同时具有 **分类层级结构**、**长文本自然史证据**、**事实条件限定** 和 **结构化 trait 约束**：例如 Bird-Life 与 Bird-Con 需要从 BOW 长文本中归纳证据，Bird-Taxonomy 需要可靠的分类层级和 checklist 对齐，Bird-ID 需要候选物种召回，List-Global 则更依赖表格过滤而不是自由生成。
+
+因此，Orniscient 采用多源知识设计，将文本、表格和图谱分工组织，而不是把所有信息压缩进单一向量库。
+
+| 知识源 | 作用 |
+|---|---|
+| **AviList** | 构建规范分类主树，作为 canonical taxonomy backbone |
+| **Clements Checklist** | 作为 Cornell/BOW-compatible 兼容层，处理 checklist 差异 |
+| **Birds of the World (BOW)** | 提供物种和科级自然史长文本证据 |
+| **BIRDBASE-style trait tables** | 提供结构化 trait 过滤和多条件约束 |
+| **Fact graph** | 将物种、事实、证据和文本块连接起来，支持可追溯检索 |
+| **Vector index** | 对文本块和事实描述进行语义召回 |
+
+专业领域知识通常不是纯文本，也不是纯图谱，而是由文本描述、实体关系和结构化属性共同构成。Orniscient 的重点不是“为了有图而建图”，而是研究 **图结构、文本证据和表格约束分别在什么任务上帮助 LLM**。
+
+---
+
+## 知识库总体结构
+
+Orniscient 的知识库由三层组成，其中：
+
+1. **Canonical Taxonomy Backbone** 解决实体锚定问题。所有 record、chunk、fact、evidence 和 trait 都尽量挂接到统一的 `canonical_taxon_id`。
+2. **Text Evidence Store** 保留 BOW 的 species/family record 和章节化 chunk，用于开放生成和证据追溯。
+3. **Fact Graph + Table KB** 将可结构化的事实、证据、trait 和限定条件组织成可查询路径，用于任务感知检索。
+
+![Framework Overview](docs/assets/framework_overview.png)
+
+---
+
+## 分类体系对齐
+
+知识库构建的第一步是建立稳定分类锚点。Orniscient 使用 AviList 作为规范分类主树，并使用 Clements 作为 Cornell/BOW-compatible 兼容层。
+
+通过`canonical_taxon_id` 唯一标识同一实体，将 BOW record、文本 chunk、Fact、Evidence、图谱节点和表格属性挂接到同一分类实体上，解决了多源不一致问题，减少同物异名、旧名称、split/lump 变化和不同 checklist 之间的错配。
+
+### 分类主树示例
+
+下面的图展示了 AviList 规范分类主树中 Accipitriformes 的局部结构。它说明系统如何从 order 层级向下连接 family、genus 和 species。Orniscient 中已给出可视化分类主树的脚本，`Orniscient/scripts/render_taxonomy_subtree.py`可自行查阅。
+
+![Taxonomy Tree](docs/assets/taxonomy_tree_accipitriformes.svg)
+
+### Checklist Crosswalk 示例
+
+下面的图展示了 AviList canonical backbone 与 Clements/BOW-compatible 兼容层之间的映射。绿色边表示 exact match，蓝色虚线表示 alias，橙色虚线表示 split/lump drift 等分类差异。
+
+![Checklist Crosswalk](docs/assets/checklist_crosswalk_accipitriformes.svg)
+
+---
+
+## 文本证据库
+
+系统将 BOW 的 species records 和 family records 解析为章节化 chunks。每个 chunk 保留来源章节、子章节、物种名、科名、文件来源和父级 record 信息，实现可追溯。
+
+每个 chunk 的核心字段包括：
+
+```text
+chunk_id
+canonical_taxon_id
+common_name
+scientific_name
+record_type
+source_chapter
+source_chapter_raw
+source_subchapter
+text
+```
+
+chunk 不再独立进行分类匹配，而是继承父级 record 的 `canonical_taxon_id`。这样可以避免同一物种下不同 chunk 被错误挂接到其他近缘种或同名实体上，从而减少检索阶段的 taxonomy drift。
+
+---
+
+## Claim–Fact–Evidence–Qualifier 建模
+
+鸟类生态事实往往不是全局成立的。例如某种鸟的栖息地、繁殖行为、迁徙状态、性别差异或保护威胁，可能受到地区、季节、年龄、性别、亚种、种群和不确定性影响。因此，Orniscient 不把 BOW 文本简单压缩成扁平三元组，而是采用四类对象建模：
+
+| 对象 | 作用 |
+|---|---|
+| `Claim` | 从 chunk 中抽取的自然语言断言，尽量保留原文语义 |
+| `Fact` | 经过规范化的事实节点，用于检索、比较和聚合 |
+| `Evidence` | 支撑 claim 或 fact 的原文证据片段 |
+| `Qualifier` | 描述事实成立条件的限定信息，例如地区、季节、性别、年龄、亚种、时间、不确定性和适用范围 |
+
+这一设计的目标是让知识库同时支持两类需求：一方面，模型可以获得自然语言上下文；另一方面，系统可以沿结构化路径定位事实和证据。
+
+---
+
+## 图谱 Schema
+
+核心图谱路径为：
+
+```text
+Taxon → Fact → Evidence → Chunk
+```
+
+该路径体现了知识增强检索中的基本逻辑：
+
+1. 先通过题目中的目标实体定位 `Taxon`；
+2. 再根据任务类型选择相关 `Fact`；
+3. 通过 `Evidence` 回到原文片段；
+4. 最后将对应 `Chunk` 或 evidence span 组织为模型上下文。
+
+可扩展关系包括：
+
+```text
+Taxon → ParentTaxon
+Taxon → Trait
+Taxon → Alias
+Taxon → ChecklistEntry
+Fact → Qualifier
+Fact → Evidence
+Evidence → Chunk
+```
+
+这种 schema 的设计动机是把三类信息连接起来：
+
+| 信息类型 | 图谱中的表示 | 解决的问题 |
+|---|---|---|
+| 分类层级 | `Taxon → ParentTaxon` | 支持 order/family/genus/species 层级推理 |
+| 文本证据 | `Fact → Evidence → Chunk` | 支持事实追溯和上下文构造 |
+| 结构化属性 | `Taxon → Trait` | 支持 List-Global、Bird-ID 等约束检索 |
+| checklist 差异 | `Taxon → Alias / ChecklistEntry` | 支持旧名、异名和 split/lump 兼容 |
+
+---
+
+## 知识图谱构建流程
+
+Orniscient 首先使用 AviList 构建规范分类主树，并通过 Clements 兼容 Cornell/BOW 体系，得到稳定的 canonical_taxon_id。这一层用于解决同物异名、分类变动和不同 checklist 之间的对齐问题。
+
+随后，Orniscient 将 BOW 中的 species records 和 family records 挂接到对应的 canonical_taxon_id，再按照 BOW 原始章节结构切分为 chunks。chunk 继承父级 record 的分类锚点，从而避免每个 chunk 独立匹配时产生分类漂移。
+
+在事实抽取阶段，Orniscient 从 chunk 中抽取 Claim，并进一步规范化为 Fact，同时保留支撑事实的 Evidence 和描述事实成立条件的 Qualifier。这样可以避免将鸟类生态知识简单压缩为无来源、无条件限定的扁平三元组。
+
+最后，Orniscient 将 Taxon、Fact、Evidence、Chunk 和 Trait 等对象物化为图谱节点和关系，并进行 schema 校验、孤立节点检测、fact-evidence 回链检查和证据可追溯性检查。通过校验后的图谱接入 Neo4j、向量索引和表格知识库，用于后续知识增强检索。
+
+---
+
+## 当前构建统计
+
+### Taxonomy Backbone 统计
+
+| 指标 | 数量 |
+|---|---:|
+| AviList rows / canonical taxon nodes | 33,684 |
+| Canonical taxonomy edges | 33,638 |
+| Clements rows / crosswalk records | 33,081 |
+| Taxonomy aliases | 105,656 |
+| Taxonomy conflicts | 9,331 |
+| Unresolved crosswalk records | 2,407 |
+| Unresolved crosswalk ratio | 7.28% |
+
+### Canonical Taxon Rank 分布
+
+| Rank | Count |
+|---|---:|
+| Order | 46 |
+| Family | 252 |
+| Genus | 2,376 |
+| Species | 11,131 |
+| Subspecies | 19,879 |
+
+### BOW Record 与 Chunk 挂接统计
+
+| 指标 | 数量 / 比例 |
+|---|---:|
+| Species records | 11,039 |
+| Attached species records | 10,992 |
+| Unresolved species records | 47 |
+| Species record attachment rate | 99.57% |
+| Species chunks | 317,799 |
+| Attached species chunks | 316,238 |
+| Family records | 251 |
+| Attached family records | 248 |
+| Unresolved family records | 3 |
+| Family record attachment rate | 98.80% |
+| Family chunks | 1,506 |
+| Attached family chunks | 1,488 |
+
+### 当前 Neo4j 图谱规模
+
+
+在 V3 全量事实抽取阶段，Orniscient 共处理 **250,078 个章节化 BOW chunks**，并生成50 万条 Claims、46.9 万条 Facts、43.7 万条 Evidence 和 47.5 万条 Fact–Evidence 链接：
+
+| 产物 | 数量 |
+|---|---:|
+| Claims | 449,473 |
+| 规范化 Facts | 421,882 |
+| Evidence 记录 | 393,075 |
+| Fact–Evidence Links | 427,278 |
+
+
+#### V3 事实抽取规模与知识覆盖
+
+在 V3 事实图谱构建阶段，Orniscient 以章节化 BOW chunks 为基本输入，执行  
+`Chunk → Claim → Fact → Evidence → Fact–Evidence Link` 的抽取与规范化流程，并且可以追溯到具体的chunk。  
+
+#### 事实抽取产物统计
+
+| 产物 | 当前数量 |
+|---|---:|
+| Species claims | 446,405 |
+| Family claims | 3,068 |
+| **Total claims** | **449,473** |
+| Species facts | 419,419 |
+| Family facts | 2,463 |
+| **Total facts** | **421,882** |
+| Evidences | 393,075 |
+| Fact–Evidence links | 427,278 |
+| Extractor failures | 57 |
+
+Orniscient 已经形成了接近45万条 Claim、42万条规范化 Fact、39万条 Evidence 和42.7万条 Fact–Evidence 连接。在当前处理 chunks 中，抽取器仅记录57条失败样本，说明全量 LLM 事实抽取链路在大规模运行下具有较好的稳定性。
+
+#### Fact 领域划分与受控关系模式
+为保证事实抽取结果具有一致的语义结构、可比较性和可追溯性，Orniscient 在 Step 3 中没有直接让 LLM 自由生成开放三元组，而是采用了受控事实领域（controlled fact domains）与受控谓词集合（controlled predicates）的设计,将鸟类自然史知识划分为 8 个核心事实领域，并为每个领域预定义可用的关系类型，从而约束抽取结果的语义空间，减少模式漂移和表述碎片化问题。
+
+8 个事实领域包括：
+| Fact Domain                 | Representative Predicates                                                |
+| --------------------------- | ------------------------------------------------------------------------ |
+| TaxonomyAndPhylogeny        | `HAS_SUBSPECIES`, `RELATED_TO`, `HYBRIDIZES_WITH`                        |
+| MorphologyAndIdentification | `HAS_BODY_LENGTH`, `HAS_PLUMAGE_TRAIT`, `HAS_DIAGNOSTIC_TRAIT`           |
+| DistributionAndMovement     | `OCCURS_IN`, `BREEDS_IN`, `HAS_MIGRATION_PATTERN`                        |
+| Habitat                     | `INHABITS_BIOME`, `USES_MICROHABITAT`                                    |
+| EcologyAndDiet              | `EATS_ITEM`, `EATS_CATEGORY`, `FORAGES_BY`                               |
+| VocalAndBehavior            | `HAS_VOCALIZATION_TYPE`, `HAS_SOCIAL_BEHAVIOR`, `HAS_COURTSHIP_BEHAVIOR` |
+| LifeHistoryAndBreeding      | `BREEDS_DURING`, `HAS_NEST_STRUCTURE`, `HAS_CLUTCH_SIZE`                 |
+| ConservationAndResearch     | `HAS_IUCN_STATUS`, `THREATENED_BY`, `HAS_CONSERVATION_ACTION`            |
+
+
+在这一框架下，每条 Fact 不仅包含主体、谓词和客体，还会被显式赋予所属领域，并通过 Fact → Evidence → Chunk 链接回原始 BOW 文本片段，这种设计使得知识图谱既保留了细粒度生态事实，又具备稳定的统计分析能力和可复现的知识增强接口。
+
+##### 高频 Fact Predicate 分布
+
+下表展示了当前抽取结果中出现频率最高的一组事实关系。可以看到，图谱不仅覆盖分布、生境、保护状态等基础知识，也覆盖鸣声、亲代行为、巢结构、卵特征、迁徙模式和数量性表型等细粒度生态事实。针对不同类型的问题，可以直接定位到相关类型的Fact节点获取关键信息，再一路追溯到相关文本片段，实现可追溯。
+![FactPredicate](docs/assets/高频Fact节点类型.png)
+
+| Predicate | Fact Count |
+|---|---:|
+| HAS_PLUMAGE_TRAIT | 31,155 |
+| OCCURS_IN | 29,141 |
+| INHABITS_BIOME | 29,064 |
+| HAS_VOCALIZATION_TYPE | 27,906 |
+| EATS_ITEM | 22,412 |
+| THREATENED_BY | 13,149 |
+| EATS_CATEGORY | 12,657 |
+| HAS_IUCN_STATUS | 12,419 |
+| HAS_SEXUAL_DIMORPHISM | 11,845 |
+| HAS_NEST_STRUCTURE | 11,646 |
+| HAS_BODY_LENGTH | 11,187 |
+| BREEDS_DURING | 11,107 |
+| HAS_POPULATION_TREND | 10,802 |
+| HAS_MIGRATION_PATTERN | 10,145 |
+| HAS_PARENTAL_ROLE | 9,799 |
+| HAS_DIAGNOSTIC_TRAIT | 9,734 |
+| FORAGES_IN_STRATUM | 9,027 |
+| HAS_CLUTCH_SIZE | 8,924 |
+| HAS_BODY_MASS | 7,894 |
+| FORAGES_BY | 7,688 |
+| NESTS_AT | 7,560 |
+| HAS_SUBSPECIES | 7,317 |
+| RELATED_TO | 7,147 |
+| HAS_MOLT_PATTERN | 7,066 |
+| HAS_STRUCTURE_TRAIT | 6,664 |
+| HAS_EGG_TRAIT | 5,888 |
+| HAS_CONSERVATION_ACTION | 5,763 |
+| HAS_DISTRIBUTION_NOTE | 5,635 |
+| HAS_INCUBATION_PERIOD | 5,389 |
+| HAS_DEMOGRAPHIC_NOTE | 5,353 |
+
+#### Fact 领域分布
+
+V3 事实图谱的抽取结果覆盖鸟类生态知识的多个主要维度。  
+其中，形态与识别、繁殖与生命史、分布与迁徙、生态与食性、保护研究等领域均形成了较大规模的事实节点，说明图谱并非仅围绕某一类浅层属性构建，而是对 BOW 自然史文本进行了多维知识组织。
+![Fact类型分布](docs/assets/Fact类型分布.png)
+
+| Fact Domain | Fact Count | Share |
+|---|---:|---:|
+| MorphologyAndIdentification | 89,896 | 21.31% |
+| LifeHistoryAndBreeding | 73,143 | 17.34% |
+| DistributionAndMovement | 57,427 | 13.61% |
+| EcologyAndDiet | 53,310 | 12.64% |
+| ConservationAndResearch | 50,642 | 12.00% |
+| VocalAndBehavior | 37,339 | 8.85% |
+| Habitat | 33,364 | 7.91% |
+| TaxonomyAndPhylogeny | 26,761 | 6.34% |
+
+---
+
+## 可视化与定性分析
+
+Orniscient 使用三类可视化来展示知识库构建结果：
+
+| 可视化 | 内容 | 作用 |
+|---|---|---|
+| Taxonomy Tree | 展示 AviList canonical backbone 的局部树结构 | 说明分类主树如何组织 order/family/genus/species |
+| Checklist Crosswalk | 展示 AviList 与 Clements/BOW-compatible 层之间的映射 | 说明 exact match、alias、split/lump drift 等兼容关系 |
+| KG Subgraph | 展示目标物种周围的 Fact、Evidence、Chunk 邻域 | 说明图谱如何支持证据追溯和任务感知检索 |
+
+其中，taxonomy tree 更适合展示分类骨架，crosswalk 更适合展示多 checklist 对齐，KG subgraph 更适合展示图谱如何服务 RAG。
+
+---
+
+## 如何可视化分类树？
+
+如果想要把鸟类分类骨架可视化为树，建议不要直接画全量 33,684 个节点，全量树会过大，难以阅读。本文也提供了可视化脚本以供使用：
+
+1. 选择一个 order 或 family 作为根节点，例如 `Accipitriformes`；
+2. 从 `canonical_taxon_nodes.jsonl` 和 `canonical_taxon_edges.jsonl` 中读取节点和父子边；
+3. 按 rank 设置不同颜色或形状；
+4. 只保留局部子树，例如 order → family → genus → species；
+5. 输出为 `.png`、`.svg` 或 `.dot`，放入 `docs/assets/`。
+
+推荐输出：
+
+```text
+docs/assets/taxonomy_tree_accipitriformes.png
+docs/assets/checklist_crosswalk_accipitriformes.png
+docs/assets/kg_subgraph_example.png
+```
+
+
+---
+
+
+
+
+# 知识增强 Harness
+
+知识增强 Harness 统一管理评测流程：题库读取 → 任务路由 → 知识模式选择 → 检索 / 查询 → 上下文构造 → LLM 答题 → LLM 答题 → 评分 / Judge → 聚合与分析
+
+支持勾选单个或多个数据集，以及Zero-shot、Few-shot、CoT三种思考模式，在none（裸模型）和hybrid（知识增强）的配置上进行测试。
+
+Harness 会记录运行清单、上下文日志、模型回答、judge 结果、聚合结果和 bad case 日志，用于复现和诊断。
+
+---
+
+# 实验与分析
+
+## 实验设置
+
+Orniscient 在相同题库、提示词、模型和评分脚本下比较裸模型与知识增强模型。实验目标不是简单证明“知识增强一定提升”，而是分析 **外部知识在什么任务上有效、在什么任务上失效，以及失效原因来自检索、证据组织、任务约束还是模型利用证据的能力**。
+
+| 设置 | 说明 |
+|---|---|
+| Vanilla | 不接入外部知识 |
+| Text-RAG | 接入 BOW 文本 chunks |
+| KG-RAG v1 | 接入早期图谱检索 |
+| KG-RAG v3 | 接入 Taxon–Fact–Evidence 图谱 |
+| Hybrid KG-RAG | 融合图谱、文本、表格和 reranker |
+
+Prompt 设置包括：
+
+| 模式 | 说明 |
+|---|---|
+| Zero-shot | 直接回答 |
+| Few-shot | 提供示例回答 |
+| CoT | 推理式提示 |
+
+> 注：以下结果单位均为百分比（%）。Bird-Classify Type1 表示给定 family 或 taxon 后生成特征细节的开放式任务；Type2 表示根据描述识别 order/family 的结构化分类任务。符号 `--` 表示该模式下未单独设置对应评测。
+
+---
+
+## 实验结果
+
+### 裸模型结果
+
+#### 客观题得分
+
+| Model | QA-SC | QA-MC (EM/F1) | QA-SA | Bird-Geo | Bird-Taxonomy (EM/F1) |
+|---|---:|---:|---:|---:|---:|
+| DeepSeek-V3.2 | 78.61 | 38.62 / 83.59 | 13.77 | 90.62 | 20.48 / 40.23 |
+| qwen3-max | 75.12 | 45.12 / 85.22 | 11.28 | 87.47 | 19.05 / 36.52 |
+| glm-5 | 42.98 | 1.28 / 72.31 | 11.61 | 46.00 | 27.65 / 34.87 |
+| doubao-seed-2-0-pro-260215 | 84.29 | 50.69 / 88.79 | 16.11 | 91.74 | 20.00 / 38.70 |
+| hunyuan-turbos-latest | 73.06 | 27.85 / 77.62 | 11.59 | 82.14 | 23.64 / 40.75 |
+| ernie-4.5-turbo-128k | 72.49 | 31.66 / 78.54 | 9.02 | 81.54 | 13.19 / 33.21 |
+| MiniMax-M2.7 | 16.33 | 2.19 / 75.64 | 22.41 | 24.33 | 5.36 / 39.14 |
+
+裸模型在客观题上表现出明显的模型差异。DeepSeek、qwen、doubao 和 hunyuan 在 QA-SC 与 Bird-Geo 上表现较强，说明这些模型具备较好的基础事实判断和常见分布知识；但 QA-SA 与 Bird-Taxonomy 的整体得分偏低，说明短答生成和分类学精确匹配仍然困难。MiniMax-M2.7 在 QA-SA 上较高，但在 QA-SC 与 Bird-Geo 上明显偏低，说明不同模型的能力边界并不一致。
+
+#### 主观题与结构化任务得分
+
+| Model | Bird-Classify Type1 | Bird-Classify Type2 | Bird-Life | Bird-Eco | Bird-Con | Bird-Comp | Bird-Reason | Bird-ID | List-Global | Bird-Plan |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| DeepSeek-V3.2 | 61.37 | 86.83 | 23.47 | 33.51 | 33.77 | 31.35 | 84.51 | 26.71 | 8.20 | 94.32 |
+| DeepSeek-V3.2 with Few-shot | 63.65 | -- | 24.86 | 44.19 | 40.58 | 31.76 | 82.50 | 18.99 | 7.13 | 93.92 |
+| DeepSeek-V3.2 with CoT | 61.30 | -- | 28.78 | 36.03 | 36.80 | 28.24 | 84.19 | 32.12 | 14.33 | 92.97 |
+| glm-5 | 59.21 | 100.00 | 9.31 | 16.33 | 22.08 | 35.31 | 70.15 | 12.97 | 3.27 | 96.88 |
+| glm-5 with Few-shot | 62.00 | -- | 40.99 | 45.65 | 27.96 | 21.67 | 70.36 | 17.58 | 4.77 | 95.02 |
+| glm-5 with CoT | 59.02 | -- | 9.38 | 29.38 | 23.82 | 31.67 | 84.17 | 13.56 | 6.64 | 98.12 |
+| doubao-seed-2-0-pro | 64.06 | 94.61 | 15.95 | 36.08 | 24.78 | 29.05 | 84.86 | 42.93 | 9.41 | 98.87 |
+| doubao-seed-2-0-pro with Few-shot | 64.58 | -- | 17.30 | 39.59 | 21.34 | 25.68 | 77.70 | 33.64 | 7.89 | 98.33 |
+| doubao-seed-2-0-pro with CoT | 63.26 | -- | 14.86 | 33.73 | 24.42 | 26.62 | 84.19 | 48.89 | 19.61 | 99.09 |
+| hunyuan-turbos-latest | 64.91 | 81.74 | 25.41 | 41.35 | 21.48 | 30.95 | 81.57 | 8.28 | 9.50 | 97.03 |
+| hunyuan-turbos-latest with Few-shot | 73.05 | -- | 20.68 | 48.46 | 31.62 | 26.62 | 80.73 | 13.56 | 9.29 | 96.08 |
+| hunyuan-turbos-latest with CoT | 64.13 | -- | 26.89 | 44.32 | 22.11 | 32.84 | 80.24 | 17.58 | 11.70 | 94.05 |
+| ernie-4.5-turbo-128k | 65.04 | 100.00 | 34.61 | 35.45 | 28.48 | 29.33 | 86.60 | 34.62 | 29.61 | 98.12 |
+| ernie-4.5-turbo-128k with Few-shot | 70.94 | -- | 20.91 | 31.11 | 30.47 | 23.33 | 79.81 | 33.01 | 29.01 | 99.09 |
+| ernie-4.5-turbo-128k with CoT | 63.49 | -- | 31.25 | 27.78 | 30.58 | 31.06 | 83.92 | 35.64 | 33.33 | 95.28 |
+| MiniMax-M2.7 | 87.27 | 69.64 | 90.27 | 83.78 | 88.24 | 97.57 | 94.73 | 3.19 | 1.28 | 96.31 |
+| MiniMax-M2.7 with Few-shot | 62.88 | -- | 23.78 | 40.61 | 35.28 | 31.22 | 78.41 | 9.90 | 1.04 | 96.62 |
+| MiniMax-M2.7 with CoT | 83.68 | -- | 92.57 | 80.41 | 91.76 | 76.22 | 92.03 | 4.91 | 1.12 | 96.98 |
+
+裸模型在主观题与结构化任务上呈现出更强的任务差异。MiniMax-M2.7 在 Bird-Life、Bird-Eco、Bird-Con 和 Bird-Comp 等开放生成任务上表现突出，但在 Bird-ID 和 List-Global 上得分较低，说明开放生成能力强并不等价于结构化检索能力强。Bird-ID 和 List-Global 整体较难，反映出反向识别与全局集合枚举不能仅依赖模型参数记忆和自由生成。
+
+---
+
+### 知识增强结果
+
+#### 客观题得分
+
+| Model | QA-SC | QA-MC | QA-SA | Bird-Geo | Bird-Taxonomy (EM/F1) |
+|---|---:|---:|---:|---:|---:|
+| DeepSeek-V3.2 | 90.82 | 88.93 | 25.81 | 97.77 | 22.00 / 44.13 |
+| qwen3-max | 90.59 | 82.66 | 24.66 | 97.97 | 18.00 / 41.38 |
+| glm-5 | 47.65 | 0.34 | 24.13 | 62.96 | 10.64 / 37.40 |
+| doubao-seed-2-0-pro-260215 | 95.00 | 79.58 | 18.41 | 98.46 | 20.00 / 41.47 |
+| hunyuan-turbos-latest | 88.29 | 82.24 | 23.79 | 97.32 | 24.00 / 40.80 |
+| ernie-4.5-turbo-128k | 23.33 | 0.47 | 24.06 | 26.00 | 26.40 / 39.21 |
+| MiniMax-M2.7 | 46.33 | 76.70 | 24.88 | 55.00 | 8.00 / 37.37 |
+
+知识增强在客观题上的效果具有明显任务相关性。QA-SC、QA-SA 和 Bird-Geo 中，多数模型获得提升，说明外部文本证据和结构化知识可以补充模型参数化知识不足。QA-MC 和 Bird-Taxonomy 则更不稳定：多选题容易受到候选边界和干扰证据影响，分类学任务则依赖 taxonomy 对齐、名称规范化和输出格式控制。因此，知识增强不是简单扩大上下文，而是需要更精确的检索、章节过滤和答案约束。
+
+#### 主观题与结构化任务得分
+
+| Model | Bird-Classify Type1 | Bird-Classify Type2 | Bird-Life | Bird-Eco | Bird-Con | Bird-Comp | Bird-Reason | Bird-ID | List-Global | Bird-Plan |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| DeepSeek-V3.2 | 77.61 | 98.20 | 87.08 | 91.01 | 92.59 | 81.16 | 95.67 | 40.71 | 70.30 | 97.54 |
+| DeepSeek-V3.2 with Few-shot | 76.23 | -- | 87.95 | 92.90 | 93.44 | 83.35 | 97.25 | 38.48 | 72.15 | 96.16 |
+| DeepSeek-V3.2 with CoT | 76.71 | -- | 85.64 | 92.69 | 93.09 | 81.27 | 96.11 | 38.60 | 71.75 | 95.48 |
+| glm-5 | 81.67 | 100.00 | 87.47 | 95.07 | 93.86 | 88.60 | 97.27 | 70.48 | 72.20 | 97.83 |
+| glm-5 with Few-shot | 70.83 | -- | 87.22 | 94.93 | 93.51 | 91.18 | 98.84 | 70.20 | 74.37 | 97.95 |
+| glm-5 with CoT | 83.04 | -- | 87.50 | 94.08 | 95.71 | 89.20 | 97.73 | 72.00 | 72.80 | 97.21 |
+| doubao-seed-2-0-pro | 84.41 | 98.08 | 86.73 | 95.03 | 94.35 | 82.75 | 98.29 | 35.29 | 76.47 | 98.71 |
+| doubao-seed-2-0-pro with Few-shot | 85.88 | -- | 88.53 | 92.70 | 94.03 | 82.27 | 98.44 | 35.29 | 77.74 | 98.73 |
+| doubao-seed-2-0-pro with CoT | 83.53 | -- | 86.52 | 93.11 | 94.29 | 82.94 | 98.27 | 33.51 | 72.80 | 98.47 |
+| hunyuan-turbos-latest | 76.38 | 97.90 | 87.48 | 94.09 | 95.22 | 80.22 | 97.23 | 42.16 | 65.25 | 98.65 |
+| hunyuan-turbos-latest with Few-shot | 76.44 | -- | 86.15 | 91.37 | 94.14 | 78.52 | 97.15 | 44.30 | 68.20 | 98.81 |
+| hunyuan-turbos-latest with CoT | 74.53 | -- | 96.71 | 91.97 | 95.04 | 79.96 | 96.11 | 30.72 | 71.75 | 97.70 |
+| ernie-4.5-turbo-128k | 73.04 | 100.00 | 89.12 | 92.79 | 91.20 | 84.60 | 98.16 | 18.62 | 70.80 | 97.12 |
+| ernie-4.5-turbo-128k with Few-shot | 74.53 | -- | 88.41 | 93.42 | 90.16 | 86.32 | 98.16 | 17.01 | 71.20 | 98.21 |
+| ernie-4.5-turbo-128k with CoT | 77.10 | -- | 88.30 | 91.99 | 93.83 | 84.87 | 97.67 | 16.67 | 72.80 | 98.33 |
+| MiniMax-M2.7 | 91.27 | 76.47 | 93.30 | 96.04 | 94.48 | 85.99 | 97.08 | 16.62 | 72.80 | 98.49 |
+| MiniMax-M2.7 with Few-shot | 81.67 | -- | 89.06 | 92.01 | 95.75 | 88.90 | 98.57 | 15.29 | 67.20 | 98.65 |
+| MiniMax-M2.7 with CoT | 89.90 | -- | 90.97 | 92.53 | 95.06 | 84.87 | 98.44 | 29.41 | 70.20 | 99.52 |
+
+知识增强在开放生成任务上带来了最稳定的提升。Bird-Life、Bird-Eco、Bird-Con、Bird-Comp 和 Bird-Reason 普遍达到较高分数，说明当任务需要事实归纳、细节覆盖和证据组织时，外部证据能够显著改善回答质量。结构化任务的提升则更依赖任务路径：List-Global 在知识增强后大幅提升，说明表格过滤和结构化约束对全局集合枚举非常关键；Bird-ID 虽有提升，但仍受候选召回和 reranker 质量限制，不同模型之间差异明显。
+
+---
+
+## 总体分析
+
+### 知识增强何时有效？
+
+从结果看，知识增强主要在三类场景中有效：
+
+1. **目标实体明确且证据可定位的任务**  
+   如 QA-SC、QA-SA、Bird-Life 和 Bird-Con。系统可以先定位目标物种或 family，再检索相关 chunk、fact 和 evidence，减少模型凭记忆作答的风险。
+
+2. **需要事实覆盖和细节组织的开放生成任务**  
+   主观题普遍受益于外部证据，因为模型需要整合分布、行为、繁殖、食性、保护威胁等多方面信息。知识库提供了更稳定的事实来源。
+
+3. **需要结构化约束的集合任务**  
+   List-Global 在知识增强后显著提升，说明这类任务不能依赖自由生成，而应通过 BIRDBASE-style 表格过滤或图谱约束先确定候选集合。
+
+### 知识增强何时失效？
+
+知识增强也可能失效，尤其在以下场景中：
+
+1. **多选题边界不清晰**  
+   QA-MC 需要同时判断多个选项，检索到的证据可能支持部分选项，也可能引入干扰信息。
+
+2. **地理分布存在稀有记录或表述歧义**  
+   Bird-Geo 中，偶发分布、迁徙范围和地区限定会影响模型判断。长上下文不一定提升可靠性。
+
+3. **候选召回漏掉正确答案**  
+   Bird-ID 的核心瓶颈是候选集合是否包含正确物种，若召回阶段失败，后续模型即使推理能力强也难以恢复。
+
+4. **模型证据利用能力较弱**
+   在 List-Global 中，存在系统已经筛选出完全正确的物种清单，但是交由模型处理时，模型剔除部分正确物种的情况，导致实际评分降低。
+
+### 图谱为什么能帮助模型？
+
+图谱的价值不在于“把文本换成图”，而在于提供更稳定的知识访问路径：
+
+```text
+Taxon → Fact → Evidence → Chunk
+```
+
+该路径带来三点优势：
+
+- **实体锚定**：`canonical_taxon_id` 减少同物异名、taxonomy 变动和 checklist 差异造成的错配；
+- **证据追溯**：Fact 可以回到 Evidence，再回到原始 Chunk，使回答具备可审计来源；
+- **任务感知检索**：不同任务可以选择不同 route，例如目标实体题走 Taxon-Fact-Evidence-chunk，Bird-ID 走候选召回，List-Global 走表格过滤。
+
+因此，Orniscient 的实验结论不是“知识库总能提升模型”，而是：**知识增强效果取决于知识覆盖、检索召回、上下文构造、输出约束和模型证据利用能力。**
+
+### 知识增强案例
+这里给出知识增强对于三个不同的模型分别在客观题、主观题和结构化题上带来提升的例子。
+#### 案例 1：外部证据纠正客观事实判断错误
+
+> 问题：What is described as the single most important threat to the continued existence of Hawaiian Duck?
+> 选项：
+> "A": "Habitat loss due to wetland destruction"
+> "B": "Predation from introduced mammals"
+> "C": "Hybridization with feral Mallards"
+> "D": "Sport hunting in the early 20th century"
+
+
+在 `QA-SC` 数据集的 `qa_sc_0014` 中，题目围绕 **Hawaiian Duck** 的物种事实展开。  
+裸模型设置下，Doubao 选择了错误答案 `A`；接入外部知识后，模型改选 `C`，与标准答案一致。
+
+| 设置 | 预测答案 | 是否正确 |
+|---|---:|---|
+| 裸模型 | A | ✗ |
+| 知识增强 | C | ✓ |
+
+知识增强阶段检索到的 BOW 证据指出，Hawaiian Duck 的持续存续受到多重威胁，其中与野化 Mallard 的杂交是其重要甚至关键风险来源。该证据为模型提供了原本参数化记忆中缺失的物种级细节，使其完成了从错误判断到正确判断的修正。
+
+这一案例说明：对于目标实体明确、答案依赖专业事实的客观题，外部知识能够有效补充模型参数化知识的遗漏。
+
+#### 案例 2：结构化题大幅提升
+在 `List-Global` 的 `list_global_0197` 中，题目要求找出：
+
+> Which bird species are among the lightest 10% by average mass and are found in the Australian-Indomalayan-West Pacific (AIW) zoogeographic realm?
+> 平均体重位于最轻 10%，且分布于 Australian-Indomalayan-West Pacific（AIW）动物地理区的鸟类物种。
+
+标准答案为：
+
+```text
+Cisticola exilis
+Collocalia esculenta
+Cypsiurus balasiensis
+```
+
+
+裸模型huanyuan给出的答案：可以看到，模型其实抓住了要输出“体重最轻的鸟”这个表面意图，但是却没有正确处理 AIW 这个地理条件约束，最终输出与标准答案无一重合，这要暴露出了模型难以完成跨全局多条件的复杂检索任务。
+```text
+Mellisuga helenae
+Colibri thalassinus
+Archilochus colubris
+Regulus regulus
+Calypte anna
+Lophornis ornatus
+Myiornis auricularis
+Eulampis holosericeus
+Chlorostilbon aureoventris
+Selasphorus platycercus
+```
+而在知识增强中，系统将题目解析为：`average_mass: among the lightest 10%` 和 `realm: AIW`，并执行了表格过滤：AIW realm 匹配到 37 个物种；lightest 10% 匹配到 1059 个物种；条件交集后剩余 3 行，最终返回 3 个物种，与标准答案一致：
+```text
+Cisticola exilis
+Collocalia esculenta
+Cypsiurus balasiensis
+```
+
+#### 案例 3：主观开放题查漏补缺
+
+在 `Bird-Life` 的 `bird_life_0012` 中，题目要求模型描述 **Crested Partridge（Rollulus rouloul）** 从求偶到幼鸟独立的完整繁殖生命周期：
+
+> Describe the complete reproductive life cycle of Crested Partridge, from courtship through to the independence of the young, based on the documented breeding ecology.
+> 根据已记录的繁殖生态学资料，描述凤头鹧鸪从求偶到幼鸟独立的完整繁殖生命周期。
+
+裸模型 Wenxin 在 CoT 模式下给出的回答，基本停留在“鸟类繁殖的一般流程”层面：它提到了求偶、筑巢、产卵、孵化、育雏和离巢等阶段，但几乎没有提供 **Crested Partridge** 的物种级事实，也缺少题目要求的繁殖时间、巢穴结构、卵数、卵尺寸、孵化时长和亲代分工等关键信息。
+
+```text
+The reproductive life cycle begins with courtship behaviors, including vocalizations, displays, and pair bonding. 
+Nest construction follows, using materials specific to the species' habitat. 
+Eggs are laid in a clutch, with incubation periods varying by species.
+Hatching produces altricial or precocial chicks, requiring parental care for feeding and protection. 
+Fledglings leave the nest after developing flight feathers, followed by a post-fledging dependence period where parents teach foraging and survival skills until full independence is achieved.
+```
+
+在知识增强设置下，系统先根据题目的目标实体 Rollulus rouloul 进行精确物种定位，再采用 Taxon-Fact-Evidence-Chunk事实证据链，从知识图谱中检索出该物种对应的子图，并定位到 BOW 文本库中与该问题最相关的章节化 chunks 作为上下文进行给出。对于这道繁殖生命周期题，系统优先返回了：
+
+BreedingPhenology：繁殖月份、巢、卵、孵化与雏鸟信息；VocalBehavior：可能与求偶相关的鸣唱信息；以及少量 Introduction / Distribution / Conservation 等补充上下文。
+
+其中，真正支撑回答提升的核心证据包括：
+```
+巢由雄鸟在干叶中构建，约 15–20 cm 宽、2–3 cm 深；
+每窝通常 5–6 枚卵，偶见 4 枚；
+卵尺寸约 35.6–39.1 mm × 30.5–32 mm；
+孵化期 18–19 天，由雌鸟单独承担；
+雏鸟具有明确的体色特征，并由双亲共同照料；
+Peninsular Malaysia 与 Borneo 的繁殖、产卵和雏鸟出现月份均有记录。
+```
+基于这些检索上下文，知识增强后的 Wenxin 能够给出完整得多、也更贴近标准答案的物种级描述：
+```text
+The male constructs a simple nest depression in dry leaves, measuring 15–20 cm in diameter and 2–3 cm deep. 
+The female lays 5–6 matt white eggs, occasionally four, with each egg measuring 35.6–39.1 mm × 30.5–32 mm. 
+Incubation lasts 18–19 days and is performed by the female alone, beginning with the last egg. 
+Upon hatching, the downy young are mahogany-brown with paler underparts... Both parents tend to the young.
+```
+在 Qwen Judge 评分中，知识增强前后的差异也非常明显：
+
+| 设置 | Key Point Recall | Numerical Accuracy | Temporal Logic | 总分 |
+|---|---:|---:|---:|---:|
+| 裸模型 | 15 | 0 | 10 | 25 |
+| 知识增强 | 40 | 35 | 25 | 100 |
+
+该案例说明：对于 Bird-Life 这类开放生成任务，裸模型往往能够给出“看似合理”的通用叙述，却难以覆盖特定物种的关键事实。知识增强通过目标实体定位与章节感知检索，将与问题直接相关的 BOW 原文证据组织为模型上下文，使回答从泛化模板提升为具备事实覆盖、数值细节与时间逻辑的专业生态描述。
+
+---
+
+# 仓库结构
 
 ```text
 orniscient/
@@ -122,296 +798,99 @@ orniscient/
 
 ---
 
-## Benchmark Design
+# 快速开始
 
-Orniscient 的 Benchmark 由 **14 个数据集**组成，按照任务复杂度划分为三个层级：**知识检索、领域推理分析和复杂逻辑推理**。该设计不是简单增加题目数量，而是希望从不同认知难度和知识类型上刻画大语言模型在鸟类生态任务中的能力边界。
-
-### 知识点脑图
-
-以下两张图展示了 Benchmark 中“知识获取”和“逻辑推理”两类任务的知识点组织方式。
-
-![知识获取](docs/assets/知识获取.png)
-
-![逻辑推理](docs/assets/逻辑推理.png)
-
-### Level 1：知识检索
-
-Level 1 主要考察模型对鸟类生态基础事实的掌握能力，题目通常可以从 BOW 或辅助数据源中的局部证据直接得到答案。
-
-| Dataset | 任务说明 |
-|---|---|
-| `QA-SC` | 单选题，考察单一事实或基础属性识别 |
-| `QA-MC` | 多选题，考察多个正确事实的同时识别 |
-| `QA-SA` | 简答题，考察模型对短事实答案的生成能力 |
-
-典型知识维度包括形态、食性、分布、生境、分类、保护状态、繁殖行为和生态习性等。该层级用于评估模型是否具备基本的鸟类生态事实检索能力。
-
-### Level 2：领域推理与综合分析
-
-Level 2 主要考察模型在鸟类分类学、地理分布、生态功能、保护状态、繁殖生物学和相似种比较等领域任务中的分析能力。
-
-| Dataset | 任务说明 |
-|---|---|
-| `Bird-Geo` | 地理分布、生境、迁徙和空间边界推理 |
-| `Bird-Taxonomy` | 分类层级、命名变迁、split/lump 等分类学推理 |
-| `Bird-Life` | 繁殖生物学、生命周期和行为时序归纳 |
-| `Bird-Eco` | 食性、觅食策略、生态功能和因果链推理 |
-| `Bird-Con` | 保护状态、威胁因素和保护风险分析 |
-| `Bird-Comp` | 相似种或近缘类群之间的形态与行为比较 |
-| `Bird-Classify` | 根据特征描述推断分类层级或总结分类特征 |
-
-该层级的核心目标不是让模型复述文本，而是要求模型在证据基础上进行归纳、比较、判断和解释。
-
-### Level 3：复杂逻辑推理
-
-Level 3 面向更复杂的任务，包括长上下文、多跳推理、反向识别、约束规划和全局集合枚举。
-
-| Dataset | 任务说明 |
-|---|---|
-| `Bird-Reason` | 跨章节、跨证据的长上下文推理与鉴伪 |
-| `Bird-Plan` | 带预算、地形、法律和威胁约束的保护规划 |
-| `Bird-ID` | 根据掩码后的形态、声学、地理和生态描述反向识别物种 |
-| `List-Global` | 基于结构化条件筛选生成全局物种集合 |
-
-该层级尤其关注模型是否能在复杂约束下保持事实一致性、证据可追溯性和推理链条稳定性。
-
----
-
-## Knowledge Base
-
-Orniscient 的知识库原型采用多源混合知识组织方式，不将所有信息简单压缩为单一知识图谱，而是根据不同任务需求组合文本证据、结构化表格、taxonomy backbone 和图谱链路。
-
-### 多源数据组织
-
-知识库原型围绕以下资源构建：
-
-- **Birds of the World (BOW)**：提供物种和科级自然史文本，是项目的核心文本知识源；
-- **AviList / Clements**：用于构建和对齐 canonical taxonomy backbone；
-- **BIRDBASE**：用于结构化属性过滤和候选约束；
-- **Order 表及其他辅助表格**：用于分类层级校验和补充映射。
-
-由于 BOW 原始文本和派生内容具有授权限制，本仓库不会公开原始 BOW 数据或完整文本 chunks。
-
-### Claim–Fact–Evidence–Qualifier 建模
-
-在 BOW chunk 层之上，项目设计了四类核心知识对象：
-
-| 对象 | 含义 |
-|---|---|
-| `Claim` | 从原文中抽取的自然语言断言，尽量保留原文语义 |
-| `Fact` | 经过标准化后的结构化事实，便于检索、聚合和比较 |
-| `Evidence` | 支撑 claim/fact 的原文证据和来源信息 |
-| `Qualifier` | 描述事实成立条件的限定信息，如地域、季节、性别、年龄、亚种、时间和不确定性 |
-
-这一层的目标不是简单抽取三元组，而是形成具有证据支撑和条件限定能力的事实证据层。
-
-### Taxon–Fact–Evidence–Chunk 图谱链路
-
-图谱链路用于连接分类实体、结构化事实、证据片段和原始文本块：
-
-```text
-Taxon -> Fact -> Evidence -> Chunk
-```
-
-该设计使系统能够从结构化事实回溯到原始证据，也能够根据目标物种、事实类型或证据来源进行任务感知检索。
-
-### 知识图谱子图示例
-
-下面是鸟类生态知识图谱的局部子图示例，用于展示目标物种周围的邻域结构和图谱化知识连接方式。
-
-![Knowledge Graph Subgraph Example](docs/assets/kg_subgraph_example.png)
-
-### 分类树与 checklist crosswalk 示例
-
-项目还包含 taxonomy tree 和 checklist crosswalk 的可视化，用于展示分类主树构建和不同 checklist 之间的兼容层对齐。
-
-![Taxonomy Tree](docs/assets/taxonomy_tree_accipitriformes.svg)
-
-![Checklist Crosswalk](docs/assets/checklist_crosswalk_accipitriformes.svg)
-
----
-
-## Harness
-
-Orniscient 的 `knowledge_RAG` Harness 是连接题库、模型、知识源、Prompt 模式、检索器、评分器和结果日志的统一评测框架。它不是单个评分脚本，而是用于组织实验流程的工程层。
-
-### Harness 支持的能力
-
-- 多模型统一调用；
-- 多数据集任务路由；
-- zero-shot / few-shot / CoT 等 Prompt 模式；
-- Vanilla 与知识增强设置对比；
-- objective / subjective / structured 三类任务流程；
-- 自动评分与 LLM-as-a-Judge；
-- run manifest、context log、resume、dry-run 和错误记录；
-- 结果聚合与可视化分析。
-
-### 评测任务类型
-
-| 类型 | 对应任务 | 主要指标 |
-|---|---|---|
-| 客观题 | `QA-SC`, `QA-MC`, `QA-SA`, `Bird-Geo`, `Bird-Taxonomy` | Accuracy, Exact Match, F1 |
-| 开放生成题 | `Bird-Life`, `Bird-Eco`, `Bird-Con`, `Bird-Comp`, `Bird-Reason`, `Bird-Plan` | LLM-as-a-Judge |
-| 结构化任务 | `Bird-ID`, `List-Global`, `Bird-Classify` | Recall, weighted top-5 accuracy, hierarchical accuracy |
-
-### Knowledge Modes
-
-项目支持或预留了多种知识接入方式：
-
-| Mode | 含义 |
-|---|---|
-| `none` | 裸模型，不接入外部知识 |
-| `text_rag` | 基于 BOW chunk 的文本检索增强 |
-| `kg_v1` | 早期知识图谱原型 |
-| `kg_v3` | schema-driven 知识图谱原型 |
-| `hybrid` | 文本、图谱和表格知识的混合访问 |
-
-知识增强并不被假设为对所有任务都单调提升。该 Harness 的目标之一正是分析：知识库在哪些任务上有效、在哪些任务上失效，以及失败来源是知识覆盖不足、检索召回不足、上下文构造问题，还是模型无法正确利用证据。
-
----
-
-## Data Notice
-
-本仓库主要用于毕业设计审阅和研究展示。项目已获得 BOW 的科研使用授权，但由于 BOW 等数据源具有授权限制，公开版本不会包含以下内容：
-
-- Birds of the World 原始文本；
-- BOW 派生的完整文本 chunks；
-- API keys 或本地 `.env` 文件；
-- 完整知识库生成产物；
-- Neo4j 数据库 dump；
-- LightRAG 工作缓存；
-- 完整模型输出、judge 日志、context logs 和大规模评测结果；
-- 大模型权重或 checkpoint。
-
-当前仓库可能包含用于论文审阅的 benchmark question 文件。若未来公开发布，应根据数据授权情况将完整题库替换为脱敏后的 demo 样例。
-
-如需完整复现实验流程，使用者需要自行准备已授权的数据源，并按照 `.env.example` 和代码中的路径配置放置到本地对应目录。
-
----
-
-## Usage
-
-### 1. 克隆仓库
+## 安装
 
 ```bash
-git clone https://github.com/<your-username>/orniscient.git
-cd orniscient
-```
-
-### 2. 创建 Python 环境
-
-```bash
+git clone https://github.com/<your-username>/Orniscient.git
+cd Orniscient
 python -m venv .venv
-```
-
-Windows PowerShell 下激活环境：
-
-```powershell
-.venv\Scripts\Activate.ps1
-```
-
-### 3. 安装依赖
-
-如果仓库中提供了 `requirements.txt`：
-
-```bash
 pip install -r requirements.txt
 ```
 
-如果暂未提供，请根据 `evaluation/` 和 `kg_v2/` 中使用的模块手动安装依赖。
-
-### 4. 配置环境变量
-
-复制 `.env.example` 为 `.env`：
-
-```bash
-cp .env.example .env
-```
-
-Windows PowerShell 下可使用：
+Windows PowerShell：
 
 ```powershell
+.venv\Scripts\Activate.ps1
 Copy-Item .env.example .env
 ```
 
-然后在 `.env` 中填写本地路径和模型 API key。
+在 `.env` 中配置本地数据路径和模型 API key。
 
-### 5. 运行客观题评测
+## 运行评测
+
+客观题：
 
 ```bash
-python evaluation/objective_eval.py ^
-  --models deepseek qwen kimi ^
-  --datasets QA-SC QA-MC QA-SA Bird-Geo Bird-Taxonomy ^
+python evaluation/objective_eval.py \
+  --models deepseek qwen kimi \
+  --datasets QA-SC QA-MC QA-SA Bird-Geo Bird-Taxonomy \
   --question-root question
 ```
 
-### 6. 运行开放生成题评测流程
+开放生成题：
 
 ```bash
-python evaluation/run_subjective_pipeline.py ^
-  --models deepseek qwen kimi ^
-  --datasets Bird-Life Bird-Eco Bird-Con Bird-Comp Bird-Reason Bird-Plan ^
-  --modes zero_shot few_shot cot ^
-  --question-root question ^
+python evaluation/run_subjective_pipeline.py \
+  --models deepseek qwen kimi \
+  --datasets Bird-Life Bird-Eco Bird-Con Bird-Comp Bird-Reason Bird-Plan \
+  --modes zero_shot few_shot cot \
+  --question-root question \
   --fewshot-root evaluation/fewshot_examples
 ```
 
-### 7. 运行结构化任务评测
+结构化任务：
 
 ```bash
-python evaluation/run_remaining_four_eval.py ^
-  --models deepseek qwen kimi ^
-  --datasets Bird-ID List-Global Bird-Classify Bird-Con ^
+python evaluation/run_remaining_four_eval.py \
+  --models deepseek qwen kimi \
+  --datasets Bird-ID List-Global Bird-Classify \
   --question-root question
 ```
 
-### 8. 构建知识库原型
+构建知识库：
 
 ```bash
 python kg_v2/run_build_kb_v2.py
 ```
 
-实际命令可能会根据本地数据路径、模型提供商、知识接入模式和实验设置有所调整。
+---
+
+# 数据说明
+
+本仓库主要用于学术研究和本科毕业设计审阅。项目已获得 Birds of the World 科研使用授权。由于数据授权限制，公开仓库不会包含：
+
+- BOW 原始文本；
+- 完整 BOW 派生 chunks；
+- 完整知识库产物；
+- Neo4j 数据库 dump；
+- LightRAG cache；
+- 完整大规模模型输出；
+- judge 日志和 context logs；
+- API keys 或 `.env` 文件；
+- 模型权重或 checkpoint。
+
+
+
 
 ---
 
-## Repository Status
+# Citation
 
-当前版本已完成：
-
-- 覆盖 14 个 dataset 的鸟类生态 Benchmark；
-- 多源知识库 schema 与构建流程；
-- canonical taxonomy backbone；
-- BOW 文本记录挂载与 chunk 对齐；
-- Claim–Fact–Evidence–Qualifier 建模；
-- Taxon–Fact–Evidence–Chunk 图谱设计；
-- objective / subjective / structured 三类评测流程；
-- knowledge_RAG Harness；
-- 裸模型与知识增强设置下的对比评测；
-- 项目目录、运行流程和复现机制整理。
-
-后续计划包括：
-
-- 全量 Neo4j 图谱部署；
-- LightRAG mix 检索集成；
-- reranker 消融实验；
-- Bird-ID 候选召回优化；
-- List-Global 确定性输出优化；
-- LangGraph 或类似框架下的鸟类专家智能体原型；
-- 基于评测反馈的系统持续迭代。
+```bibtex
+@misc{orniscient2026,
+  title        = {Orniscient: A Heterogeneous Benchmark and Knowledge-Enhanced Evaluation Framework for Bird Ecology Reasoning},
+  author       = {TODO},
+  year         = {2026},
+  howpublished = {\url{https://github.com/Xiao0731/Orniscient}}
+}
+```
 
 ---
 
-## License and Data Access
+# 致谢
 
-本仓库中的源代码主要用于学术研究和毕业设计展示。
+Orniscient 源于一个朴素的问题：鸟类生态知识是否可以不再散落在长文本、分类 checklist 和 trait 表格之间，而是被组织成可验证、可检索、可追溯、可评测的知识基础设施。
 
-原始数据和由受限来源派生的完整数据产物不随公开仓库分发。请确保任何外部数据源的使用均符合其授权协议和使用条款。
-
----
-
-## Acknowledgements
-
-Orniscient 源于一个朴素的问题：鸟类生态知识是否可以不再只是散落在长文本、表格和 checklist 之间，而是被组织成可验证、可检索、可推理、可评测的知识基础设施。
-
-本项目希望通过 Benchmark、知识库原型和评测 Harness 的结合，为未来鸟类生态知识库、知识增强问答系统和鸟类专家智能体提供一个可复用的起点。
+感谢支持本项目的老师、合作者和数据资源提供方。
