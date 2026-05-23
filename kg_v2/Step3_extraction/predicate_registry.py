@@ -17,6 +17,8 @@ PREDICATES_BY_DOMAIN = {
     "TaxonomyAndPhylogeny": [
         "HAS_SUBSPECIES",
         "HAS_GEOGRAPHIC_VARIATION",
+        "HAS_SUBSPECIES_TRAIT",
+        "HAS_SUBSPECIES_DISTRIBUTION",
         "HYBRIDIZES_WITH",
         "RELATED_TO",
         "HAS_CLASSIFICATION_HISTORY",
@@ -25,6 +27,11 @@ PREDICATES_BY_DOMAIN = {
     "MorphologyAndIdentification": [
         "HAS_BODY_LENGTH",
         "HAS_BODY_MASS",
+        "HAS_WING_LENGTH",
+        "HAS_TAIL_LENGTH",
+        "HAS_BILL_LENGTH",
+        "HAS_TARSUS_LENGTH",
+        "HAS_WINGSPAN",
         "HAS_PLUMAGE_TRAIT",
         "HAS_MOLT_PATTERN",
         "HAS_SEXUAL_DIMORPHISM",
@@ -61,8 +68,16 @@ PREDICATES_BY_DOMAIN = {
         "HAS_SOCIAL_BEHAVIOR",
         "HAS_TERRITORIAL_BEHAVIOR",
         "HAS_LOCOMOTION_STYLE",
+        "HAS_FLIGHT_ABILITY",
+        "HAS_RUNNING_SPEED",
+        "HAS_JUMP_HEIGHT",
+        "HAS_SWIMMING_ABILITY",
+        "HAS_CLIMBING_ABILITY",
         "HAS_DAILY_ACTIVITY_PATTERN",
         "HAS_COURTSHIP_BEHAVIOR",
+        "HAS_MATING_SYSTEM",
+        "HAS_PAIR_BOND",
+        "HAS_COPULATION_BEHAVIOR",
         "HAS_AGONISTIC_BEHAVIOR",
     ],
     "LifeHistoryAndBreeding": [
@@ -83,6 +98,10 @@ PREDICATES_BY_DOMAIN = {
         "THREATENED_BY",
         "HAS_CONSERVATION_ACTION",
         "INTERACTS_WITH_HUMANS",
+        "HAS_PREDATOR",
+        "HAS_PARASITE",
+        "HAS_DISEASE",
+        "HAS_MORTALITY_CAUSE",
         "REQUIRES_RESEARCH_ON",
     ],
 }
@@ -117,4 +136,3 @@ def predicates_for_domains(domains: list[str]) -> list[str]:
     for domain in domains:
         predicates.extend(PREDICATES_BY_DOMAIN.get(domain, []))
     return predicates
-

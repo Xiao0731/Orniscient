@@ -75,6 +75,40 @@ To validate the V3 Taxon -> Fact -> Evidence -> Chunk graph chain without Neo4j:
 python kg_v2/Step4_graph/smoke_v3_kg_e2e.py --skip-neo4j
 ```
 
+For a one-question vanilla vs. KG-augmented local demo:
+
+```powershell
+python evaluation/knowledge_RAG/demo_compare.py `
+  --question "What are the main threats to the Southern Cassowary?" `
+  --target "Casuarius casuarius" `
+  --model deepseek-chat `
+  --knowledge-mode kg_v3 `
+  --top-k 5
+```
+
+No-API prompt and retrieval preview:
+
+```powershell
+python evaluation/knowledge_RAG/demo_compare.py `
+  --question "What are the main threats to the Southern Cassowary?" `
+  --target "Casuarius casuarius" `
+  --knowledge-mode kg_v3 `
+  --top-k 5 `
+  --no-api
+```
+
+Sample-mode interface preview:
+
+```powershell
+python evaluation/knowledge_RAG/demo_compare.py `
+  --question "What are the main threats to the Southern Cassowary?" `
+  --target "Casuarius casuarius" `
+  --top-k 2 `
+  --sample-mode
+```
+
+`demo_compare.py` is not a formal evaluation script: it does not score, judge, or aggregate. In full local mode it retrieves from `claims_final_global_v2` and `facts_final_global_v2`, optionally adds chunk text from `--chunks-path`, then calls an OpenAI-compatible chat API unless `--no-api` is set. Full execution requires local BOW-derived chunks and KG artifacts, which are not redistributed in this repository due to data usage restrictions.
+
 ## Output Layout
 
 Unified commands write:

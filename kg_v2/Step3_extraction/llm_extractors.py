@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import json
 import re
+import sys
 from typing import Any
 
 from kg_v2.Step3_extraction.normalizers import QUALIFIER_KEYS
@@ -141,10 +142,30 @@ Input chunk:
 """
 
 
+def _configure_stdio() -> None:
+    for stream in (sys.stdout, sys.stderr):
+        try:
+            if hasattr(stream, "reconfigure"):
+                stream.reconfigure(encoding="utf-8", errors="replace")
+        except Exception:
+            pass
+
+
+_configure_stdio()
+
+
 def _debug_print(text: str) -> None:
+    text = str(text)
     try:
         print(text, flush=True)
-    except OSError:
+    except UnicodeEncodeError:
+        encoding = getattr(sys.stdout, "encoding", None) or "utf-8"
+        safe_text = text.encode(encoding, errors="replace").decode(encoding, errors="replace")
+        try:
+            print(safe_text, flush=True)
+        except Exception:
+            pass
+    except Exception:
         pass
 
 

@@ -1,6 +1,6 @@
 # Orniscient
 
-**Orniscient** 是一个面向鸟类生态知识推理的异构 Benchmark 与知识增强评测框架。它结合 **14 个任务型数据集**、**多源鸟类知识库** 和统一的 **knowledge_RAG Harness**，用于研究：
+**Orniscient** 是一个面向鸟类生态知识推理的异构 Benchmark 与知识增强评测框架。它结合 **14 个任务型数据集**、**多源鸟类知识库** 和统一的 **知识增强 Harness**，用于研究：
 
 > **多源鸟类知识在何种条件下、通过何种方式提升大语言模型在鸟类生态任务中的推理能力？**
 
@@ -9,7 +9,7 @@
 
 <div align="center">
 
-[English](./README.md) | [简体中文](./README_zh.md)
+[中文版本](./README_zh.md)/[English Version](./README.md)
 
 </div>
 
@@ -62,7 +62,7 @@ Orniscient 围绕三个核心部分展开：
    统一管理题库读取、任务路由、知识检索、模型答题、评分、日志和结果聚合。
 
 4. **进行知识增强对比分析**  
-   比较 Vanilla、Text-RAG、KG-RAG 和 Hybrid KG-RAG，分析外部知识何时有效、何时失效以及为什么失效。
+   比较裸模型和知识增强的结果，分析外部知识何时有效、何时失效以及为什么失效。
 
 ---
 
@@ -100,7 +100,7 @@ Orniscient 将鸟类的专业知识划分为两大类别，知识获取和逻辑
 ## Dataset 总览
 
 | 数据集 | 子任务分类 | 评估层级 | 数据量 | 任务描述 | 知识领域 | 数据构建方法 | 评测指标 |
-| --- | --- | --- | --- | --- | --- | --- | --- |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
 | QA-SC | | L1 | 2400 | 单选题 (1选4)： 从四个选项中选择唯一正确的属性（如体重、体长、IUCN保护等级），评估模型对基础事实的检索能力。 | 基础属性 | 基于BOW与SciQ，按鸟类科级分层程序化抽取题目 | Accuracy |
 | QA-MC | | L1 | 1200 | 多选题 (多选)： 从多个选项中选出所有正确的描述，评估模型的综合信息验证能力。 | 食性与栖息地 | 基于BOW由LLM生成多项选择题 | EM / F1 |
 | QA-SA | | L1 | 1200 | 简答题： 不提供选项，要求模型直接输出具体的实体名称或数值，评估模型的精准抽取能力。 | 形态学与冷知识 | 从BOW、SciQ与TriviaQA中抽取特定实体和数值信息构建的关键词短答题 | EM / F1 |
@@ -266,95 +266,82 @@ Orniscient 首先使用 AviList 构建规范分类主树，并通过 Clements �
 
 ---
 
-## 当前构建统计
+### 当前核心 Claim–Fact–Evidence 图谱规模
 
-### Taxonomy Backbone 统计
+在最终 V3 Claim–Fact–Evidence 构建阶段，Orniscient 共处理 **309,369 个已对齐的章节化 BOW chunks**，形成 **921,161 条正式 Claims**。随后，系统在全局范围内对同一 taxon 下的语义等价 Claims 进行规范化归并，构建出 **891,862 个 Facts**、**815,896 条 Evidence 记录**以及 **915,793 条 Fact–Evidence Links**。基于 `Taxon → Fact → Evidence → Chunk` 的核心链路，当前待物化核心图谱规模约为 **2,028,249 个核心节点**和 **2,623,551 条核心边**。
 
-| 指标 | 数量 |
-|---|---:|
-| AviList rows / canonical taxon nodes | 33,684 |
-| Canonical taxonomy edges | 33,638 |
-| Clements rows / crosswalk records | 33,081 |
-| Taxonomy aliases | 105,656 |
-| Taxonomy conflicts | 9,331 |
-| Unresolved crosswalk records | 2,407 |
-| Unresolved crosswalk ratio | 7.28% |
+Orniscient 的图谱层并不试图把 BOW 长文本完整塞入图数据库。图谱中的 Fact 与 Evidence 主要承担结构化索引、证据锚定和可追溯定位的作用；开放生成任务所需的大段自然语言上下文仍由本地 chunk store / vector index 提供。换言之，图谱负责回答“应该去哪里找、依据哪类事实找”，向量库和 chunk store 负责提供“用于生成回答的长文本内容”。
 
-### Canonical Taxon Rank 分布
+#### Overall Artifact Scale
 
-| Rank | Count |
-|---|---:|
-| Order | 46 |
-| Family | 252 |
-| Genus | 2,376 |
-| Species | 11,131 |
-| Subspecies | 19,879 |
+| Metric | Count |
+| --- | ---: |
+| Processed BOW chunks | 309,369 |
+| Species claims | 912,598 |
+| Family claims | 8,563 |
+| Total claims | 921,161 |
+| Species facts | 883,500 |
+| Family facts | 8,362 |
+| Total facts | 891,862 |
+| Evidences | 815,896 |
+| Fact-Evidence links | 915,793 |
+| Supplement accepted claims | 331,827 |
+| Supplement covered chunks | 93,542 |
+| Hit soft-cap chunks | 33,211 |
+| Fact ID collisions | 0 |
+| Extractor failures | 0 |
 
-### BOW Record 与 Chunk 挂接统计
+#### Core Graph Size Estimate
 
-| 指标 | 数量 / 比例 |
-|---|---:|
-| Species records | 11,039 |
-| Attached species records | 10,992 |
-| Unresolved species records | 47 |
-| Species record attachment rate | 99.57% |
-| Species chunks | 317,799 |
-| Attached species chunks | 316,238 |
-| Family records | 251 |
-| Attached family records | 248 |
-| Unresolved family records | 3 |
-| Family record attachment rate | 98.80% |
-| Family chunks | 1,506 |
-| Attached family chunks | 1,488 |
+| Node Label | Count |
+| --- | ---: |
+| Taxon | 11,122 |
+| Fact | 891,862 |
+| Evidence | 815,896 |
+| Chunk | 309,369 |
+| Total core nodes | 2,028,249 |
 
-### 当前 Neo4j 图谱规模
+| Concept Edge Type | Relation Name | Count |
+| --- | --- | ---: |
+| Taxon -> Fact | HAS_FACT | 891,862 |
+| Fact -> Evidence | SUPPORTED_BY | 915,793 |
+| Evidence -> Chunk | FROM_CHUNK | 815,896 |
+| Total core edges |  | 2,623,551 |
 
+#### Claim 补充抽取策略验证
 
-在 V3 全量事实抽取阶段，Orniscient 共处理 **250,078 个章节化 BOW chunks**，并生成50 万条 Claims、46.9 万条 Facts、43.7 万条 Evidence 和 47.5 万条 Fact–Evidence 链接：
+为缓解早期 per-chunk Claim 数量上限带来的召回损失，Orniscient 对达到旧抽取上限的高风险 chunks 进行了补充抽取策略验证。系统首先识别出 **93,542 个 at/over-cap chunks**，并在小样本上比较不同 supplementary extraction budget 对 Claim 质量的影响。
 
-| 产物 | 数量 |
-|---|---:|
-| Claims | 449,473 |
-| 规范化 Facts | 421,882 |
-| Evidence 记录 | 393,075 |
-| Fact–Evidence Links | 427,278 |
+| Comparison | Faithfulness | Novelty | Non-duplicate | Atomicity | Predicate/domain fit | Practical usefulness | Overall pass | Near-duplicate |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| max=6 | 97.27% | 94.55% | 95.45% | 97.27% | 96.97% | 89.09% | 88.18% | 6.06% |
+| 12-extra | 93.01% | 65.50% | 65.94% | 92.14% | 97.38% | 55.46% | 53.28% | 36.24% |
+| 6+6 Round2 | 98.37% | 75.92% | 76.33% | 95.10% | 99.59% | 73.88% | 71.43% | 35.51% |
 
+实验结果表明，单轮 `max=12` 虽然能够继续产生额外 Claims，但第 7–12 条的新增性、非重复性和实际可用性明显下降。`6+6 Round2` 相比 `12-extra` 更稳定，但第二轮仍存在较高近重复风险；在 55 个样本中，Round2 产生 245 条新增 Claims，51/55 个 chunks 仍有新增，31/55 个 chunks 再次触顶。
+
+因此，最终全量补充抽取采用 **single-pass additional-6** 策略：即每个高风险 chunk 最多补充 6 条高价值 Claims，不执行 Round2 continuation。最终，系统将 **331,827 条 supplementary claims** 合入 Claim v2，并将 **33,211 个 hit soft-cap chunks** 保留为后续高召回扩展清单。
 
 #### V3 事实抽取规模与知识覆盖
 
 在 V3 事实图谱构建阶段，Orniscient 以章节化 BOW chunks 为基本输入，执行  
-`Chunk → Claim → Fact → Evidence → Fact–Evidence Link` 的抽取与规范化流程，并且可以追溯到具体的chunk。  
-
-#### 事实抽取产物统计
-
-| 产物 | 当前数量 |
-|---|---:|
-| Species claims | 446,405 |
-| Family claims | 3,068 |
-| **Total claims** | **449,473** |
-| Species facts | 419,419 |
-| Family facts | 2,463 |
-| **Total facts** | **421,882** |
-| Evidences | 393,075 |
-| Fact–Evidence links | 427,278 |
-| Extractor failures | 57 |
-
-Orniscient 已经形成了接近45万条 Claim、42万条规范化 Fact、39万条 Evidence 和42.7万条 Fact–Evidence 连接。在当前处理 chunks 中，抽取器仅记录57条失败样本，说明全量 LLM 事实抽取链路在大规模运行下具有较好的稳定性。
+`Chunk → Claim → Fact → Evidence → Fact–Evidence Link` 的抽取与规范化流程，并且可以追溯到具体的 chunk。
 
 #### Fact 领域划分与受控关系模式
 为保证事实抽取结果具有一致的语义结构、可比较性和可追溯性，Orniscient 在 Step 3 中没有直接让 LLM 自由生成开放三元组，而是采用了受控事实领域（controlled fact domains）与受控谓词集合（controlled predicates）的设计,将鸟类自然史知识划分为 8 个核心事实领域，并为每个领域预定义可用的关系类型，从而约束抽取结果的语义空间，减少模式漂移和表述碎片化问题。
 
-8 个事实领域包括：
-| Fact Domain                 | Representative Predicates                                                |
-| --------------------------- | ------------------------------------------------------------------------ |
-| TaxonomyAndPhylogeny        | `HAS_SUBSPECIES`, `RELATED_TO`, `HYBRIDIZES_WITH`                        |
-| MorphologyAndIdentification | `HAS_BODY_LENGTH`, `HAS_PLUMAGE_TRAIT`, `HAS_DIAGNOSTIC_TRAIT`           |
-| DistributionAndMovement     | `OCCURS_IN`, `BREEDS_IN`, `HAS_MIGRATION_PATTERN`                        |
-| Habitat                     | `INHABITS_BIOME`, `USES_MICROHABITAT`                                    |
-| EcologyAndDiet              | `EATS_ITEM`, `EATS_CATEGORY`, `FORAGES_BY`                               |
-| VocalAndBehavior            | `HAS_VOCALIZATION_TYPE`, `HAS_SOCIAL_BEHAVIOR`, `HAS_COURTSHIP_BEHAVIOR` |
-| LifeHistoryAndBreeding      | `BREEDS_DURING`, `HAS_NEST_STRUCTURE`, `HAS_CLUTCH_SIZE`                 |
-| ConservationAndResearch     | `HAS_IUCN_STATUS`, `THREATENED_BY`, `HAS_CONSERVATION_ACTION`            |
+当前 schema 包含 8 个 fact domains 和 74 个 controlled predicates。Predicate Count 表示该 fact domain 下受控谓词类型数量。表中 Controlled Predicates 为完整 schema 列表，而不是频次统计：
+
+| Fact Domain | Predicate Count | Controlled Predicates |
+| --- | ---: | --- |
+| TaxonomyAndPhylogeny | 8 | `HAS_SUBSPECIES`, `HAS_GEOGRAPHIC_VARIATION`, `HAS_SUBSPECIES_TRAIT`, `HAS_SUBSPECIES_DISTRIBUTION`, `HYBRIDIZES_WITH`, `RELATED_TO`, `HAS_CLASSIFICATION_HISTORY`, `HAS_TAXONOMIC_NOTE` |
+| MorphologyAndIdentification | 13 | `HAS_BODY_LENGTH`, `HAS_BODY_MASS`, `HAS_WING_LENGTH`, `HAS_TAIL_LENGTH`, `HAS_BILL_LENGTH`, `HAS_TARSUS_LENGTH`, `HAS_WINGSPAN`, `HAS_PLUMAGE_TRAIT`, `HAS_MOLT_PATTERN`, `HAS_SEXUAL_DIMORPHISM`, `HAS_AGE_DIMORPHISM`, `HAS_DIAGNOSTIC_TRAIT`, `HAS_STRUCTURE_TRAIT` |
+| DistributionAndMovement | 8 | `OCCURS_IN`, `ENDEMIC_TO`, `BREEDS_IN`, `WINTERS_IN`, `MIGRATES_VIA`, `HAS_MIGRATION_PATTERN`, `HAS_ELEVATION_RANGE`, `HAS_DISTRIBUTION_NOTE` |
+| Habitat | 2 | `INHABITS_BIOME`, `USES_MICROHABITAT` |
+| EcologyAndDiet | 5 | `EATS_CATEGORY`, `EATS_ITEM`, `FORAGES_BY`, `FORAGES_IN_STRATUM`, `HAS_ECOLOGICAL_ROLE` |
+| VocalAndBehavior | 18 | `HAS_VOCALIZATION_TYPE`, `CALLS_DURING`, `HAS_NONVOCAL_SOUND`, `HAS_SOUND_DIAGNOSTIC`, `HAS_SOCIAL_BEHAVIOR`, `HAS_TERRITORIAL_BEHAVIOR`, `HAS_LOCOMOTION_STYLE`, `HAS_FLIGHT_ABILITY`, `HAS_RUNNING_SPEED`, `HAS_JUMP_HEIGHT`, `HAS_SWIMMING_ABILITY`, `HAS_CLIMBING_ABILITY`, `HAS_DAILY_ACTIVITY_PATTERN`, `HAS_COURTSHIP_BEHAVIOR`, `HAS_MATING_SYSTEM`, `HAS_PAIR_BOND`, `HAS_COPULATION_BEHAVIOR`, `HAS_AGONISTIC_BEHAVIOR` |
+| LifeHistoryAndBreeding | 10 | `BREEDS_DURING`, `NESTS_AT`, `HAS_NEST_STRUCTURE`, `HAS_EGG_TRAIT`, `HAS_CLUTCH_SIZE`, `HAS_INCUBATION_PERIOD`, `HAS_FLEDGING_PERIOD`, `HAS_PARENTAL_ROLE`, `HAS_DEVELOPMENT_NOTE`, `HAS_DEMOGRAPHIC_NOTE` |
+| ConservationAndResearch | 10 | `HAS_IUCN_STATUS`, `HAS_POPULATION_TREND`, `THREATENED_BY`, `HAS_CONSERVATION_ACTION`, `INTERACTS_WITH_HUMANS`, `HAS_PREDATOR`, `HAS_PARASITE`, `HAS_DISEASE`, `HAS_MORTALITY_CAUSE`, `REQUIRES_RESEARCH_ON` |
 
 
 在这一框架下，每条 Fact 不仅包含主体、谓词和客体，还会被显式赋予所属领域，并通过 Fact → Evidence → Chunk 链接回原始 BOW 文本片段，这种设计使得知识图谱既保留了细粒度生态事实，又具备稳定的统计分析能力和可复现的知识增强接口。
@@ -362,40 +349,40 @@ Orniscient 已经形成了接近45万条 Claim、42万条规范化 Fact、39万�
 ##### 高频 Fact Predicate 分布
 
 下表展示了当前抽取结果中出现频率最高的一组事实关系。可以看到，图谱不仅覆盖分布、生境、保护状态等基础知识，也覆盖鸣声、亲代行为、巢结构、卵特征、迁徙模式和数量性表型等细粒度生态事实。针对不同类型的问题，可以直接定位到相关类型的Fact节点获取关键信息，再一路追溯到相关文本片段，实现可追溯。
-![FactPredicate](docs/assets/高频Fact节点类型.png)
+![FactPredicate](docs/assets/高频Fact.png)
 
 | Predicate | Fact Count |
 |---|---:|
-| HAS_PLUMAGE_TRAIT | 31,155 |
-| OCCURS_IN | 29,141 |
-| INHABITS_BIOME | 29,064 |
-| HAS_VOCALIZATION_TYPE | 27,906 |
-| EATS_ITEM | 22,412 |
-| THREATENED_BY | 13,149 |
-| EATS_CATEGORY | 12,657 |
-| HAS_IUCN_STATUS | 12,419 |
-| HAS_SEXUAL_DIMORPHISM | 11,845 |
-| HAS_NEST_STRUCTURE | 11,646 |
-| HAS_BODY_LENGTH | 11,187 |
-| BREEDS_DURING | 11,107 |
-| HAS_POPULATION_TREND | 10,802 |
-| HAS_MIGRATION_PATTERN | 10,145 |
-| HAS_PARENTAL_ROLE | 9,799 |
-| HAS_DIAGNOSTIC_TRAIT | 9,734 |
-| FORAGES_IN_STRATUM | 9,027 |
-| HAS_CLUTCH_SIZE | 8,924 |
-| HAS_BODY_MASS | 7,894 |
-| FORAGES_BY | 7,688 |
-| NESTS_AT | 7,560 |
-| HAS_SUBSPECIES | 7,317 |
-| RELATED_TO | 7,147 |
-| HAS_MOLT_PATTERN | 7,066 |
-| HAS_STRUCTURE_TRAIT | 6,664 |
-| HAS_EGG_TRAIT | 5,888 |
-| HAS_CONSERVATION_ACTION | 5,763 |
-| HAS_DISTRIBUTION_NOTE | 5,635 |
-| HAS_INCUBATION_PERIOD | 5,389 |
-| HAS_DEMOGRAPHIC_NOTE | 5,353 |
+| HAS_PLUMAGE_TRAIT | 88,726 |
+| INHABITS_BIOME | 61,235 |
+| OCCURS_IN | 49,913 |
+| EATS_ITEM | 49,404 |
+| HAS_VOCALIZATION_TYPE | 42,121 |
+| HAS_SUBSPECIES | 31,396 |
+| THREATENED_BY | 21,709 |
+| HAS_NEST_STRUCTURE | 20,342 |
+| HAS_DIAGNOSTIC_TRAIT | 19,945 |
+| EATS_CATEGORY | 19,633 |
+| HAS_PARENTAL_ROLE | 19,075 |
+| FORAGES_IN_STRATUM | 18,980 |
+| HAS_POPULATION_TREND | 18,817 |
+| FORAGES_BY | 18,706 |
+| HAS_STRUCTURE_TRAIT | 17,377 |
+| HAS_SEXUAL_DIMORPHISM | 16,829 |
+| HAS_BODY_LENGTH | 16,534 |
+| BREEDS_DURING | 16,496 |
+| HAS_BODY_MASS | 15,763 |
+| HAS_DISTRIBUTION_NOTE | 15,370 |
+| HAS_IUCN_STATUS | 15,166 |
+| RELATED_TO | 14,646 |
+| HAS_MIGRATION_PATTERN | 14,634 |
+| HAS_DEMOGRAPHIC_NOTE | 13,663 |
+| NESTS_AT | 13,002 |
+| HAS_CONSERVATION_ACTION | 12,263 |
+| USES_MICROHABITAT | 12,021 |
+| HAS_TAXONOMIC_NOTE | 11,924 |
+| HAS_MOLT_PATTERN | 11,839 |
+| HAS_CLUTCH_SIZE | 11,635 |
 
 #### Fact 领域分布
 
@@ -405,14 +392,14 @@ V3 事实图谱的抽取结果覆盖鸟类生态知识的多个主要维度。
 
 | Fact Domain | Fact Count | Share |
 |---|---:|---:|
-| MorphologyAndIdentification | 89,896 | 21.31% |
-| LifeHistoryAndBreeding | 73,143 | 17.34% |
-| DistributionAndMovement | 57,427 | 13.61% |
-| EcologyAndDiet | 53,310 | 12.64% |
-| ConservationAndResearch | 50,642 | 12.00% |
-| VocalAndBehavior | 37,339 | 8.85% |
-| Habitat | 33,364 | 7.91% |
-| TaxonomyAndPhylogeny | 26,761 | 6.34% |
+| MorphologyAndIdentification | 217,286 | 24.36% |
+| LifeHistoryAndBreeding | 137,996 | 15.47% |
+| EcologyAndDiet | 120,624 | 13.53% |
+| DistributionAndMovement | 102,493 | 11.49% |
+| ConservationAndResearch | 85,579 | 9.60% |
+| TaxonomyAndPhylogeny | 77,600 | 8.70% |
+| VocalAndBehavior | 76,755 | 8.61% |
+| Habitat | 73,529 | 8.24% |
 
 ---
 
@@ -432,7 +419,7 @@ Orniscient 使用三类可视化来展示知识库构建结果：
 
 ## 如何可视化分类树？
 
-如果想要把鸟类分类骨架可视化为树，建议不要直接画全量 33,684 个节点，全量树会过大，难以阅读。本文也提供了可视化脚本以供使用：
+如果想要把鸟类分类骨架可视化为树，建议不要直接画全量节点，全量树会过大，难以阅读。本文也提供了可视化脚本以供使用：
 
 1. 选择一个 order 或 family 作为根节点，例如 `Accipitriformes`；
 2. 从 `canonical_taxon_nodes.jsonl` 和 `canonical_taxon_edges.jsonl` 中读取节点和父子边；
@@ -456,7 +443,7 @@ docs/assets/kg_subgraph_example.png
 
 # 知识增强 Harness
 
-知识增强 Harness 统一管理评测流程：题库读取 → 任务路由 → 知识模式选择 → 检索 / 查询 → 上下文构造 → LLM 答题 → LLM 答题 → 评分 / Judge → 聚合与分析
+知识增强 Harness 统一管理评测流程：题库读取 → 任务路由 → 知识模式选择 → 检索 / 查询 → 上下文构造 → LLM 答题 → 评分 / Judge → 聚合与分析
 
 支持勾选单个或多个数据集，以及Zero-shot、Few-shot、CoT三种思考模式，在none（裸模型）和hybrid（知识增强）的配置上进行测试。
 
@@ -855,6 +842,61 @@ python evaluation/run_remaining_four_eval.py \
 python kg_v2/run_build_kb_v2.py
 ```
 
+裸模型 vs 知识增强一键对比 demo：
+
+`demo_compare.py` 不是正式评测脚本，不进行评分、judge 或聚合；正式 benchmark evaluation 仍使用 objective / subjective / structured pipelines。该脚本只用于展示同一问题在 vanilla 与 knowledge-augmented setting 下的输出差异。
+
+该 demo 支持两种模式：
+
+- **full local mode**：需要本地 KG v2 artifacts，并可选传入 BOW chunk store；
+- **sample mode**：用于公开仓库接口展示，不依赖私有 KG/BOW artifacts。
+
+```bash
+python evaluation/knowledge_RAG/demo_compare.py \
+  --question "What are the main threats to the Southern Cassowary?" \
+  --target "Casuarius casuarius" \
+  --model deepseek-chat \
+  --knowledge-mode kg_v3 \
+  --top-k 5
+```
+
+无 API 预览命令：
+
+```bash
+python evaluation/knowledge_RAG/demo_compare.py \
+  --question "What are the main threats to the Southern Cassowary?" \
+  --target "Casuarius casuarius" \
+  --knowledge-mode kg_v3 \
+  --top-k 5 \
+  --no-api
+```
+
+sample mode 命令：
+
+```bash
+python evaluation/knowledge_RAG/demo_compare.py \
+  --question "What are the main threats to the Southern Cassowary?" \
+  --target "Casuarius casuarius" \
+  --top-k 2 \
+  --sample-mode
+```
+
+输出格式示意：
+
+```text
+[Vanilla Answer]
+...
+
+[Knowledge-Augmented Answer]
+...
+
+[Retrieved Evidence]
+1. predicate=THREATENED_BY, source_chunk_id=...
+2. predicate=INTERACTS_WITH_HUMANS, source_chunk_id=...
+```
+
+Full execution requires local BOW-derived chunks and KG artifacts, which are not redistributed in this repository due to data usage restrictions. The script can still run without chunk text by using Evidence snippets as fallback context.
+
 ---
 
 # 数据说明
@@ -865,8 +907,9 @@ python kg_v2/run_build_kb_v2.py
 - 完整 BOW 派生 chunks；
 - 完整知识库产物；
 - Neo4j 数据库 dump；
+- vector DB / embeddings；
 - LightRAG cache；
-- 完整大规模模型输出；
+- 完整大规模模型输出和大型 eval logs；
 - judge 日志和 context logs；
 - API keys 或 `.env` 文件；
 - 模型权重或 checkpoint。
@@ -889,8 +932,15 @@ python kg_v2/run_build_kb_v2.py
 
 ---
 
-# 致谢
+# References 
 
 Orniscient 源于一个朴素的问题：鸟类生态知识是否可以不再散落在长文本、分类 checklist 和 trait 表格之间，而是被组织成可验证、可检索、可追溯、可评测的知识基础设施。
 
-感谢支持本项目的老师、合作者和数据资源提供方。
+感谢支持本项目的老师、合作者和数据资源提供方。特别感谢：
+
+- **LightRAG / GraphRAG-style systems**：图谱的搭建参考和使用工具；
+- **Neo4j**：提供图数据库存储、查询和图谱检索支持；
+- **Birds of the World / Cornell Lab**：提供鸟类自然史知识来源；
+- **AviList / Clements Checklist**：支持 taxonomy backbone 和 Cornell/BOW-compatible 对齐；
+- **ECharts / Graphviz / Mermaid**：支持图表、分类树、映射表和流程图可视化；
+- **open-source LLM/RAG ecosystem**：提供检索、评测、提示工程和工程化实践参考。

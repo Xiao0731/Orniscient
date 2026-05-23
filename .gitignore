@@ -68,6 +68,11 @@ question/**/*.backup
 question/**/__pycache__/
 
 # Knowledge base generated artifacts
+KG/intermediate/
+KG/outputs/
+KG/neo4j/
+KG/vector*/
+KG/embeddings*/
 kg_v2/outputs/
 kg_v3/outputs/
 kg_v1/outputs/
@@ -76,6 +81,12 @@ neo4j/
 neo4j_data/
 graph_data/
 docker_data/
+vector_db/
+vectordb/
+embeddings/
+embedding_cache/
+faiss*/
+chroma*/
 
 *_chunks.jsonl
 *_claims.jsonl
@@ -97,6 +108,8 @@ evaluation/cache/
 evaluation/output/
 evaluation/results*/
 evaluation/**/results*/
+evaluation/**/logs/
+evaluation/**/*logs*/
 evaluation/**/answers/
 evaluation/**/judge*/
 evaluation/**/predictions/

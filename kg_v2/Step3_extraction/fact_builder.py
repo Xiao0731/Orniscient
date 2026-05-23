@@ -3,12 +3,12 @@
 from __future__ import annotations
 
 import json
+import hashlib
+import math
 from collections import defaultdict
 
 from kg_v2.Step3_extraction.evidence_builder import build_evidence_record
 from kg_v2.Step3_extraction.normalizers import canonicalize_object, normalize_qualifiers
-from kg_v2.Step3_extraction.predicate_registry import FAMILY_DOMAIN_FACT_QUOTAS, SPECIES_DOMAIN_FACT_QUOTAS
-from kg_v2.utils.hash_utils import stable_hash
 
 
 def _hashable_key_part(value):
@@ -39,7 +39,35 @@ def _fact_group_key(claim: dict) -> tuple:
 
 
 def _fact_id_for_group(group_key: tuple) -> str:
-    return stable_hash(*group_key, prefix="fact_")
+    raw = json.dumps(_stable_id_key_part(group_key), sort_keys=True, ensure_ascii=False, separators=(",", ":"))
+    return "fact_" + hashlib.sha1(raw.encode("utf-8")).hexdigest()[:32]
+
+
+def _stable_id_key_part(value):
+    if isinstance(value, tuple):
+        return {"type": "tuple", "value": [_stable_id_key_part(item) for item in value]}
+    if isinstance(value, list):
+        return {"type": "list", "value": [_stable_id_key_part(item) for item in value]}
+    if isinstance(value, dict):
+        return {
+            "type": "dict",
+            "value": [
+                [str(key), _stable_id_key_part(item)]
+                for key, item in sorted(value.items(), key=lambda pair: str(pair[0]))
+            ],
+        }
+    if isinstance(value, bool):
+        return {"type": "bool", "value": value}
+    if isinstance(value, (int, float)):
+        if isinstance(value, float) and math.isnan(value):
+            return {"type": "number", "value": "NaN"}
+        if isinstance(value, float) and math.isinf(value):
+            return {"type": "number", "value": "Infinity" if value > 0 else "-Infinity"}
+        numeric = float(value)
+        if numeric.is_integer():
+            return {"type": "number", "value": str(int(numeric))}
+        return {"type": "number", "value": format(numeric, ".17g")}
+    return {"type": type(value).__name__, "value": value}
 
 
 def _status_for_fact(claims: list[dict], object_id: str, object_name: str) -> str:
@@ -52,28 +80,12 @@ def _status_for_fact(claims: list[dict], object_id: str, object_name: str) -> st
     return "active"
 
 
-def _apply_subject_limits(facts: list[dict], subject_rank: str) -> list[dict]:
-    hard_limit = 40 if subject_rank == "species" else 18
-    quotas = SPECIES_DOMAIN_FACT_QUOTAS if subject_rank == "species" else FAMILY_DOMAIN_FACT_QUOTAS
-    selected: list[dict] = []
-    per_domain_count: dict[str, int] = defaultdict(int)
-    for fact in sorted(facts, key=lambda row: (row.get("confidence", 0.0), row.get("support_count", 0)), reverse=True):
-        domain = fact.get("fact_domain", "")
-        if per_domain_count[domain] >= quotas.get(domain, 2):
-            continue
-        if len(selected) >= hard_limit:
-            break
-        selected.append(fact)
-        per_domain_count[domain] += 1
-    return selected
-
-
 def build_facts_and_evidence(claims: list[dict], *, subject_rank: str) -> tuple[list[dict], list[dict], list[dict]]:
     grouped_claims: dict[tuple, list[dict]] = defaultdict(list)
     for claim in claims:
         grouped_claims[_fact_group_key(claim)].append(claim)
 
-    facts_by_subject: dict[str, list[dict]] = defaultdict(list)
+    facts: list[dict] = []
     fact_claims: dict[str, list[dict]] = {}
     for group_key, group_claims in grouped_claims.items():
         first = group_claims[0]
@@ -98,12 +110,19 @@ def build_facts_and_evidence(claims: list[dict], *, subject_rank: str) -> tuple[
             "confidence": round(confidence, 4),
             "status": _status_for_fact(group_claims, object_id, object_name),
         }
-        facts_by_subject[fact["subject_taxon_id"]].append(fact)
+        facts.append(fact)
         fact_claims[fact_id] = group_claims
 
-    selected_facts: list[dict] = []
-    for subject_facts in facts_by_subject.values():
-        selected_facts.extend(_apply_subject_limits(subject_facts, subject_rank))
+    selected_facts = sorted(
+        facts,
+        key=lambda row: (
+            row.get("subject_rank", ""),
+            row.get("subject_taxon_id", ""),
+            row.get("fact_domain", ""),
+            row.get("predicate", ""),
+            row.get("fact_id", ""),
+        ),
+    )
 
     selected_fact_ids = {fact["fact_id"] for fact in selected_facts}
     evidence_by_id: dict[str, dict] = {}
@@ -115,12 +134,12 @@ def build_facts_and_evidence(claims: list[dict], *, subject_rank: str) -> tuple[
             evidence_id = evidence["evidence_id"]
             if evidence_id in seen_evidence:
                 continue
-            if len(seen_evidence) >= 2:
-                break
             if fact["fact_id"] not in selected_fact_ids:
                 continue
             evidence_by_id[evidence_id] = evidence
             fact_evidence_links.append({"fact_id": fact["fact_id"], "evidence_id": evidence_id})
             seen_evidence.add(evidence_id)
 
-    return selected_facts, list(evidence_by_id.values()), fact_evidence_links
+    evidences = sorted(evidence_by_id.values(), key=lambda row: row.get("evidence_id", ""))
+    fact_evidence_links = sorted(fact_evidence_links, key=lambda row: (row.get("fact_id", ""), row.get("evidence_id", "")))
+    return selected_facts, evidences, fact_evidence_links

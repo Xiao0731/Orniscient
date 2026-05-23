@@ -1,23 +1,23 @@
 const domainData = [
-  { name: 'MorphologyAndIdentification', value: 89896, share: '21.31%' },
-  { name: 'LifeHistoryAndBreeding', value: 73143, share: '17.34%' },
-  { name: 'DistributionAndMovement', value: 57427, share: '13.61%' },
-  { name: 'EcologyAndDiet', value: 53310, share: '12.64%' },
-  { name: 'ConservationAndResearch', value: 50642, share: '12.00%' },
-  { name: 'VocalAndBehavior', value: 37339, share: '8.85%' },
-  { name: 'Habitat', value: 33364, share: '7.91%' },
-  { name: 'TaxonomyAndPhylogeny', value: 26761, share: '6.34%' }
+  { name: 'MorphologyAndIdentification', value: 217286, share: '24.36%' },
+  { name: 'LifeHistoryAndBreeding', value: 137996, share: '15.47%' },
+  { name: 'EcologyAndDiet', value: 120624, share: '13.53%' },
+  { name: 'DistributionAndMovement', value: 102493, share: '11.49%' },
+  { name: 'ConservationAndResearch', value: 85579, share: '9.60%' },
+  { name: 'TaxonomyAndPhylogeny', value: 77600, share: '8.70%' },
+  { name: 'VocalAndBehavior', value: 76755, share: '8.61%' },
+  { name: 'Habitat', value: 73529, share: '8.24%' }
 ];
 
 const shortName = {
   MorphologyAndIdentification: 'Morphology & ID',
   LifeHistoryAndBreeding: 'Life History & Breeding',
-  DistributionAndMovement: 'Distribution & Movement',
   EcologyAndDiet: 'Ecology & Diet',
+  DistributionAndMovement: 'Distribution & Movement',
   ConservationAndResearch: 'Conservation & Research',
+  TaxonomyAndPhylogeny: 'Taxonomy & Phylogeny',
   VocalAndBehavior: 'Vocal & Behavior',
-  Habitat: 'Habitat',
-  TaxonomyAndPhylogeny: 'Taxonomy & Phylogeny'
+  Habitat: 'Habitat'
 };
 
 const colors = [
@@ -41,7 +41,7 @@ option = {
   title: [
     {
       text: 'Fact Domain Distribution',
-      subtext: 'Current V3 fact graph snapshot',
+      subtext: 'Final Claim–Fact–Evidence graph · 891,862 Facts',
       left: 'center',
       top: 20,
       textStyle: {
@@ -73,10 +73,11 @@ option = {
   tooltip: {
     trigger: 'item',
     formatter: function (params) {
+      const item = domainData.find(d => d.name === params.name);
       return `
         <b>${shortName[params.name] || params.name}</b><br/>
         Fact Count: ${params.value.toLocaleString()}<br/>
-        Share: ${params.percent}%
+        Share: ${item ? item.share : params.percent + '%'}
       `;
     }
   },
@@ -93,7 +94,9 @@ option = {
       color: '#333'
     },
     formatter: function (name) {
-      return shortName[name] || name;
+      const item = domainData.find(d => d.name === name);
+      const label = shortName[name] || name;
+      return item ? `${label}  ${item.share}` : label;
     }
   },
 
@@ -105,30 +108,41 @@ option = {
       center: [cx, cy],
       minAngle: 4,
       avoidLabelOverlap: true,
+
       itemStyle: {
         borderColor: '#fff',
         borderWidth: 2,
         borderRadius: 8
       },
+
       label: {
         show: true,
         formatter: function (params) {
-          return `${shortName[params.name] || params.name}\n${params.percent}%`;
+          const item = domainData.find(d => d.name === params.name);
+          return `${shortName[params.name] || params.name}\n${item ? item.share : params.percent + '%'}`;
         },
         fontSize: 11,
         lineHeight: 16,
         color: '#333'
       },
+
       labelLine: {
         show: true,
         length: 14,
         length2: 12,
         smooth: 0.2
       },
+
       emphasis: {
         scale: true,
-        scaleSize: 6
+        scaleSize: 6,
+        itemStyle: {
+          shadowBlur: 12,
+          shadowOffsetX: 0,
+          shadowColor: 'rgba(0, 0, 0, 0.18)'
+        }
       },
+
       data: domainData
     }
   ]

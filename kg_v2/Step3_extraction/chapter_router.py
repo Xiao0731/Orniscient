@@ -17,6 +17,9 @@ CHAPTER_DOMAIN_ROUTES = {
     "plumageandmolt": ["MorphologyAndIdentification"],
     "plumage and molt": ["MorphologyAndIdentification"],
     "morphology": ["MorphologyAndIdentification"],
+    "measurements": ["MorphologyAndIdentification"],
+    "subspeciesandvariation": ["TaxonomyAndPhylogeny", "MorphologyAndIdentification", "DistributionAndMovement"],
+    "subspecies and variation": ["TaxonomyAndPhylogeny", "MorphologyAndIdentification", "DistributionAndMovement"],
     "distribution": ["DistributionAndMovement"],
     "habitat": ["Habitat", "EcologyAndDiet"],
     "movementandmigration": ["DistributionAndMovement"],
@@ -27,6 +30,9 @@ CHAPTER_DOMAIN_ROUTES = {
     "vocalbehavior": ["VocalAndBehavior"],
     "behavior": ["VocalAndBehavior", "LifeHistoryAndBreeding"],
     "generalbehavior": ["VocalAndBehavior"],
+    "locomotion": ["VocalAndBehavior"],
+    "sexualbehavior": ["VocalAndBehavior", "LifeHistoryAndBreeding"],
+    "sexual behavior": ["VocalAndBehavior", "LifeHistoryAndBreeding"],
     "breeding": ["LifeHistoryAndBreeding"],
     "breedingphenology": ["LifeHistoryAndBreeding"],
     "nestandeggs": ["LifeHistoryAndBreeding"],
@@ -37,8 +43,18 @@ CHAPTER_DOMAIN_ROUTES = {
     "conservation and management": ["ConservationAndResearch"],
     "relationships with people": ["ConservationAndResearch"],
     "humanrelations": ["ConservationAndResearch"],
+    "mortalitypredationparasites": ["ConservationAndResearch", "EcologyAndDiet", "LifeHistoryAndBreeding"],
+    "mortality predation parasites": ["ConservationAndResearch", "EcologyAndDiet", "LifeHistoryAndBreeding"],
     "priorities for future research": ["ConservationAndResearch"],
     "futureresearch": ["ConservationAndResearch"],
+    "other": ["ConservationAndResearch", "EcologyAndDiet"],
+    "unknown": [
+        "TaxonomyAndPhylogeny",
+        "DistributionAndMovement",
+        "Habitat",
+        "EcologyAndDiet",
+        "ConservationAndResearch",
+    ],
     "introduction": [
         "MorphologyAndIdentification",
         "DistributionAndMovement",
@@ -73,4 +89,3 @@ def route_chapter(source_chapter: str, source_subchapter: str = "") -> dict:
         "allowed_predicates": predicates_for_domains(domains),
         "max_claims": max_claims,
     }
-

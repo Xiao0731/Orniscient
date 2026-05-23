@@ -27,10 +27,30 @@ from kg_v2.utils.llm_utils import LLMResponseError
 from kg_v2.utils.llm_utils import load_openai_compatible_config
 
 
+def _configure_stdio() -> None:
+    for stream in (sys.stdout, sys.stderr):
+        try:
+            if hasattr(stream, "reconfigure"):
+                stream.reconfigure(encoding="utf-8", errors="replace")
+        except Exception:
+            pass
+
+
+_configure_stdio()
+
+
 def _debug_print(text: str) -> None:
+    text = str(text)
     try:
         print(text, flush=True)
-    except OSError:
+    except UnicodeEncodeError:
+        encoding = getattr(sys.stdout, "encoding", None) or "utf-8"
+        safe_text = text.encode(encoding, errors="replace").decode(encoding, errors="replace")
+        try:
+            print(safe_text, flush=True)
+        except Exception:
+            pass
+    except Exception:
         pass
 
 
@@ -107,6 +127,8 @@ def _resolve_under_kg(path_str: str) -> Path:
     path = Path(path_str)
     if path.is_absolute():
         return path
+    if path.parts and path.parts[0] == "KG":
+        return (ROOT / path).resolve()
     return (KG_ROOT / path).resolve()
 
 
@@ -417,8 +439,86 @@ def _collect_attached_chunks(
     )
 
 
+def _candidate_sort_key(row: tuple[dict, dict, str]) -> tuple[str, str, str]:
+    metadata = row[0]
+    return (
+        metadata.get("subject_rank", ""),
+        metadata.get("source_chunk_id", ""),
+        metadata.get("source_doc_id", ""),
+    )
+
+
+def _candidate_from_manifest_row(row: dict, *, max_chars: int) -> tuple[dict, dict, str]:
+    subject_rank = row.get("subject_rank") or row.get("record_type") or ""
+    metadata = {
+        "source_db": row.get("source_db", "BOW"),
+        "source_release": row.get("source_release", ""),
+        "source_doc_id": row.get("source_doc_id", ""),
+        "source_chunk_id": row.get("source_chunk_id") or row.get("chunk_id", ""),
+        "source_chapter": row.get("source_chapter", "Unknown"),
+        "source_subchapter": row.get("source_subchapter", "Unknown"),
+        "subject_taxon_id": row.get("subject_taxon_id", ""),
+        "subject_rank": subject_rank,
+        "common_name": row.get("common_name", ""),
+        "scientific_name": row.get("scientific_name", ""),
+    }
+    allowed_domains = row.get("allowed_fact_domains")
+    allowed_predicates = row.get("allowed_predicates")
+    if isinstance(allowed_domains, list) and isinstance(allowed_predicates, list):
+        routing = {
+            "skip": False,
+            "allowed_fact_domains": [str(value) for value in allowed_domains],
+            "allowed_predicates": [str(value) for value in allowed_predicates],
+            "max_claims": int(row.get("max_claims") or 4),
+        }
+    else:
+        routing = route_chapter(metadata["source_chapter"], metadata.get("source_subchapter", ""))
+    chunk_text = str(row.get("chunk_text") or row.get("raw_text") or "")
+    return metadata, routing, chunk_text[:max_chars]
+
+
+def _collect_manifest_chunks(*, manifest_path: Path, max_chars: int) -> list[tuple[dict, dict, str]]:
+    rows = _read_jsonl(manifest_path)
+    chunks: list[tuple[dict, dict, str]] = []
+    for row in rows:
+        if not isinstance(row, dict):
+            continue
+        metadata, routing, chunk_text = _candidate_from_manifest_row(row, max_chars=max_chars)
+        if not metadata.get("source_chunk_id"):
+            continue
+        if not metadata.get("subject_taxon_id"):
+            continue
+        if not chunk_text:
+            continue
+        if routing.get("skip"):
+            continue
+        chunks.append((metadata, routing, chunk_text))
+    return sorted(chunks, key=_candidate_sort_key)
+
+
+def _shard_group_key(metadata: dict) -> tuple[str, str]:
+    subject_rank = str(metadata.get("subject_rank", "") or "")
+    group_id = str(metadata.get("subject_taxon_id", "") or "").strip()
+    if not group_id:
+        group_id = str(metadata.get("source_doc_id", "") or "").strip()
+    if not group_id:
+        group_id = str(metadata.get("source_chunk_id", "") or "").strip()
+    return subject_rank, group_id
+
+
 def _select_shard(rows: list[tuple[dict, dict, str]], *, shard_index: int, num_shards: int) -> list[tuple[dict, dict, str]]:
-    return [row for index, row in enumerate(rows) if index % num_shards == shard_index]
+    grouped_indices: dict[tuple[str, str], list[int]] = {}
+    for index, (metadata, _, _) in enumerate(rows):
+        grouped_indices.setdefault(_shard_group_key(metadata), []).append(index)
+
+    shard_loads = [0 for _ in range(num_shards)]
+    shard_indices: list[list[int]] = [[] for _ in range(num_shards)]
+    for group_key, indices in sorted(grouped_indices.items(), key=lambda item: (-len(item[1]), item[0])):
+        target_shard = min(range(num_shards), key=lambda idx: (shard_loads[idx], idx))
+        shard_indices[target_shard].extend(indices)
+        shard_loads[target_shard] += len(indices)
+
+    return [rows[index] for index in sorted(shard_indices[shard_index])]
 
 
 def _candidate_chunk_total(
@@ -459,6 +559,7 @@ def main() -> None:
     parser.add_argument("--taxonomy-dir", default="outputs/intermediate/taxonomy")
     parser.add_argument("--claims-dir", default="outputs/intermediate/claims")
     parser.add_argument("--claims-out-dir", default=None)
+    parser.add_argument("--input-manifest", default=None)
     parser.add_argument("--source-release", default="bow_2025_snapshot")
     parser.add_argument("--extractor", choices=["auto", "llm", "mock"], default="auto")
     parser.add_argument("--max-species-chunks", type=int, default=-1)
@@ -494,42 +595,45 @@ def main() -> None:
     if args.debug_llm:
         _print_runtime_debug(extractor, extractor_mode)
 
-    inputs = load_step3_inputs(
-        intermediate_dir=intermediate_dir,
-        attachments_dir=attachments_dir,
-        taxonomy_dir=taxonomy_dir,
-    )
-
     dropped_reasons: Counter = Counter()
     species_claims: list[dict] = []
     family_claims: list[dict] = []
     extractor_failures: list[dict] = []
     species_processed = 0
     family_processed = 0
-    species_chunks_global = _collect_attached_chunks(
-        links=inputs["species_chunk_links"],
-        chunks_by_id=inputs["species_chunks_by_id"],
-        subject_rank="species",
-        source_release=args.source_release,
-        max_chunks=args.max_species_chunks,
-        max_chars=args.max_chars_per_chunk,
-    )
-    family_chunks_global = _collect_attached_chunks(
-        links=inputs["family_chunk_links"],
-        chunks_by_id=inputs["family_chunks_by_id"],
-        subject_rank="family",
-        source_release=args.source_release,
-        max_chunks=args.max_family_chunks,
-        max_chars=args.max_chars_per_chunk,
-    )
-    all_chunks_global = sorted(
-        species_chunks_global + family_chunks_global,
-        key=lambda row: (
-            row[0].get("subject_rank", ""),
-            row[0].get("source_chunk_id", ""),
-            row[0].get("source_doc_id", ""),
-        ),
-    )
+    input_manifest_path = _resolve_under_kg(args.input_manifest) if args.input_manifest else None
+    if input_manifest_path:
+        all_chunks_global = _collect_manifest_chunks(
+            manifest_path=input_manifest_path,
+            max_chars=args.max_chars_per_chunk,
+        )
+        source_species_chunk_total = sum(1 for metadata, _, _ in all_chunks_global if metadata.get("subject_rank") == "species")
+        source_family_chunk_total = sum(1 for metadata, _, _ in all_chunks_global if metadata.get("subject_rank") == "family")
+    else:
+        inputs = load_step3_inputs(
+            intermediate_dir=intermediate_dir,
+            attachments_dir=attachments_dir,
+            taxonomy_dir=taxonomy_dir,
+        )
+        species_chunks_global = _collect_attached_chunks(
+            links=inputs["species_chunk_links"],
+            chunks_by_id=inputs["species_chunks_by_id"],
+            subject_rank="species",
+            source_release=args.source_release,
+            max_chunks=args.max_species_chunks,
+            max_chars=args.max_chars_per_chunk,
+        )
+        family_chunks_global = _collect_attached_chunks(
+            links=inputs["family_chunk_links"],
+            chunks_by_id=inputs["family_chunks_by_id"],
+            subject_rank="family",
+            source_release=args.source_release,
+            max_chunks=args.max_family_chunks,
+            max_chars=args.max_chars_per_chunk,
+        )
+        all_chunks_global = sorted(species_chunks_global + family_chunks_global, key=_candidate_sort_key)
+        source_species_chunk_total = len(inputs["species_chunk_links"])
+        source_family_chunk_total = len(inputs["family_chunk_links"])
     paths = {
         "species_claims": claims_dir / "species_claims.jsonl",
         "family_claims": claims_dir / "family_claims.jsonl",
@@ -606,7 +710,8 @@ def main() -> None:
         f"species_total={remaining_species_total} family_total={remaining_family_total} "
         f"total_global={len(all_chunks_global)} total_shard={len(shard_chunks_all)} "
         f"shard_index={args.shard_index} num_shards={args.num_shards} "
-        f"claims_dir={claims_dir} log_every={args.log_every} flush_every={args.flush_every}"
+        f"claims_dir={claims_dir} input_manifest={input_manifest_path or ''} "
+        f"log_every={args.log_every} flush_every={args.flush_every}"
     )
 
     output_files = JsonlOutputFiles(paths, shard_index=args.shard_index, initial_counts=initial_counts)
@@ -719,8 +824,8 @@ def main() -> None:
             output_files.flush(processed=saved_chunk_count, out_dir=claims_dir)
 
     summary = build_extraction_summary(
-        species_chunk_total=len(inputs["species_chunk_links"]),
-        family_chunk_total=len(inputs["family_chunk_links"]),
+        species_chunk_total=source_species_chunk_total,
+        family_chunk_total=source_family_chunk_total,
         species_chunks_processed=species_processed,
         family_chunks_processed=family_processed,
         species_claims=species_claims,
@@ -741,6 +846,7 @@ def main() -> None:
             "remaining_chunks_at_start": len(shard_chunks),
             "loaded_processed_chunks": len(processed_chunk_ids),
             "claims_out_dir": str(claims_dir),
+            "input_manifest": str(input_manifest_path or ""),
             "wrapper_claims_total": int(wrapper_component_totals.get("claims", 0)),
             "wrapper_facts_total": int(wrapper_component_totals.get("facts", 0)),
             "wrapper_evidences_total": int(wrapper_component_totals.get("evidences", 0)),
@@ -751,7 +857,7 @@ def main() -> None:
     )
     write_json(paths["summary"], summary)
     _debug_print(_done_line(stats=progress_stats, output_files=output_files))
-    print(json.dumps(summary, ensure_ascii=False, indent=2), flush=True)
+    _debug_print(json.dumps(summary, ensure_ascii=False, indent=2))
     output_files.close(processed=saved_chunk_count, out_dir=claims_dir)
 
 

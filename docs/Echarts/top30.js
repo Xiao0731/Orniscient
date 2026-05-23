@@ -1,34 +1,34 @@
 const rawData = [
-  { full: 'HAS_PLUMAGE_TRAIT', short: 'PLUMAGE TRAIT', value: 31155 },
-  { full: 'OCCURS_IN', short: 'OCCURS IN', value: 29141 },
-  { full: 'INHABITS_BIOME', short: 'BIOME', value: 29064 },
-  { full: 'HAS_VOCALIZATION_TYPE', short: 'VOCALIZATION', value: 27906 },
-  { full: 'EATS_ITEM', short: 'EATS ITEM', value: 22412 },
-  { full: 'THREATENED_BY', short: 'THREATENED BY', value: 13149 },
-  { full: 'EATS_CATEGORY', short: 'EATS CATEGORY', value: 12657 },
-  { full: 'HAS_IUCN_STATUS', short: 'IUCN STATUS', value: 12419 },
-  { full: 'HAS_SEXUAL_DIMORPHISM', short: 'SEXUAL DIMORPHISM', value: 11845 },
-  { full: 'HAS_NEST_STRUCTURE', short: 'NEST STRUCTURE', value: 11646 },
-  { full: 'HAS_BODY_LENGTH', short: 'BODY LENGTH', value: 11187 },
-  { full: 'BREEDS_DURING', short: 'BREEDS DURING', value: 11107 },
-  { full: 'HAS_POPULATION_TREND', short: 'POPULATION TREND', value: 10802 },
-  { full: 'HAS_MIGRATION_PATTERN', short: 'MIGRATION PATTERN', value: 10145 },
-  { full: 'HAS_PARENTAL_ROLE', short: 'PARENTAL ROLE', value: 9799 },
-  { full: 'HAS_DIAGNOSTIC_TRAIT', short: 'DIAGNOSTIC TRAIT', value: 9734 },
-  { full: 'FORAGES_IN_STRATUM', short: 'FORAGES IN STRATUM', value: 9027 },
-  { full: 'HAS_CLUTCH_SIZE', short: 'CLUTCH SIZE', value: 8924 },
-  { full: 'HAS_BODY_MASS', short: 'BODY MASS', value: 7894 },
-  { full: 'FORAGES_BY', short: 'FORAGES BY', value: 7688 },
-  { full: 'NESTS_AT', short: 'NESTS AT', value: 7560 },
-  { full: 'HAS_SUBSPECIES', short: 'SUBSPECIES', value: 7317 },
-  { full: 'RELATED_TO', short: 'RELATED TO', value: 7147 },
-  { full: 'HAS_MOLT_PATTERN', short: 'MOLT PATTERN', value: 7066 },
-  { full: 'HAS_STRUCTURE_TRAIT', short: 'STRUCTURE TRAIT', value: 6664 },
-  { full: 'HAS_EGG_TRAIT', short: 'EGG TRAIT', value: 5888 },
-  { full: 'HAS_CONSERVATION_ACTION', short: 'CONSERVATION ACTION', value: 5763 },
-  { full: 'HAS_DISTRIBUTION_NOTE', short: 'DISTRIBUTION NOTE', value: 5635 },
-  { full: 'HAS_INCUBATION_PERIOD', short: 'INCUBATION PERIOD', value: 5389 },
-  { full: 'HAS_DEMOGRAPHIC_NOTE', short: 'DEMOGRAPHIC NOTE', value: 5353 }
+  { full: 'HAS_PLUMAGE_TRAIT', short: 'PLUMAGE TRAIT', value: 88726 },
+  { full: 'INHABITS_BIOME', short: 'BIOME', value: 61235 },
+  { full: 'OCCURS_IN', short: 'OCCURS IN', value: 49913 },
+  { full: 'EATS_ITEM', short: 'EATS ITEM', value: 49404 },
+  { full: 'HAS_VOCALIZATION_TYPE', short: 'VOCALIZATION', value: 42121 },
+  { full: 'HAS_SUBSPECIES', short: 'SUBSPECIES', value: 31396 },
+  { full: 'THREATENED_BY', short: 'THREATENED BY', value: 21709 },
+  { full: 'HAS_NEST_STRUCTURE', short: 'NEST STRUCTURE', value: 20342 },
+  { full: 'HAS_DIAGNOSTIC_TRAIT', short: 'DIAGNOSTIC TRAIT', value: 19945 },
+  { full: 'EATS_CATEGORY', short: 'EATS CATEGORY', value: 19633 },
+  { full: 'HAS_PARENTAL_ROLE', short: 'PARENTAL ROLE', value: 19075 },
+  { full: 'FORAGES_IN_STRATUM', short: 'FORAGES IN STRATUM', value: 18980 },
+  { full: 'HAS_POPULATION_TREND', short: 'POPULATION TREND', value: 18817 },
+  { full: 'FORAGES_BY', short: 'FORAGES BY', value: 18706 },
+  { full: 'HAS_STRUCTURE_TRAIT', short: 'STRUCTURE TRAIT', value: 17377 },
+  { full: 'HAS_SEXUAL_DIMORPHISM', short: 'SEXUAL DIMORPHISM', value: 16829 },
+  { full: 'HAS_BODY_LENGTH', short: 'BODY LENGTH', value: 16534 },
+  { full: 'BREEDS_DURING', short: 'BREEDS DURING', value: 16496 },
+  { full: 'HAS_BODY_MASS', short: 'BODY MASS', value: 15763 },
+  { full: 'HAS_DISTRIBUTION_NOTE', short: 'DISTRIBUTION NOTE', value: 15370 },
+  { full: 'HAS_IUCN_STATUS', short: 'IUCN STATUS', value: 15166 },
+  { full: 'RELATED_TO', short: 'RELATED TO', value: 14646 },
+  { full: 'HAS_MIGRATION_PATTERN', short: 'MIGRATION PATTERN', value: 14634 },
+  { full: 'HAS_DEMOGRAPHIC_NOTE', short: 'DEMOGRAPHIC NOTE', value: 13663 },
+  { full: 'NESTS_AT', short: 'NESTS AT', value: 13002 },
+  { full: 'HAS_CONSERVATION_ACTION', short: 'CONSERVATION ACTION', value: 12263 },
+  { full: 'USES_MICROHABITAT', short: 'MICROHABITAT', value: 12021 },
+  { full: 'HAS_TAXONOMIC_NOTE', short: 'TAXONOMIC NOTE', value: 11924 },
+  { full: 'HAS_MOLT_PATTERN', short: 'MOLT PATTERN', value: 11839 },
+  { full: 'HAS_CLUTCH_SIZE', short: 'CLUTCH SIZE', value: 11635 }
 ];
 
 const labels = rawData.map(d => d.short);
@@ -36,24 +36,20 @@ const fullLabels = rawData.map(d => d.full);
 const originalValues = rawData.map(d => d.value);
 
 // =====================================================
-// 分段缩放：让中低频 Predicate 不至于被头部高值压扁
+// 分段缩放：避免头部 Predicate 把中低频 Predicate 压扁
 // =====================================================
 const THRESHOLD = 12000;
 const LOW_SCALE = 1.65;
 const HIGH_SCALE = 0.26;
 
 function transformValue(v) {
-  if (v <= THRESHOLD) {
-    return v * LOW_SCALE;
-  }
+  if (v <= THRESHOLD) return v * LOW_SCALE;
   return THRESHOLD * LOW_SCALE + (v - THRESHOLD) * HIGH_SCALE;
 }
 
 function inverseValue(tv) {
   const cut = THRESHOLD * LOW_SCALE;
-  if (tv <= cut) {
-    return tv / LOW_SCALE;
-  }
+  if (tv <= cut) return tv / LOW_SCALE;
   return THRESHOLD + (tv - cut) / HIGH_SCALE;
 }
 
@@ -62,13 +58,11 @@ const maxOriginal = Math.max(...originalValues);
 const maxTransformed = transformValue(maxOriginal);
 
 // =====================================================
-// 颜色工具
+// 配色工具
 // =====================================================
 function hexToRgb(hex) {
   hex = hex.replace('#', '');
-  if (hex.length === 3) {
-    hex = hex.split('').map(c => c + c).join('');
-  }
+  if (hex.length === 3) hex = hex.split('').map(c => c + c).join('');
   const num = parseInt(hex, 16);
   return {
     r: (num >> 16) & 255,
@@ -107,30 +101,41 @@ function lighten(hex, factor = 0.28) {
 }
 
 // =====================================================
-// 三套配色方案：默认启用方案 C（墨绿 → 金橙）
-// 想换色时，只保留其中一组 colorStart / colorEnd 即可
+// 低饱和蓝灰 / 青绿配色，统一 taxonomy / checklist 图风格
 // =====================================================
+const paletteStops = [
+  '#1F3D55',  // 深蓝灰
+  '#2F6F7E',  // 深青绿
+  '#3F8492',  // 中青
+  '#6EA8B7',  // 浅青蓝
+  '#A9C9DA'   // 雾蓝
+];
 
 // 方案 A：深蓝紫 → 暖珊瑚
 // const colorStart = '#4F6BD7';
 // const colorEnd = '#F28C6B';
 
 // 方案 B：青蓝 → 紫粉
-const colorStart = '#49A6E9';
-const colorEnd = '#C86DD7';
+// const colorStart = '#49A6E9';
+// const colorEnd = '#C86DD7';
 
 // 方案 C：墨绿 → 金橙
 // const colorStart = '#2F7F72';
 // const colorEnd = '#E7A63A';
 
-const baseColors = rawData.map((_, i) => {
-  const t = i / (rawData.length - 1);
-  return mixColor(colorStart, colorEnd, t);
-});
+function gradientPalette(i, n) {
+  const t = i / Math.max(1, n - 1);
+  const segment = 1 / (paletteStops.length - 1);
+  const idx = Math.min(
+    paletteStops.length - 2,
+    Math.floor(t / segment)
+  );
+  const localT = (t - idx * segment) / segment;
+  return mixColor(paletteStops[idx], paletteStops[idx + 1], localT);
+}
 
-// =====================================================
-// 标签处理：图面使用短标签，多词自动换行
-// =====================================================
+const baseColors = rawData.map((_, i) => gradientPalette(i, rawData.length));
+
 function wrapShortLabel(str) {
   return str.split(' ').join('\n');
 }
@@ -140,27 +145,28 @@ option = {
 
   title: {
     text: 'High-Frequency Fact Predicate Distribution',
-    subtext: 'Top 30 predicates in the current V3 fact graph snapshot',
+    subtext: 'Top 30 predicates in the final Claim–Fact–Evidence graph',
     left: 'center',
     top: 18,
     textStyle: {
-      fontSize: 22,
-      fontWeight: 'bold',
-      color: '#222'
+      fontSize: 24,
+      fontWeight: 600,
+      color: '#1F2933'
     },
     subtextStyle: {
       fontSize: 13,
-      color: '#666'
+      color: '#667085'
     }
   },
 
   tooltip: {
     trigger: 'item',
-    backgroundColor: 'rgba(255, 255, 255, 0.96)',
-    borderColor: '#d0d7de',
+    backgroundColor: 'rgba(255, 255, 255, 0.97)',
+    borderColor: '#C7D3DD',
     borderWidth: 1,
+    extraCssText: 'box-shadow: 0 8px 24px rgba(31, 61, 85, 0.12);',
     textStyle: {
-      color: '#222',
+      color: '#243447',
       fontSize: 13
     },
     formatter: function (params) {
@@ -173,7 +179,7 @@ option = {
   },
 
   polar: {
-    center: ['50%', '53%'],
+    center: ['50%', '54%'],
     radius: '68%'
   },
 
@@ -182,18 +188,21 @@ option = {
     data: labels,
     z: 10,
     startAngle: 90,
+
     axisLine: {
       lineStyle: {
-        color: '#aab2bd',
+        color: '#9AA9B8',
         width: 1
       }
     },
+
     axisTick: {
       show: false
     },
+
     axisLabel: {
       interval: 0,
-      color: '#333',
+      color: '#2F3A45',
       fontSize: 9,
       lineHeight: 11,
       margin: 15,
@@ -207,23 +216,28 @@ option = {
     min: 0,
     max: maxTransformed,
     splitNumber: 5,
+
     axisLine: {
       show: false
     },
+
     axisTick: {
       show: false
     },
+
     axisLabel: {
-      color: '#666',
-      fontSize: 11,
+      color: '#667085',
+      fontSize: 10,
       formatter: function (value) {
         const approx = Math.round(inverseValue(value));
+        if (approx >= 1000) return (approx / 1000).toFixed(0) + 'k';
         return approx.toLocaleString();
       }
     },
+
     splitLine: {
       lineStyle: {
-        color: '#d8dde6',
+        color: '#D9E2EA',
         type: 'dashed',
         width: 1
       }
@@ -232,21 +246,22 @@ option = {
 
   series: [
     {
+      name: 'Fact Predicate',
       type: 'bar',
       coordinateSystem: 'polar',
       roundCap: true,
-      barWidth: 18,
+      barWidth: 17,
 
       data: values.map((v, i) => ({
         value: v,
         originalValue: originalValues[i],
         itemStyle: {
           color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-            { offset: 0, color: lighten(baseColors[i], 0.32) },
+            { offset: 0, color: lighten(baseColors[i], 0.35) },
             { offset: 1, color: baseColors[i] }
           ]),
-          borderColor: 'rgba(255,255,255,0.65)',
-          borderWidth: 0.6
+          borderColor: 'rgba(255,255,255,0.75)',
+          borderWidth: 0.7
         }
       })),
 
@@ -254,7 +269,7 @@ option = {
         show: true,
         position: 'outside',
         distance: 2,
-        color: '#2b2b2b',
+        color: '#26323D',
         fontSize: 8,
         formatter: function (params) {
           const v = params.data.originalValue;
@@ -268,8 +283,24 @@ option = {
         focus: 'series',
         itemStyle: {
           shadowBlur: 12,
-          shadowColor: 'rgba(0, 0, 0, 0.18)'
+          shadowColor: 'rgba(31, 61, 85, 0.20)'
         }
+      }
+    }
+  ],
+
+  graphic: [
+    {
+      type: 'text',
+      left: 'center',
+      top: '52%',
+      style: {
+        text: 'Top 30\nPredicates',
+        textAlign: 'center',
+        fill: '#2F3A45',
+        fontSize: 18,
+        fontWeight: 600,
+        lineHeight: 26
       }
     }
   ]

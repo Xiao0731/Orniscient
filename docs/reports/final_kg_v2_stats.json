@@ -1,0 +1,1069 @@
+{
+  "source_artifacts": {
+    "claims_dir": "D:\\软工作业\\鸟类文本库\\题目生成脚本\\Generation\\KG\\intermediate\\claims_final_global_v2",
+    "facts_dir": "D:\\软工作业\\鸟类文本库\\题目生成脚本\\Generation\\KG\\intermediate\\facts_final_global_v2",
+    "predicate_registry": "kg_v2/Step3_extraction/predicate_registry.py"
+  },
+  "overall_artifact_scale": [
+    {
+      "metric": "Processed BOW chunks",
+      "count": 309369
+    },
+    {
+      "metric": "Species claims",
+      "count": 912598
+    },
+    {
+      "metric": "Family claims",
+      "count": 8563
+    },
+    {
+      "metric": "Total claims",
+      "count": 921161
+    },
+    {
+      "metric": "Species facts",
+      "count": 883500
+    },
+    {
+      "metric": "Family facts",
+      "count": 8362
+    },
+    {
+      "metric": "Total facts",
+      "count": 891862
+    },
+    {
+      "metric": "Evidences",
+      "count": 815896
+    },
+    {
+      "metric": "Fact-Evidence links",
+      "count": 915793
+    },
+    {
+      "metric": "Supplement accepted claims",
+      "count": 331827
+    },
+    {
+      "metric": "Supplement covered chunks",
+      "count": 93542
+    },
+    {
+      "metric": "Hit soft-cap chunks",
+      "count": 33211
+    },
+    {
+      "metric": "Fact ID collisions",
+      "count": 0
+    },
+    {
+      "metric": "Extractor failures",
+      "count": 0
+    }
+  ],
+  "core_graph_size_estimate": {
+    "notes": [
+      "Core graph estimate covers Taxon-Fact-Evidence-Chunk only.",
+      "It excludes Object/Concept nodes, full taxonomy backbone, aliases, crosswalks, vector indexes, and Neo4j materialization extras."
+    ],
+    "nodes": [
+      {
+        "node_label": "Taxon",
+        "count": 11122
+      },
+      {
+        "node_label": "Fact",
+        "count": 891862
+      },
+      {
+        "node_label": "Evidence",
+        "count": 815896
+      },
+      {
+        "node_label": "Chunk",
+        "count": 309369
+      },
+      {
+        "node_label": "Total core nodes",
+        "count": 2028249
+      }
+    ],
+    "edges": [
+      {
+        "concept_edge_type": "Taxon -> Fact",
+        "actual_relation_name": "HAS_FACT",
+        "count": 891862
+      },
+      {
+        "concept_edge_type": "Fact -> Evidence",
+        "actual_relation_name": "SUPPORTED_BY",
+        "count": 915793
+      },
+      {
+        "concept_edge_type": "Evidence -> Chunk",
+        "actual_relation_name": "FROM_CHUNK",
+        "count": 815896
+      },
+      {
+        "concept_edge_type": "Total core edges",
+        "actual_relation_name": "",
+        "count": 2623551
+      }
+    ]
+  },
+  "fact_domain_distribution": [
+    {
+      "fact_domain": "MorphologyAndIdentification",
+      "fact_count": 217286,
+      "share": 0.243632,
+      "share_percent": 24.36
+    },
+    {
+      "fact_domain": "LifeHistoryAndBreeding",
+      "fact_count": 137996,
+      "share": 0.154728,
+      "share_percent": 15.47
+    },
+    {
+      "fact_domain": "EcologyAndDiet",
+      "fact_count": 120624,
+      "share": 0.13525,
+      "share_percent": 13.53
+    },
+    {
+      "fact_domain": "DistributionAndMovement",
+      "fact_count": 102493,
+      "share": 0.11492,
+      "share_percent": 11.49
+    },
+    {
+      "fact_domain": "ConservationAndResearch",
+      "fact_count": 85579,
+      "share": 0.095955,
+      "share_percent": 9.6
+    },
+    {
+      "fact_domain": "TaxonomyAndPhylogeny",
+      "fact_count": 77600,
+      "share": 0.087009,
+      "share_percent": 8.7
+    },
+    {
+      "fact_domain": "VocalAndBehavior",
+      "fact_count": 76755,
+      "share": 0.086062,
+      "share_percent": 8.61
+    },
+    {
+      "fact_domain": "Habitat",
+      "fact_count": 73529,
+      "share": 0.082444,
+      "share_percent": 8.24
+    }
+  ],
+  "top_predicates": {
+    "top_30": [
+      {
+        "predicate": "HAS_PLUMAGE_TRAIT",
+        "fact_count": 88726
+      },
+      {
+        "predicate": "INHABITS_BIOME",
+        "fact_count": 61235
+      },
+      {
+        "predicate": "OCCURS_IN",
+        "fact_count": 49913
+      },
+      {
+        "predicate": "EATS_ITEM",
+        "fact_count": 49404
+      },
+      {
+        "predicate": "HAS_VOCALIZATION_TYPE",
+        "fact_count": 42121
+      },
+      {
+        "predicate": "HAS_SUBSPECIES",
+        "fact_count": 31396
+      },
+      {
+        "predicate": "THREATENED_BY",
+        "fact_count": 21709
+      },
+      {
+        "predicate": "HAS_NEST_STRUCTURE",
+        "fact_count": 20342
+      },
+      {
+        "predicate": "HAS_DIAGNOSTIC_TRAIT",
+        "fact_count": 19945
+      },
+      {
+        "predicate": "EATS_CATEGORY",
+        "fact_count": 19633
+      },
+      {
+        "predicate": "HAS_PARENTAL_ROLE",
+        "fact_count": 19075
+      },
+      {
+        "predicate": "FORAGES_IN_STRATUM",
+        "fact_count": 18980
+      },
+      {
+        "predicate": "HAS_POPULATION_TREND",
+        "fact_count": 18817
+      },
+      {
+        "predicate": "FORAGES_BY",
+        "fact_count": 18706
+      },
+      {
+        "predicate": "HAS_STRUCTURE_TRAIT",
+        "fact_count": 17377
+      },
+      {
+        "predicate": "HAS_SEXUAL_DIMORPHISM",
+        "fact_count": 16829
+      },
+      {
+        "predicate": "HAS_BODY_LENGTH",
+        "fact_count": 16534
+      },
+      {
+        "predicate": "BREEDS_DURING",
+        "fact_count": 16496
+      },
+      {
+        "predicate": "HAS_BODY_MASS",
+        "fact_count": 15763
+      },
+      {
+        "predicate": "HAS_DISTRIBUTION_NOTE",
+        "fact_count": 15370
+      },
+      {
+        "predicate": "HAS_IUCN_STATUS",
+        "fact_count": 15166
+      },
+      {
+        "predicate": "RELATED_TO",
+        "fact_count": 14646
+      },
+      {
+        "predicate": "HAS_MIGRATION_PATTERN",
+        "fact_count": 14634
+      },
+      {
+        "predicate": "HAS_DEMOGRAPHIC_NOTE",
+        "fact_count": 13663
+      },
+      {
+        "predicate": "NESTS_AT",
+        "fact_count": 13002
+      },
+      {
+        "predicate": "HAS_CONSERVATION_ACTION",
+        "fact_count": 12263
+      },
+      {
+        "predicate": "USES_MICROHABITAT",
+        "fact_count": 12021
+      },
+      {
+        "predicate": "HAS_TAXONOMIC_NOTE",
+        "fact_count": 11924
+      },
+      {
+        "predicate": "HAS_MOLT_PATTERN",
+        "fact_count": 11839
+      },
+      {
+        "predicate": "HAS_CLUTCH_SIZE",
+        "fact_count": 11635
+      }
+    ],
+    "top_50": [
+      {
+        "predicate": "HAS_PLUMAGE_TRAIT",
+        "fact_count": 88726
+      },
+      {
+        "predicate": "INHABITS_BIOME",
+        "fact_count": 61235
+      },
+      {
+        "predicate": "OCCURS_IN",
+        "fact_count": 49913
+      },
+      {
+        "predicate": "EATS_ITEM",
+        "fact_count": 49404
+      },
+      {
+        "predicate": "HAS_VOCALIZATION_TYPE",
+        "fact_count": 42121
+      },
+      {
+        "predicate": "HAS_SUBSPECIES",
+        "fact_count": 31396
+      },
+      {
+        "predicate": "THREATENED_BY",
+        "fact_count": 21709
+      },
+      {
+        "predicate": "HAS_NEST_STRUCTURE",
+        "fact_count": 20342
+      },
+      {
+        "predicate": "HAS_DIAGNOSTIC_TRAIT",
+        "fact_count": 19945
+      },
+      {
+        "predicate": "EATS_CATEGORY",
+        "fact_count": 19633
+      },
+      {
+        "predicate": "HAS_PARENTAL_ROLE",
+        "fact_count": 19075
+      },
+      {
+        "predicate": "FORAGES_IN_STRATUM",
+        "fact_count": 18980
+      },
+      {
+        "predicate": "HAS_POPULATION_TREND",
+        "fact_count": 18817
+      },
+      {
+        "predicate": "FORAGES_BY",
+        "fact_count": 18706
+      },
+      {
+        "predicate": "HAS_STRUCTURE_TRAIT",
+        "fact_count": 17377
+      },
+      {
+        "predicate": "HAS_SEXUAL_DIMORPHISM",
+        "fact_count": 16829
+      },
+      {
+        "predicate": "HAS_BODY_LENGTH",
+        "fact_count": 16534
+      },
+      {
+        "predicate": "BREEDS_DURING",
+        "fact_count": 16496
+      },
+      {
+        "predicate": "HAS_BODY_MASS",
+        "fact_count": 15763
+      },
+      {
+        "predicate": "HAS_DISTRIBUTION_NOTE",
+        "fact_count": 15370
+      },
+      {
+        "predicate": "HAS_IUCN_STATUS",
+        "fact_count": 15166
+      },
+      {
+        "predicate": "RELATED_TO",
+        "fact_count": 14646
+      },
+      {
+        "predicate": "HAS_MIGRATION_PATTERN",
+        "fact_count": 14634
+      },
+      {
+        "predicate": "HAS_DEMOGRAPHIC_NOTE",
+        "fact_count": 13663
+      },
+      {
+        "predicate": "NESTS_AT",
+        "fact_count": 13002
+      },
+      {
+        "predicate": "HAS_CONSERVATION_ACTION",
+        "fact_count": 12263
+      },
+      {
+        "predicate": "USES_MICROHABITAT",
+        "fact_count": 12021
+      },
+      {
+        "predicate": "HAS_TAXONOMIC_NOTE",
+        "fact_count": 11924
+      },
+      {
+        "predicate": "HAS_MOLT_PATTERN",
+        "fact_count": 11839
+      },
+      {
+        "predicate": "HAS_CLUTCH_SIZE",
+        "fact_count": 11635
+      },
+      {
+        "predicate": "HAS_DEVELOPMENT_NOTE",
+        "fact_count": 11466
+      },
+      {
+        "predicate": "HAS_AGE_DIMORPHISM",
+        "fact_count": 10298
+      },
+      {
+        "predicate": "HAS_GEOGRAPHIC_VARIATION",
+        "fact_count": 9845
+      },
+      {
+        "predicate": "HAS_EGG_TRAIT",
+        "fact_count": 9687
+      },
+      {
+        "predicate": "HAS_PREDATOR",
+        "fact_count": 8633
+      },
+      {
+        "predicate": "REQUIRES_RESEARCH_ON",
+        "fact_count": 8246
+      },
+      {
+        "predicate": "INTERACTS_WITH_HUMANS",
+        "fact_count": 7688
+      },
+      {
+        "predicate": "BREEDS_IN",
+        "fact_count": 7510
+      },
+      {
+        "predicate": "HAS_SOCIAL_BEHAVIOR",
+        "fact_count": 6942
+      },
+      {
+        "predicate": "HAS_INCUBATION_PERIOD",
+        "fact_count": 6851
+      },
+      {
+        "predicate": "WINTERS_IN",
+        "fact_count": 6097
+      },
+      {
+        "predicate": "CALLS_DURING",
+        "fact_count": 5984
+      },
+      {
+        "predicate": "HAS_BILL_LENGTH",
+        "fact_count": 5827
+      },
+      {
+        "predicate": "HAS_FLEDGING_PERIOD",
+        "fact_count": 5553
+      },
+      {
+        "predicate": "HAS_WING_LENGTH",
+        "fact_count": 5527
+      },
+      {
+        "predicate": "HAS_AGONISTIC_BEHAVIOR",
+        "fact_count": 5509
+      },
+      {
+        "predicate": "HAS_CLASSIFICATION_HISTORY",
+        "fact_count": 5101
+      },
+      {
+        "predicate": "HAS_LOCOMOTION_STYLE",
+        "fact_count": 4785
+      },
+      {
+        "predicate": "HAS_ECOLOGICAL_ROLE",
+        "fact_count": 4470
+      },
+      {
+        "predicate": "HAS_SUBSPECIES_TRAIT",
+        "fact_count": 4140
+      }
+    ],
+    "full_distribution": [
+      {
+        "predicate": "HAS_PLUMAGE_TRAIT",
+        "fact_count": 88726
+      },
+      {
+        "predicate": "INHABITS_BIOME",
+        "fact_count": 61235
+      },
+      {
+        "predicate": "OCCURS_IN",
+        "fact_count": 49913
+      },
+      {
+        "predicate": "EATS_ITEM",
+        "fact_count": 49404
+      },
+      {
+        "predicate": "HAS_VOCALIZATION_TYPE",
+        "fact_count": 42121
+      },
+      {
+        "predicate": "HAS_SUBSPECIES",
+        "fact_count": 31396
+      },
+      {
+        "predicate": "THREATENED_BY",
+        "fact_count": 21709
+      },
+      {
+        "predicate": "HAS_NEST_STRUCTURE",
+        "fact_count": 20342
+      },
+      {
+        "predicate": "HAS_DIAGNOSTIC_TRAIT",
+        "fact_count": 19945
+      },
+      {
+        "predicate": "EATS_CATEGORY",
+        "fact_count": 19633
+      },
+      {
+        "predicate": "HAS_PARENTAL_ROLE",
+        "fact_count": 19075
+      },
+      {
+        "predicate": "FORAGES_IN_STRATUM",
+        "fact_count": 18980
+      },
+      {
+        "predicate": "HAS_POPULATION_TREND",
+        "fact_count": 18817
+      },
+      {
+        "predicate": "FORAGES_BY",
+        "fact_count": 18706
+      },
+      {
+        "predicate": "HAS_STRUCTURE_TRAIT",
+        "fact_count": 17377
+      },
+      {
+        "predicate": "HAS_SEXUAL_DIMORPHISM",
+        "fact_count": 16829
+      },
+      {
+        "predicate": "HAS_BODY_LENGTH",
+        "fact_count": 16534
+      },
+      {
+        "predicate": "BREEDS_DURING",
+        "fact_count": 16496
+      },
+      {
+        "predicate": "HAS_BODY_MASS",
+        "fact_count": 15763
+      },
+      {
+        "predicate": "HAS_DISTRIBUTION_NOTE",
+        "fact_count": 15370
+      },
+      {
+        "predicate": "HAS_IUCN_STATUS",
+        "fact_count": 15166
+      },
+      {
+        "predicate": "RELATED_TO",
+        "fact_count": 14646
+      },
+      {
+        "predicate": "HAS_MIGRATION_PATTERN",
+        "fact_count": 14634
+      },
+      {
+        "predicate": "HAS_DEMOGRAPHIC_NOTE",
+        "fact_count": 13663
+      },
+      {
+        "predicate": "NESTS_AT",
+        "fact_count": 13002
+      },
+      {
+        "predicate": "HAS_CONSERVATION_ACTION",
+        "fact_count": 12263
+      },
+      {
+        "predicate": "USES_MICROHABITAT",
+        "fact_count": 12021
+      },
+      {
+        "predicate": "HAS_TAXONOMIC_NOTE",
+        "fact_count": 11924
+      },
+      {
+        "predicate": "HAS_MOLT_PATTERN",
+        "fact_count": 11839
+      },
+      {
+        "predicate": "HAS_CLUTCH_SIZE",
+        "fact_count": 11635
+      },
+      {
+        "predicate": "HAS_DEVELOPMENT_NOTE",
+        "fact_count": 11466
+      },
+      {
+        "predicate": "HAS_AGE_DIMORPHISM",
+        "fact_count": 10298
+      },
+      {
+        "predicate": "HAS_GEOGRAPHIC_VARIATION",
+        "fact_count": 9845
+      },
+      {
+        "predicate": "HAS_EGG_TRAIT",
+        "fact_count": 9687
+      },
+      {
+        "predicate": "HAS_PREDATOR",
+        "fact_count": 8633
+      },
+      {
+        "predicate": "REQUIRES_RESEARCH_ON",
+        "fact_count": 8246
+      },
+      {
+        "predicate": "INTERACTS_WITH_HUMANS",
+        "fact_count": 7688
+      },
+      {
+        "predicate": "BREEDS_IN",
+        "fact_count": 7510
+      },
+      {
+        "predicate": "HAS_SOCIAL_BEHAVIOR",
+        "fact_count": 6942
+      },
+      {
+        "predicate": "HAS_INCUBATION_PERIOD",
+        "fact_count": 6851
+      },
+      {
+        "predicate": "WINTERS_IN",
+        "fact_count": 6097
+      },
+      {
+        "predicate": "CALLS_DURING",
+        "fact_count": 5984
+      },
+      {
+        "predicate": "HAS_BILL_LENGTH",
+        "fact_count": 5827
+      },
+      {
+        "predicate": "HAS_FLEDGING_PERIOD",
+        "fact_count": 5553
+      },
+      {
+        "predicate": "HAS_WING_LENGTH",
+        "fact_count": 5527
+      },
+      {
+        "predicate": "HAS_AGONISTIC_BEHAVIOR",
+        "fact_count": 5509
+      },
+      {
+        "predicate": "HAS_CLASSIFICATION_HISTORY",
+        "fact_count": 5101
+      },
+      {
+        "predicate": "HAS_LOCOMOTION_STYLE",
+        "fact_count": 4785
+      },
+      {
+        "predicate": "HAS_ECOLOGICAL_ROLE",
+        "fact_count": 4470
+      },
+      {
+        "predicate": "HAS_SUBSPECIES_TRAIT",
+        "fact_count": 4140
+      },
+      {
+        "predicate": "HAS_TAIL_LENGTH",
+        "fact_count": 3897
+      },
+      {
+        "predicate": "HAS_ELEVATION_RANGE",
+        "fact_count": 3827
+      },
+      {
+        "predicate": "HAS_COURTSHIP_BEHAVIOR",
+        "fact_count": 3657
+      },
+      {
+        "predicate": "MIGRATES_VIA",
+        "fact_count": 3351
+      },
+      {
+        "predicate": "HAS_SOUND_DIAGNOSTIC",
+        "fact_count": 2633
+      },
+      {
+        "predicate": "HAS_MATING_SYSTEM",
+        "fact_count": 2548
+      },
+      {
+        "predicate": "HAS_MORTALITY_CAUSE",
+        "fact_count": 2361
+      },
+      {
+        "predicate": "HAS_TERRITORIAL_BEHAVIOR",
+        "fact_count": 2296
+      },
+      {
+        "predicate": "HAS_TARSUS_LENGTH",
+        "fact_count": 2185
+      },
+      {
+        "predicate": "HAS_NONVOCAL_SOUND",
+        "fact_count": 2056
+      },
+      {
+        "predicate": "HYBRIDIZES_WITH",
+        "fact_count": 1928
+      },
+      {
+        "predicate": "HAS_DAILY_ACTIVITY_PATTERN",
+        "fact_count": 1868
+      },
+      {
+        "predicate": "HAS_SUBSPECIES_DISTRIBUTION",
+        "fact_count": 1818
+      },
+      {
+        "predicate": "HAS_FLIGHT_ABILITY",
+        "fact_count": 1631
+      },
+      {
+        "predicate": "HAS_PAIR_BOND",
+        "fact_count": 1483
+      },
+      {
+        "predicate": "ENDEMIC_TO",
+        "fact_count": 1461
+      },
+      {
+        "predicate": "HAS_COPULATION_BEHAVIOR",
+        "fact_count": 1334
+      },
+      {
+        "predicate": "HAS_PARASITE",
+        "fact_count": 903
+      },
+      {
+        "predicate": "HAS_WINGSPAN",
+        "fact_count": 504
+      },
+      {
+        "predicate": "HAS_SWIMMING_ABILITY",
+        "fact_count": 426
+      },
+      {
+        "predicate": "HAS_DISEASE",
+        "fact_count": 169
+      },
+      {
+        "predicate": "HAS_CLIMBING_ABILITY",
+        "fact_count": 109
+      },
+      {
+        "predicate": "HAS_RUNNING_SPEED",
+        "fact_count": 78
+      },
+      {
+        "predicate": "HAS_JUMP_HEIGHT",
+        "fact_count": 16
+      }
+    ]
+  },
+  "controlled_schema": {
+    "fact_domains": [
+      "TaxonomyAndPhylogeny",
+      "MorphologyAndIdentification",
+      "DistributionAndMovement",
+      "Habitat",
+      "EcologyAndDiet",
+      "VocalAndBehavior",
+      "LifeHistoryAndBreeding",
+      "ConservationAndResearch"
+    ],
+    "predicates_by_domain": {
+      "TaxonomyAndPhylogeny": [
+        "HAS_SUBSPECIES",
+        "HAS_GEOGRAPHIC_VARIATION",
+        "HAS_SUBSPECIES_TRAIT",
+        "HAS_SUBSPECIES_DISTRIBUTION",
+        "HYBRIDIZES_WITH",
+        "RELATED_TO",
+        "HAS_CLASSIFICATION_HISTORY",
+        "HAS_TAXONOMIC_NOTE"
+      ],
+      "MorphologyAndIdentification": [
+        "HAS_BODY_LENGTH",
+        "HAS_BODY_MASS",
+        "HAS_WING_LENGTH",
+        "HAS_TAIL_LENGTH",
+        "HAS_BILL_LENGTH",
+        "HAS_TARSUS_LENGTH",
+        "HAS_WINGSPAN",
+        "HAS_PLUMAGE_TRAIT",
+        "HAS_MOLT_PATTERN",
+        "HAS_SEXUAL_DIMORPHISM",
+        "HAS_AGE_DIMORPHISM",
+        "HAS_DIAGNOSTIC_TRAIT",
+        "HAS_STRUCTURE_TRAIT"
+      ],
+      "DistributionAndMovement": [
+        "OCCURS_IN",
+        "ENDEMIC_TO",
+        "BREEDS_IN",
+        "WINTERS_IN",
+        "MIGRATES_VIA",
+        "HAS_MIGRATION_PATTERN",
+        "HAS_ELEVATION_RANGE",
+        "HAS_DISTRIBUTION_NOTE"
+      ],
+      "Habitat": [
+        "INHABITS_BIOME",
+        "USES_MICROHABITAT"
+      ],
+      "EcologyAndDiet": [
+        "EATS_CATEGORY",
+        "EATS_ITEM",
+        "FORAGES_BY",
+        "FORAGES_IN_STRATUM",
+        "HAS_ECOLOGICAL_ROLE"
+      ],
+      "VocalAndBehavior": [
+        "HAS_VOCALIZATION_TYPE",
+        "CALLS_DURING",
+        "HAS_NONVOCAL_SOUND",
+        "HAS_SOUND_DIAGNOSTIC",
+        "HAS_SOCIAL_BEHAVIOR",
+        "HAS_TERRITORIAL_BEHAVIOR",
+        "HAS_LOCOMOTION_STYLE",
+        "HAS_FLIGHT_ABILITY",
+        "HAS_RUNNING_SPEED",
+        "HAS_JUMP_HEIGHT",
+        "HAS_SWIMMING_ABILITY",
+        "HAS_CLIMBING_ABILITY",
+        "HAS_DAILY_ACTIVITY_PATTERN",
+        "HAS_COURTSHIP_BEHAVIOR",
+        "HAS_MATING_SYSTEM",
+        "HAS_PAIR_BOND",
+        "HAS_COPULATION_BEHAVIOR",
+        "HAS_AGONISTIC_BEHAVIOR"
+      ],
+      "LifeHistoryAndBreeding": [
+        "BREEDS_DURING",
+        "NESTS_AT",
+        "HAS_NEST_STRUCTURE",
+        "HAS_EGG_TRAIT",
+        "HAS_CLUTCH_SIZE",
+        "HAS_INCUBATION_PERIOD",
+        "HAS_FLEDGING_PERIOD",
+        "HAS_PARENTAL_ROLE",
+        "HAS_DEVELOPMENT_NOTE",
+        "HAS_DEMOGRAPHIC_NOTE"
+      ],
+      "ConservationAndResearch": [
+        "HAS_IUCN_STATUS",
+        "HAS_POPULATION_TREND",
+        "THREATENED_BY",
+        "HAS_CONSERVATION_ACTION",
+        "INTERACTS_WITH_HUMANS",
+        "HAS_PREDATOR",
+        "HAS_PARASITE",
+        "HAS_DISEASE",
+        "HAS_MORTALITY_CAUSE",
+        "REQUIRES_RESEARCH_ON"
+      ]
+    },
+    "predicate_count_by_domain": {
+      "TaxonomyAndPhylogeny": 8,
+      "MorphologyAndIdentification": 13,
+      "DistributionAndMovement": 8,
+      "Habitat": 2,
+      "EcologyAndDiet": 5,
+      "VocalAndBehavior": 18,
+      "LifeHistoryAndBreeding": 10,
+      "ConservationAndResearch": 10
+    },
+    "all_predicate_count": 74,
+    "schema_table": [
+      {
+        "fact_domain": "TaxonomyAndPhylogeny",
+        "predicate_count": 8,
+        "representative_predicates": [
+          "HAS_SUBSPECIES",
+          "HAS_GEOGRAPHIC_VARIATION",
+          "HAS_SUBSPECIES_TRAIT",
+          "HAS_SUBSPECIES_DISTRIBUTION",
+          "HYBRIDIZES_WITH"
+        ]
+      },
+      {
+        "fact_domain": "MorphologyAndIdentification",
+        "predicate_count": 13,
+        "representative_predicates": [
+          "HAS_BODY_LENGTH",
+          "HAS_BODY_MASS",
+          "HAS_WING_LENGTH",
+          "HAS_TAIL_LENGTH",
+          "HAS_BILL_LENGTH"
+        ]
+      },
+      {
+        "fact_domain": "DistributionAndMovement",
+        "predicate_count": 8,
+        "representative_predicates": [
+          "OCCURS_IN",
+          "ENDEMIC_TO",
+          "BREEDS_IN",
+          "WINTERS_IN",
+          "MIGRATES_VIA"
+        ]
+      },
+      {
+        "fact_domain": "Habitat",
+        "predicate_count": 2,
+        "representative_predicates": [
+          "INHABITS_BIOME",
+          "USES_MICROHABITAT"
+        ]
+      },
+      {
+        "fact_domain": "EcologyAndDiet",
+        "predicate_count": 5,
+        "representative_predicates": [
+          "EATS_CATEGORY",
+          "EATS_ITEM",
+          "FORAGES_BY",
+          "FORAGES_IN_STRATUM",
+          "HAS_ECOLOGICAL_ROLE"
+        ]
+      },
+      {
+        "fact_domain": "VocalAndBehavior",
+        "predicate_count": 18,
+        "representative_predicates": [
+          "HAS_VOCALIZATION_TYPE",
+          "CALLS_DURING",
+          "HAS_NONVOCAL_SOUND",
+          "HAS_SOUND_DIAGNOSTIC",
+          "HAS_SOCIAL_BEHAVIOR"
+        ]
+      },
+      {
+        "fact_domain": "LifeHistoryAndBreeding",
+        "predicate_count": 10,
+        "representative_predicates": [
+          "BREEDS_DURING",
+          "NESTS_AT",
+          "HAS_NEST_STRUCTURE",
+          "HAS_EGG_TRAIT",
+          "HAS_CLUTCH_SIZE"
+        ]
+      },
+      {
+        "fact_domain": "ConservationAndResearch",
+        "predicate_count": 10,
+        "representative_predicates": [
+          "HAS_IUCN_STATUS",
+          "HAS_POPULATION_TREND",
+          "THREATENED_BY",
+          "HAS_CONSERVATION_ACTION",
+          "INTERACTS_WITH_HUMANS"
+        ]
+      }
+    ]
+  },
+  "supplementary_claim_extraction_summary": {
+    "table": [
+      {
+        "item": "Old official claims",
+        "count": 589334
+      },
+      {
+        "item": "Supplement raw claims",
+        "count": 331940
+      },
+      {
+        "item": "Supplement accepted claims",
+        "count": 331827
+      },
+      {
+        "item": "Strict duplicates dropped",
+        "count": 113
+      },
+      {
+        "item": "Supplement covered chunks",
+        "count": 93542
+      },
+      {
+        "item": "Hit soft-cap chunks",
+        "count": 33211
+      },
+      {
+        "item": "Final merged claims",
+        "count": 921161
+      },
+      {
+        "item": "Possible near-duplicate audit rows",
+        "count": 12178
+      }
+    ],
+    "notes": [
+      "Original Claim extraction had a 2/4 per-chunk cap.",
+      "93,542 chunks were identified as high-risk at/over-cap chunks.",
+      "The final supplementary strategy used a single-pass additional-6 extraction.",
+      "331,827 supplement claims were accepted into Claim v2.",
+      "Hit soft-cap chunks are retained for future high-recall continuation passes."
+    ]
+  },
+  "fact_rebuild_policy_and_integrity_checks": [
+    {
+      "policy_or_check": "Subject/domain quota",
+      "status": "removed"
+    },
+    {
+      "policy_or_check": "Evidence max-2 cap",
+      "status": "removed"
+    },
+    {
+      "policy_or_check": "Fact ID strategy",
+      "status": "typed stable group key + 32-hex SHA1"
+    },
+    {
+      "policy_or_check": "Fact ID collision",
+      "status": "0"
+    },
+    {
+      "policy_or_check": "Integrity check",
+      "status": "ok"
+    },
+    {
+      "policy_or_check": "final facts equal grouped candidates",
+      "status": "ok"
+    }
+  ],
+  "cross_checks": {
+    "all_claims_equals_species_plus_family": true,
+    "domain_total_equals_total_facts": true,
+    "predicate_total_equals_total_facts": true,
+    "fact_rebuild_integrity_ok": true,
+    "fact_id_collision_ok": true
+  },
+  "warnings": [],
+  "baseline_differences": []
+}
