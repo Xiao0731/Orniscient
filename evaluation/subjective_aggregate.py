@@ -67,11 +67,14 @@ def summarize_one_file(
 
     scores: list[float] = []
     n_scored = 0
+    invalid_answer_count = 0
 
     for qid in answer_qids:
         qwen_row = qwen_map.get(qid)
         if not qwen_row:
             continue
+        if int(qwen_row.get("invalid_answer", 0) or 0):
+            invalid_answer_count += 1
         final_score = round(float(qwen_row["score_total"]), 2)
         scores.append(final_score)
         n_scored += 1
@@ -83,6 +86,7 @@ def summarize_one_file(
         "n_total": len(answer_qids),
         "n_scored": n_scored,
         "n_disputed": 0,
+        "invalid_answer_count": invalid_answer_count,
         "disputed_rate": 0.0,
         "avg_score_including_disputed": safe_average(scores),
         "avg_score_excluding_disputed": safe_average(scores),
@@ -117,6 +121,7 @@ def build_full_table(summary_rows: list[Dict[str, Any]], datasets: list[str], mo
         grouped.setdefault(key, {"model": row["model"], "mode": row["mode"]})
         grouped[key][row["dataset"]] = row["avg_score_including_disputed"]
         grouped[key][f"{row['dataset']}_disputed"] = row["n_disputed"]
+        grouped[key][f"{row['dataset']}_invalid"] = row.get("invalid_answer_count", 0)
 
     table_rows: list[Dict[str, Any]] = []
     for mode in modes:
@@ -129,7 +134,9 @@ def build_full_table(summary_rows: list[Dict[str, Any]], datasets: list[str], mo
             for dataset in datasets:
                 row[dataset] = format_score(payload.get(dataset))
                 disputed_count = int(payload.get(f"{dataset}_disputed", 0))
+                invalid_count = int(payload.get(f"{dataset}_invalid", 0))
                 row[f"{dataset}_disputed"] = disputed_count
+                row[f"{dataset}_invalid"] = invalid_count
                 total_disputed += disputed_count
             row["macro_avg"] = format_score(safe_average(numeric_scores))
             row["total_disputed"] = total_disputed
@@ -175,6 +182,7 @@ def main(argv: Sequence[str] | None = None) -> None:
             "n_total",
             "n_scored",
             "n_disputed",
+            "invalid_answer_count",
             "disputed_rate",
             "avg_score_including_disputed",
             "avg_score_excluding_disputed",
@@ -193,6 +201,7 @@ def main(argv: Sequence[str] | None = None) -> None:
     for dataset in args.datasets:
         full_fieldnames.append(dataset)
         full_fieldnames.append(f"{dataset}_disputed")
+        full_fieldnames.append(f"{dataset}_invalid")
     full_fieldnames.extend(["macro_avg", "total_disputed"])
     write_csv(summary_root / "summary_full_table.csv", full_rows, full_fieldnames)
 

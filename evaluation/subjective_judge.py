@@ -3,7 +3,8 @@ from __future__ import annotations
 import argparse
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
-from typing import Dict, Sequence
+import re
+from typing import Any, Dict, Sequence
 
 try:
     from model_registry import enabled_specs, subjective_candidate_specs
@@ -14,7 +15,6 @@ try:
         call_with_retries,
         discover_dataset_file,
         ensure_dir,
-        has_nonempty_answer,
         has_nonempty_score,
         load_existing_jsonl_map,
         load_jsonl,
@@ -24,7 +24,7 @@ try:
         seed_everything,
         write_jsonl,
     )
-    from subjective_rubrics import DEFAULT_SUBJECTIVE_DATASET_ORDER
+    from subjective_rubrics import DEFAULT_SUBJECTIVE_DATASET_ORDER, get_rubric
 except ModuleNotFoundError:
     from evaluation.model_registry import enabled_specs, subjective_candidate_specs
     from evaluation.subjective_common import (
@@ -34,7 +34,6 @@ except ModuleNotFoundError:
         call_with_retries,
         discover_dataset_file,
         ensure_dir,
-        has_nonempty_answer,
         has_nonempty_score,
         load_existing_jsonl_map,
         load_jsonl,
@@ -44,7 +43,34 @@ except ModuleNotFoundError:
         seed_everything,
         write_jsonl,
     )
-    from evaluation.subjective_rubrics import DEFAULT_SUBJECTIVE_DATASET_ORDER
+    from evaluation.subjective_rubrics import DEFAULT_SUBJECTIVE_DATASET_ORDER, get_rubric
+
+
+INVALID_ANSWER_STRINGS = {"", "...", "n/a", "none"}
+MIN_VALID_ANSWER_TOKENS = 20
+
+
+def answer_token_count(answer: str) -> int:
+    return len(re.findall(r"[A-Za-z0-9]+|[\u4e00-\u9fff]", answer or ""))
+
+
+def invalid_answer_reason(answer: str) -> str:
+    text = str(answer or "").strip()
+    if text.lower() in INVALID_ANSWER_STRINGS:
+        return "empty_or_placeholder_answer"
+    if answer_token_count(text) < MIN_VALID_ANSWER_TOKENS:
+        return f"too_short_under_{MIN_VALID_ANSWER_TOKENS}_tokens"
+    return ""
+
+
+def build_invalid_score_row(item, reason: str) -> Dict[str, Any]:
+    row: Dict[str, Any] = {"question_id": item.qid}
+    for dimension in get_rubric(item.dataset):
+        row[dimension] = 0
+    row["score_total"] = 0
+    row["invalid_answer"] = 1
+    row["invalid_answer_reason"] = reason
+    return row
 
 
 def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
@@ -77,7 +103,7 @@ def score_one_judge(
     judge_retries: int,
     temperature: float,
     max_tokens: int,
-) -> Dict[str, int]:
+) -> Dict[str, Any]:
     last_error: Exception | None = None
     for attempt in range(judge_retries + 1):
         try:
@@ -109,17 +135,19 @@ def judge_one_answer(
     temperature: float,
     max_tokens: int,
     judge_workers: int,
-) -> Dict[str, Dict[str, int]]:
+) -> Dict[str, Dict[str, Any]]:
     candidate_answer = str(answer_row.get("answer", "")).strip()
-    if not candidate_answer:
-        raise ValueError(f"Missing candidate answer for qid={item.qid}")
+    reason = invalid_answer_reason(candidate_answer)
+    if reason:
+        print(f"[JUDGE-INVALID] qid={item.qid} reason={reason}")
+        return {spec.alias: build_invalid_score_row(item, reason) for spec in judge_specs}
 
     print(
         f"[JUDGE-START] qid={item.qid} judges={','.join(spec.alias for spec in judge_specs)} "
         f"launch_mode={'parallel' if judge_workers > 1 and len(judge_specs) > 1 else 'sequential'}"
     )
 
-    results: Dict[str, Dict[str, int]] = {}
+    results: Dict[str, Dict[str, Any]] = {}
     if judge_workers > 1 and len(judge_specs) > 1:
         with ThreadPoolExecutor(max_workers=min(judge_workers, len(judge_specs))) as executor:
             futures = {
@@ -205,8 +233,6 @@ def main(argv: Sequence[str] | None = None) -> None:
                     answer_rows = answer_rows[: args.limit]
                 if only_question_ids:
                     answer_rows = [row for row in answer_rows if str(row.get("question_id", "")).strip() in only_question_ids]
-                answer_rows = [row for row in answer_rows if has_nonempty_answer(row)]
-
                 question_map = dataset_payloads[dataset_name]
                 qwen_path = judge_qwen_root / mode / spec.alias / f"{dataset_name}.jsonl"
                 ensure_dir(qwen_path.parent)
@@ -228,7 +254,7 @@ def main(argv: Sequence[str] | None = None) -> None:
                     print(f"[JUDGE-SKIP] model={spec.alias} dataset={dataset_name} mode={mode}")
                     continue
 
-                new_qwen: Dict[str, Dict[str, int]] = {}
+                new_qwen: Dict[str, Dict[str, Any]] = {}
                 with ThreadPoolExecutor(max_workers=judge_question_workers) as executor:
                     futures = {
                         executor.submit(

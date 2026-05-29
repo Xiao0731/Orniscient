@@ -801,10 +801,10 @@ orniscient/
 
 # Quick Start
 
-## Installation
+## 1. Install
 
 ```bash
-git clone https://github.com/<your-username>/Orniscient.git
+git clone https://github.com/Xiao0731/Orniscient.git
 cd Orniscient
 python -m venv .venv
 pip install -r requirements.txt
@@ -817,99 +817,116 @@ Windows PowerShell:
 Copy-Item .env.example .env
 ```
 
-Configure local data paths and model API keys in `.env`.
+## 2. Configure API Keys
 
-## Running Evaluations
+Configure API keys in your local `.env`. Do not commit real keys.
+
+```env
+DEEPSEEK_API_KEY=your_api_key_here
+DEEPSEEK_BASE_URL=https://api.deepseek.com/v1
+```
+
+The scripts also support OpenAI-compatible API configuration through `OPENAI_API_KEY` / `OPENAI_BASE_URL` or command-line overrides where available.
+
+## 3. Run Benchmark Evaluation
+
+`question/` contains public-ready benchmark questions. For target-aware tasks, placeholders such as `[the bird]` have been resolved to the `target_entity` directly in the `question` and `answer` fields. Leakage-sensitive tasks, such as `Bird-ID`, reverse identification, and Feature-to-Family / Feature-to-Order classification, remain anonymized by design. The original anonymized version is backed up locally under `question_anonymized_backup/`; if that directory is not committed to GitHub, keep the anonymized version internally for reproducibility.
+
+By default, `--knowledge-mode none` runs vanilla model evaluation and only requires the benchmark questions plus a model API. Knowledge-enhanced modes such as `kg_v3` and `hybrid` require local authorized KG artifacts; the public repository does not redistribute full BOW raw text or the complete KG.
+
+Common fields:
+
+- `question_id`: question ID;
+- `dataset`: task dataset;
+- `question`: public question text for direct model input;
+- `answer`: reference answer;
+- `target_entity`: target species or taxon, when applicable;
+- `provenance`: evidence/source metadata, when applicable;
+- `type` / `knowledge_domain`: task type and knowledge domain, when applicable.
 
 Objective QA:
 
 ```bash
-python evaluation/objective_eval.py \
-  --models deepseek qwen kimi \
-  --datasets QA-SC QA-MC QA-SA Bird-Geo Bird-Taxonomy \
-  --question-root question
+python evaluation/knowledge_RAG/cli/run_objective.py \
+  --models deepseek \
+  --datasets QA-MC
 ```
 
-Open-generation tasks:
+KG-augmented objective QA:
 
 ```bash
-python evaluation/run_subjective_pipeline.py \
-  --models deepseek qwen kimi \
-  --datasets Bird-Life Bird-Eco Bird-Con Bird-Comp Bird-Reason Bird-Plan \
-  --modes zero_shot few_shot cot \
-  --question-root question \
-  --fewshot-root evaluation/fewshot_examples
+python evaluation/knowledge_RAG/cli/run_objective.py \
+  --models deepseek \
+  --datasets Bird-Geo \
+  --knowledge-mode kg_v3
+```
+
+Subjective open-generation tasks:
+
+```bash
+python evaluation/knowledge_RAG/cli/run_subjective.py \
+  --models deepseek \
+  --datasets Bird-Life \
+  --modes zero_shot
 ```
 
 Structured tasks:
 
 ```bash
-python evaluation/run_remaining_four_eval.py \
-  --models deepseek qwen kimi \
-  --datasets Bird-ID List-Global Bird-Classify \
-  --question-root question
+python evaluation/knowledge_RAG/cli/run_structured.py \
+  --models deepseek \
+  --datasets Bird-ID
 ```
 
-Build the knowledge base:
+The default question root is `question/`. Structured tasks default to `data/BIRDBASE.xlsx` and `data/Order.xlsx`; use `--birdbase-xlsx` and `--order-xlsx` if those files live elsewhere. Full paper-scale experiments produce intermediate outputs, logs, predictions, and score files through the unified harness.
 
-```bash
-python kg_v2/run_build_kb_v2.py
-```
+## 4. Run Vanilla vs. KG-Augmented Demo
 
-One-command vanilla vs. knowledge-enhanced demo:
+Due to data usage restrictions, the full BOW-derived chunks and complete KG artifacts are not redistributed in this repository. To make the framework testable, Orniscient provides a 100-taxon demo graph under `demo_data/sample_100_taxa/`. This subset contains Taxon-Fact-Evidence-Chunk graph data and short text previews for the selected 100 taxa. It can be used to test the retrieval interface and the vanilla vs. knowledge-augmented comparison script. The demo graph is intended for interface demonstration only and is not a substitute for the full authorized local knowledge base.
 
-`demo_compare.py` is not a formal evaluation script. It does not perform scoring, judging, or aggregation; formal benchmark evaluation still uses the objective / subjective / structured pipelines. This script is only used to show the output difference between a vanilla setting and a knowledge-augmented setting on the same question.
+`demo_compare.py` is not a formal evaluation script. It does not perform scoring, judging, or benchmark aggregation. It shows the Planner Result, Resolved Target, Vanilla Answer, KG-Augmented Answer, Retrieved Evidence / Chunks, and the evidence-grounded prompt for one free-form expert question. `--no-api` only previews the planner, retrieval results, and prompts; it does not generate real answers.
 
-The demo supports two modes:
+This demo covers only the 100 taxa listed in `demo_data/sample_100_taxa/sample_taxa.jsonl`. Chunk previews are truncated excerpts, not full BOW raw text. If the bird in the question is not in these 100 taxa, the script will report that it cannot resolve a target. `--target` is optional and is useful when the question itself does not name the bird.
 
-- **full local mode**: requires local KG v2 artifacts and can optionally use a BOW chunk store;
-- **sample mode**: demonstrates the public interface without private KG/BOW artifacts.
+Preview retrieval and prompts without API:
 
 ```bash
 python evaluation/knowledge_RAG/demo_compare.py \
   --question "What are the main threats to the Southern Cassowary?" \
-  --target "Casuarius casuarius" \
-  --model deepseek-chat \
-  --knowledge-mode kg_v3 \
-  --top-k 5
-```
-
-No-API preview:
-
-```bash
-python evaluation/knowledge_RAG/demo_compare.py \
-  --question "What are the main threats to the Southern Cassowary?" \
-  --target "Casuarius casuarius" \
-  --knowledge-mode kg_v3 \
-  --top-k 5 \
   --no-api
 ```
 
-Sample mode:
+Run full comparison with API:
+
+```bash
+python evaluation/knowledge_RAG/demo_compare.py \
+  --question "What are the main threats to the Southern Cassowary?"
+```
+
+Use explicit target if needed:
+
+```bash
+python evaluation/knowledge_RAG/demo_compare.py \
+  --question "What does it eat?" \
+  --target "Southern Cassowary"
+```
+
+API configuration diagnostics:
 
 ```bash
 python evaluation/knowledge_RAG/demo_compare.py \
   --question "What are the main threats to the Southern Cassowary?" \
-  --target "Casuarius casuarius" \
-  --top-k 2 \
-  --sample-mode
+  --debug-api-config \
+  --ping-api
 ```
 
-Output sketch:
+Defaults are `--demo-data demo_data/sample_100_taxa`, `--model deepseek-chat`, and `--top-k 6`. Advanced options include `--demo-data`, `--model`, `--top-k`, `--planner`, and `--target`.
 
-```text
-[Vanilla Answer]
-...
+## 5. Notes on Demo Rigor
 
-[Knowledge-Augmented Answer]
-...
+The LLM planner in this demo is only used to parse free-form expert questions into structured retrieval requests. It does not receive gold answers, evaluation labels, or hidden benchmark metadata. Retrieval is executed deterministically over the demo graph, and the retrieved evidence is displayed for inspection. The planner does not answer the question; the final answer is generated by the answer LLM using the retrieved evidence.
 
-[Retrieved Evidence]
-1. predicate=THREATENED_BY, source_chunk_id=...
-2. predicate=INTERACTS_WITH_HUMANS, source_chunk_id=...
-```
-
-Full execution requires local BOW-derived chunks and KG artifacts, which are not redistributed in this repository due to data usage restrictions. The script can still run without chunk text by using Evidence snippets as fallback context.
+The public demo is a lightweight demonstration: it exposes only 100 selected taxa and truncated evidence previews. In the full authorized local setup, the same retrieval path can be connected to the complete chunk store, vector index, or Neo4j graph for more complete long-context knowledge augmentation.
 
 ---
 

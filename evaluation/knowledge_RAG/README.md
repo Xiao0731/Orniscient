@@ -36,25 +36,35 @@ For the current API-compatible setup, use SiliconFlow for BGE models:
 ## Commands
 
 ```powershell
-python evaluation/knowledge_RAG/cli/run_objective.py --question-root question --knowledge-mode kg_v3 --models deepseek qwen glm --datasets QA-SC QA-MC QA-SA Bird-Geo Bird-Taxonomy --save-predictions --resume
+python evaluation/knowledge_RAG/cli/run_objective.py --models deepseek --datasets QA-MC
 ```
 
 ```powershell
-python evaluation/knowledge_RAG/cli/run_subjective.py --question-root question --knowledge-mode kg_v3 --models deepseek glm --datasets Bird-Life Bird-Eco Bird-Con Bird-Comp Bird-Reason Bird-Plan --modes zero_shot few_shot cot --resume
+python evaluation/knowledge_RAG/cli/run_subjective.py --models deepseek --datasets Bird-Life --modes zero_shot
 ```
 
 ```powershell
-python evaluation/knowledge_RAG/cli/run_structured.py --question-root question --knowledge-mode kg_v3 --models deepseek glm --datasets List-Global Bird-ID Bird-Classify --birdbase-xlsx data/BIRDBASE.xlsx --order-xlsx data/Order.xlsx --resume
+python evaluation/knowledge_RAG/cli/run_structured.py --models deepseek --datasets Bird-ID
 ```
 
+The default question root is `question/`, and the default knowledge mode is `none` for vanilla evaluation. Use `--knowledge-mode kg_v3` or `--knowledge-mode hybrid` for knowledge-enhanced runs; those modes require local KG artifacts that are not redistributed in the public repository. Structured tasks default to `data/BIRDBASE.xlsx` and `data/Order.xlsx`; override them with `--birdbase-xlsx` and `--order-xlsx` if needed.
+
+Knowledge-enhanced objective example:
+
 ```powershell
-python evaluation/knowledge_RAG/cli/run_all.py --question-root question --knowledge-mode hybrid --out-root evaluation/output --models deepseek glm doubao hunyuan wenxin minimax --resume
+python evaluation/knowledge_RAG/cli/run_objective.py --models deepseek --datasets Bird-Geo --knowledge-mode kg_v3
+```
+
+Larger paper-scale runs can still pass advanced options such as `--question-root`, `--out-root`, `--resume`, `--save-predictions`, `--kg-backend`, `--query-mode`, `--embedding-provider`, and reranker settings.
+
+```powershell
+python evaluation/knowledge_RAG/cli/run_all.py --knowledge-mode hybrid --models deepseek glm doubao hunyuan wenxin minimax --resume
 ```
 
 `run_all.py` dispatches the three formal groups in order: objective, subjective, structured. You can run a smoke check without API calls:
 
 ```powershell
-python evaluation/knowledge_RAG/cli/run_objective.py --knowledge-mode kg_v3 --kg-backend neo4j --datasets QA-SC --limit 1 --dry-run
+python evaluation/knowledge_RAG/cli/run_objective.py --datasets QA-SC --limit 1 --dry-run
 ```
 
 For environment diagnosis:
@@ -75,39 +85,43 @@ To validate the V3 Taxon -> Fact -> Evidence -> Chunk graph chain without Neo4j:
 python kg_v2/Step4_graph/smoke_v3_kg_e2e.py --skip-neo4j
 ```
 
-For a one-question vanilla vs. KG-augmented local demo:
+For a one-question public demo preview without API:
 
 ```powershell
 python evaluation/knowledge_RAG/demo_compare.py `
   --question "What are the main threats to the Southern Cassowary?" `
-  --target "Casuarius casuarius" `
-  --model deepseek-chat `
-  --knowledge-mode kg_v3 `
-  --top-k 5
-```
-
-No-API prompt and retrieval preview:
-
-```powershell
-python evaluation/knowledge_RAG/demo_compare.py `
-  --question "What are the main threats to the Southern Cassowary?" `
-  --target "Casuarius casuarius" `
-  --knowledge-mode kg_v3 `
-  --top-k 5 `
   --no-api
 ```
 
-Sample-mode interface preview:
+Full API mode generates both vanilla and KG-augmented answers:
+
+```powershell
+python evaluation/knowledge_RAG/demo_compare.py `
+  --question "What are the main threats to the Southern Cassowary?"
+```
+
+Use an explicit target when the question does not uniquely name a demo taxon:
+
+```powershell
+python evaluation/knowledge_RAG/demo_compare.py `
+  --question "What does it eat?" `
+  --target "Southern Cassowary"
+```
+
+Use API diagnostics without printing full keys:
 
 ```powershell
 python evaluation/knowledge_RAG/demo_compare.py `
   --question "What are the main threats to the Southern Cassowary?" `
-  --target "Casuarius casuarius" `
-  --top-k 2 `
-  --sample-mode
+  --debug-api-config `
+  --ping-api
 ```
 
-`demo_compare.py` is not a formal evaluation script: it does not score, judge, or aggregate. In full local mode it retrieves from `claims_final_global_v2` and `facts_final_global_v2`, optionally adds chunk text from `--chunks-path`, then calls an OpenAI-compatible chat API unless `--no-api` is set. Full execution requires local BOW-derived chunks and KG artifacts, which are not redistributed in this repository due to data usage restrictions.
+`demo_compare.py` is not a formal evaluation script: it does not score, judge, or aggregate. It is a one-question interface demo that prints the planner result, resolved target, vanilla answer, KG-augmented answer, retrieved facts/evidence/chunks, and the evidence-grounded prompt. Defaults are `--demo-data demo_data/sample_100_taxa`, `--model deepseek-chat`, and `--top-k 6`. Public demo-data mode covers only the 100 taxa listed in `sample_taxa.jsonl`; chunk previews are truncated excerpts and are not complete BOW raw text. If the question does not name a taxon in the demo subset, pass `--target` or choose one of the listed demo taxa.
+
+In demo-data mode, `--planner deterministic` is the default. It resolves the target, routes the intent, chooses domains/predicates/chapters, and then the script performs deterministic graph retrieval. `--planner llm` asks the model only for query-planning JSON and validates it before deterministic graph retrieval. The planner does not receive gold answers or evaluation metadata, does not access files directly, and does not answer the question. Advanced options include `--demo-data`, `--model`, `--top-k`, `--planner`, `--target`, and `--max-evidence-per-chunk`.
+
+The retrieved evidence trace is always printed after answer generation. If the API call fails, the command prints `[API Error]`, the sanitized error message, and then the retrieved evidence/chunks so target resolution and KG retrieval can still be debugged.
 
 ## Output Layout
 

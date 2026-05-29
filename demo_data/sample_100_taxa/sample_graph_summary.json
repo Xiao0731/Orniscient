@@ -1,0 +1,1463 @@
+{
+  "taxa_count": 100,
+  "facts_count": 36480,
+  "evidences_count": 33169,
+  "links_count": 37627,
+  "chunks_count": 8584,
+  "fact_domain_distribution": {
+    "LifeHistoryAndBreeding": 9776,
+    "MorphologyAndIdentification": 8480,
+    "EcologyAndDiet": 4526,
+    "VocalAndBehavior": 4253,
+    "DistributionAndMovement": 3459,
+    "ConservationAndResearch": 3307,
+    "Habitat": 1367,
+    "TaxonomyAndPhylogeny": 1312
+  },
+  "predicate_distribution_top30": {
+    "HAS_PLUMAGE_TRAIT": 3191,
+    "EATS_ITEM": 1823,
+    "HAS_PARENTAL_ROLE": 1601,
+    "HAS_VOCALIZATION_TYPE": 1440,
+    "HAS_DEMOGRAPHIC_NOTE": 1304,
+    "HAS_NEST_STRUCTURE": 1210,
+    "HAS_MOLT_PATTERN": 1069,
+    "INHABITS_BIOME": 1061,
+    "THREATENED_BY": 1036,
+    "HAS_DEVELOPMENT_NOTE": 1023,
+    "HAS_EGG_TRAIT": 857,
+    "HAS_DISTRIBUTION_NOTE": 842,
+    "HAS_STRUCTURE_TRAIT": 804,
+    "OCCURS_IN": 786,
+    "HAS_PREDATOR": 766,
+    "NESTS_AT": 741,
+    "HAS_DIAGNOSTIC_TRAIT": 671,
+    "HAS_MIGRATION_PATTERN": 621,
+    "HAS_CLUTCH_SIZE": 619,
+    "BREEDS_DURING": 593,
+    "FORAGES_BY": 588,
+    "HAS_AGONISTIC_BEHAVIOR": 577,
+    "HAS_SEXUAL_DIMORPHISM": 575,
+    "EATS_CATEGORY": 533,
+    "FORAGES_IN_STRATUM": 533,
+    "BREEDS_IN": 531,
+    "HAS_CONSERVATION_ACTION": 529,
+    "HAS_SOCIAL_BEHAVIOR": 524,
+    "HAS_LOCOMOTION_STYLE": 520,
+    "HAS_BODY_MASS": 509
+  },
+  "included_taxa": [
+    {
+      "canonical_taxon_id": "taxon_species_a3736ebf17fe5b22",
+      "common_name": "Hawaiian Duck",
+      "scientific_name": "Anas wyvilliana",
+      "rank": "species",
+      "order": "Anseriformes",
+      "family": "Anatidae",
+      "genus": "Anas",
+      "aliases": [
+        "Hawaiian Duck",
+        "Anas wyvilliana"
+      ],
+      "source_doc_id": "bow_species_Anas_wyvilliana"
+    },
+    {
+      "canonical_taxon_id": "taxon_species_6f3cf1fb12cff900",
+      "common_name": "Okarito Brown Kiwi",
+      "scientific_name": "Apteryx rowi",
+      "rank": "species",
+      "order": "Apterygiformes",
+      "family": "Apterygidae",
+      "genus": "Apteryx",
+      "aliases": [
+        "Okarito Brown Kiwi",
+        "Apteryx rowi"
+      ],
+      "source_doc_id": "bow_species_Apteryx_rowi"
+    },
+    {
+      "canonical_taxon_id": "taxon_species_bdb2fed421116900",
+      "common_name": "Southern Cassowary",
+      "scientific_name": "Casuarius casuarius",
+      "rank": "species",
+      "order": "Casuariiformes",
+      "family": "Casuariidae",
+      "genus": "Casuarius",
+      "aliases": [
+        "Southern Cassowary",
+        "Casuarius casuarius"
+      ],
+      "source_doc_id": "bow_species_Casuarius_casuarius"
+    },
+    {
+      "canonical_taxon_id": "taxon_species_9bb745d14be32e34",
+      "common_name": "Pink-headed Duck",
+      "scientific_name": "Rhodonessa caryophyllacea",
+      "rank": "species",
+      "order": "Anseriformes",
+      "family": "Anatidae",
+      "genus": "Rhodonessa",
+      "aliases": [
+        "Pink-headed Duck",
+        "Rhodonessa caryophyllacea"
+      ],
+      "source_doc_id": "bow_species_Rhodonessa_caryophyllacea"
+    },
+    {
+      "canonical_taxon_id": "taxon_species_678bcda8f67a155a",
+      "common_name": "Crested Partridge",
+      "scientific_name": "Rollulus rouloul",
+      "rank": "species",
+      "order": "Galliformes",
+      "family": "Phasianidae",
+      "genus": "Rollulus",
+      "aliases": [
+        "Crested Partridge",
+        "Rollulus rouloul"
+      ],
+      "source_doc_id": "bow_species_Rollulus_rouloul"
+    },
+    {
+      "canonical_taxon_id": "taxon_species_6d5d2ce992458437",
+      "common_name": "Surfbird",
+      "scientific_name": "Calidris virgata",
+      "rank": "species",
+      "order": "Charadriiformes",
+      "family": "Scolopacidae",
+      "genus": "Calidris",
+      "aliases": [
+        "Surfbird",
+        "Calidris virgata"
+      ],
+      "source_doc_id": "bow_species_Calidris_virgata"
+    },
+    {
+      "canonical_taxon_id": "taxon_species_68d1263a7cfe2a0a",
+      "common_name": "Red-throated Loon",
+      "scientific_name": "Gavia stellata",
+      "rank": "species",
+      "order": "Gaviiformes",
+      "family": "Gaviidae",
+      "genus": "Gavia",
+      "aliases": [
+        "Red-throated Loon",
+        "Gavia stellata"
+      ],
+      "source_doc_id": "bow_species_Gavia_stellata"
+    },
+    {
+      "canonical_taxon_id": "taxon_species_bfdbccfb2a575e78",
+      "common_name": "Herald Petrel",
+      "scientific_name": "Pterodroma heraldica",
+      "rank": "species",
+      "order": "Procellariiformes",
+      "family": "Procellariidae",
+      "genus": "Pterodroma",
+      "aliases": [
+        "Herald Petrel",
+        "Pterodroma heraldica"
+      ],
+      "source_doc_id": "bow_species_Pterodroma_heraldica"
+    },
+    {
+      "canonical_taxon_id": "taxon_species_098d7e0f20c99414",
+      "common_name": "Snowy Owl",
+      "scientific_name": "Bubo scandiacus",
+      "rank": "species",
+      "order": "Strigiformes",
+      "family": "Strigidae",
+      "genus": "Bubo",
+      "aliases": [
+        "Snowy Owl",
+        "Bubo scandiacus"
+      ],
+      "source_doc_id": "bow_species_Bubo_scandiacus"
+    },
+    {
+      "canonical_taxon_id": "taxon_species_c700b571e0615f71",
+      "common_name": "Aplomado Falcon",
+      "scientific_name": "Falco femoralis",
+      "rank": "species",
+      "order": "Falconiformes",
+      "family": "Falconidae",
+      "genus": "Falco",
+      "aliases": [
+        "Aplomado Falcon",
+        "Falco femoralis"
+      ],
+      "source_doc_id": "bow_species_Falco_femoralis"
+    },
+    {
+      "canonical_taxon_id": "taxon_species_e8264e9222f9da91",
+      "common_name": "Little Blue Heron",
+      "scientific_name": "Egretta caerulea",
+      "rank": "species",
+      "order": "Pelecaniformes",
+      "family": "Ardeidae",
+      "genus": "Egretta",
+      "aliases": [
+        "Little Blue Heron",
+        "Egretta caerulea"
+      ],
+      "source_doc_id": "bow_species_Egretta_caerulea"
+    },
+    {
+      "canonical_taxon_id": "taxon_species_d6c59cb98c1519a0",
+      "common_name": "Orange-crowned Warbler",
+      "scientific_name": "Leiothlypis celata",
+      "rank": "species",
+      "order": "Passeriformes",
+      "family": "Parulidae",
+      "genus": "Leiothlypis",
+      "aliases": [
+        "Orange-crowned Warbler",
+        "Leiothlypis celata"
+      ],
+      "source_doc_id": "bow_species_Leiothlypis_celata"
+    },
+    {
+      "canonical_taxon_id": "taxon_species_5bfe87e25311a2b0",
+      "common_name": "Brown Booby",
+      "scientific_name": "Sula leucogaster",
+      "rank": "species",
+      "order": "Suliformes",
+      "family": "Sulidae",
+      "genus": "Sula",
+      "aliases": [
+        "Brown Booby",
+        "Sula leucogaster"
+      ],
+      "source_doc_id": "bow_species_Sula_leucogaster"
+    },
+    {
+      "canonical_taxon_id": "taxon_species_9fa44a13c0e90872",
+      "common_name": "Sandhill Crane",
+      "scientific_name": "Antigone canadensis",
+      "rank": "species",
+      "order": "Gruiformes",
+      "family": "Gruidae",
+      "genus": "Antigone",
+      "aliases": [
+        "Sandhill Crane",
+        "Antigone canadensis"
+      ],
+      "source_doc_id": "bow_species_Antigone_canadensis"
+    },
+    {
+      "canonical_taxon_id": "taxon_species_b9fec9b59b34c798",
+      "common_name": "Anna's Hummingbird",
+      "scientific_name": "Calypte anna",
+      "rank": "species",
+      "order": "Apodiformes",
+      "family": "Trochilidae",
+      "genus": "Calypte",
+      "aliases": [
+        "Anna's Hummingbird",
+        "Calypte anna"
+      ],
+      "source_doc_id": "bow_species_Calypte_anna"
+    },
+    {
+      "canonical_taxon_id": "taxon_species_d307ccbce6ff5db8",
+      "common_name": "Mangrove Cuckoo",
+      "scientific_name": "Coccyzus minor",
+      "rank": "species",
+      "order": "Cuculiformes",
+      "family": "Cuculidae",
+      "genus": "Coccyzus",
+      "aliases": [
+        "Mangrove Cuckoo",
+        "Coccyzus minor"
+      ],
+      "source_doc_id": "bow_species_Coccyzus_minor"
+    },
+    {
+      "canonical_taxon_id": "taxon_species_4c6b8421a93d1e37",
+      "common_name": "Swainson's Hawk",
+      "scientific_name": "Buteo swainsoni",
+      "rank": "species",
+      "order": "Accipitriformes",
+      "family": "Accipitridae",
+      "genus": "Buteo",
+      "aliases": [
+        "Swainson's Hawk",
+        "Buteo swainsoni"
+      ],
+      "source_doc_id": "bow_species_Buteo_swainsoni"
+    },
+    {
+      "canonical_taxon_id": "taxon_species_6f8e9aeb1b3164b2",
+      "common_name": "Pied-billed Grebe",
+      "scientific_name": "Podilymbus podiceps",
+      "rank": "species",
+      "order": "Podicipediformes",
+      "family": "Podicipedidae",
+      "genus": "Podilymbus",
+      "aliases": [
+        "Pied-billed Grebe",
+        "Podilymbus podiceps"
+      ],
+      "source_doc_id": "bow_species_Podilymbus_podiceps"
+    },
+    {
+      "canonical_taxon_id": "taxon_species_3c40ce90b83b2f43",
+      "common_name": "Mourning Dove",
+      "scientific_name": "Zenaida macroura",
+      "rank": "species",
+      "order": "Columbiformes",
+      "family": "Columbidae",
+      "genus": "Zenaida",
+      "aliases": [
+        "Mourning Dove",
+        "Zenaida macroura"
+      ],
+      "source_doc_id": "bow_species_Zenaida_macroura"
+    },
+    {
+      "canonical_taxon_id": "taxon_species_b87ece2849922ad8",
+      "common_name": "California Condor",
+      "scientific_name": "Gymnogyps californianus",
+      "rank": "species",
+      "order": "Cathartiformes",
+      "family": "Cathartidae",
+      "genus": "Gymnogyps",
+      "aliases": [
+        "California Condor",
+        "Gymnogyps californianus"
+      ],
+      "source_doc_id": "bow_species_Gymnogyps_californianus"
+    },
+    {
+      "canonical_taxon_id": "taxon_species_b442102630a31988",
+      "common_name": "White-headed Woodpecker",
+      "scientific_name": "Leuconotopicus albolarvatus",
+      "rank": "species",
+      "order": "Piciformes",
+      "family": "Picidae",
+      "genus": "Leuconotopicus",
+      "aliases": [
+        "White-headed Woodpecker",
+        "Leuconotopicus albolarvatus"
+      ],
+      "source_doc_id": "bow_species_Leuconotopicus_albolarvatus"
+    },
+    {
+      "canonical_taxon_id": "taxon_species_de0c000924f7d94c",
+      "common_name": "Wood Stork",
+      "scientific_name": "Mycteria americana",
+      "rank": "species",
+      "order": "Ciconiiformes",
+      "family": "Ciconiidae",
+      "genus": "Mycteria",
+      "aliases": [
+        "Wood Stork",
+        "Mycteria americana"
+      ],
+      "source_doc_id": "bow_species_Mycteria_americana"
+    },
+    {
+      "canonical_taxon_id": "taxon_species_5ab57971f01c2e88",
+      "common_name": "Monk Parakeet",
+      "scientific_name": "Myiopsitta monachus",
+      "rank": "species",
+      "order": "Psittaciformes",
+      "family": "Psittacidae",
+      "genus": "Myiopsitta",
+      "aliases": [
+        "Monk Parakeet",
+        "Myiopsitta monachus"
+      ],
+      "source_doc_id": "bow_species_Myiopsitta_monachus"
+    },
+    {
+      "canonical_taxon_id": "taxon_species_009fa9d6a7e8d64b",
+      "common_name": "Common Hoopoe",
+      "scientific_name": "Upupa epops",
+      "rank": "species",
+      "order": "Bucerotiformes",
+      "family": "Upupidae",
+      "genus": "Upupa",
+      "aliases": [
+        "Common Hoopoe",
+        "Upupa epops"
+      ],
+      "source_doc_id": "bow_species_Upupa_epops"
+    },
+    {
+      "canonical_taxon_id": "taxon_species_b6af84e861f8efe9",
+      "common_name": "Eastern Whip-poor-will",
+      "scientific_name": "Antrostomus vociferus",
+      "rank": "species",
+      "order": "Caprimulgiformes",
+      "family": "Caprimulgidae",
+      "genus": "Antrostomus",
+      "aliases": [
+        "Eastern Whip-poor-will",
+        "Antrostomus vociferus"
+      ],
+      "source_doc_id": "bow_species_Antrostomus_vociferus"
+    },
+    {
+      "canonical_taxon_id": "taxon_species_75897f487293748f",
+      "common_name": "Belted Kingfisher",
+      "scientific_name": "Megaceryle alcyon",
+      "rank": "species",
+      "order": "Coraciiformes",
+      "family": "Alcedinidae",
+      "genus": "Megaceryle",
+      "aliases": [
+        "Belted Kingfisher",
+        "Megaceryle alcyon"
+      ],
+      "source_doc_id": "bow_species_Megaceryle_alcyon"
+    },
+    {
+      "canonical_taxon_id": "taxon_species_19da68079e1da210",
+      "common_name": "Red-tailed Tropicbird",
+      "scientific_name": "Phaethon rubricauda",
+      "rank": "species",
+      "order": "Phaethontiformes",
+      "family": "Phaethontidae",
+      "genus": "Phaethon",
+      "aliases": [
+        "Red-tailed Tropicbird",
+        "Phaethon rubricauda"
+      ],
+      "source_doc_id": "bow_species_Phaethon_rubricauda"
+    },
+    {
+      "canonical_taxon_id": "taxon_species_f0811393fa724faf",
+      "common_name": "Greater Flamingo",
+      "scientific_name": "Phoenicopterus roseus",
+      "rank": "species",
+      "order": "Phoenicopteriformes",
+      "family": "Phoenicopteridae",
+      "genus": "Phoenicopterus",
+      "aliases": [
+        "Greater Flamingo",
+        "Phoenicopterus roseus"
+      ],
+      "source_doc_id": "bow_species_Phoenicopterus_roseus"
+    },
+    {
+      "canonical_taxon_id": "taxon_species_ea29bdedab81e00b",
+      "common_name": "Coppery-tailed Trogon",
+      "scientific_name": "Trogon ambiguus",
+      "rank": "species",
+      "order": "Trogoniformes",
+      "family": "Trogonidae",
+      "genus": "Trogon",
+      "aliases": [
+        "Coppery-tailed Trogon",
+        "Trogon ambiguus"
+      ],
+      "source_doc_id": "bow_species_Trogon_ambiguus"
+    },
+    {
+      "canonical_taxon_id": "taxon_species_f17621972234f6e5",
+      "common_name": "Asian Houbara",
+      "scientific_name": "Chlamydotis macqueenii",
+      "rank": "species",
+      "order": "Otidiformes",
+      "family": "Otididae",
+      "genus": "Chlamydotis",
+      "aliases": [
+        "Asian Houbara",
+        "Chlamydotis macqueenii"
+      ],
+      "source_doc_id": "bow_species_Chlamydotis_macqueenii"
+    },
+    {
+      "canonical_taxon_id": "taxon_species_72f3154cf4dd782e",
+      "common_name": "Oilbird",
+      "scientific_name": "Steatornis caripensis",
+      "rank": "species",
+      "order": "Steatornithiformes",
+      "family": "Steatornithidae",
+      "genus": "Steatornis",
+      "aliases": [
+        "Oilbird",
+        "Steatornis caripensis"
+      ],
+      "source_doc_id": "bow_species_Steatornis_caripensis"
+    },
+    {
+      "canonical_taxon_id": "taxon_species_9a17335793f5a1e2",
+      "common_name": "Eastern Rockhopper Penguin",
+      "scientific_name": "Eudyptes filholi",
+      "rank": "species",
+      "order": "Sphenisciformes",
+      "family": "Spheniscidae",
+      "genus": "Eudyptes",
+      "aliases": [
+        "Eastern Rockhopper Penguin",
+        "Eudyptes filholi"
+      ],
+      "source_doc_id": "bow_species_Eudyptes_filholi"
+    },
+    {
+      "canonical_taxon_id": "taxon_species_ea630a780d10badb",
+      "common_name": "Greater Rhea",
+      "scientific_name": "Rhea americana",
+      "rank": "species",
+      "order": "Rheiformes",
+      "family": "Rheidae",
+      "genus": "Rhea",
+      "aliases": [
+        "Greater Rhea",
+        "Rhea americana"
+      ],
+      "source_doc_id": "bow_species_Rhea_americana"
+    },
+    {
+      "canonical_taxon_id": "taxon_species_e533fa82caed0ec9",
+      "common_name": "Hoatzin",
+      "scientific_name": "Opisthocomus hoazin",
+      "rank": "species",
+      "order": "Opisthocomiformes",
+      "family": "Opisthocomidae",
+      "genus": "Opisthocomus",
+      "aliases": [
+        "Hoatzin",
+        "Opisthocomus hoazin"
+      ],
+      "source_doc_id": "bow_species_Opisthocomus_hoazin"
+    },
+    {
+      "canonical_taxon_id": "taxon_species_7dcc219b63e337ae",
+      "common_name": "Curve-billed Tinamou",
+      "scientific_name": "Nothoprocta curvirostris",
+      "rank": "species",
+      "order": "Tinamiformes",
+      "family": "Tinamidae",
+      "genus": "Nothoprocta",
+      "aliases": [
+        "Curve-billed Tinamou",
+        "Nothoprocta curvirostris"
+      ],
+      "source_doc_id": "bow_species_Nothoprocta_curvirostris"
+    },
+    {
+      "canonical_taxon_id": "taxon_species_bd495c3b2748fedb",
+      "common_name": "Sri Lanka Frogmouth",
+      "scientific_name": "Batrachostomus moniliger",
+      "rank": "species",
+      "order": "Podargiformes",
+      "family": "Podargidae",
+      "genus": "Batrachostomus",
+      "aliases": [
+        "Sri Lanka Frogmouth",
+        "Batrachostomus moniliger"
+      ],
+      "source_doc_id": "bow_species_Batrachostomus_moniliger"
+    },
+    {
+      "canonical_taxon_id": "taxon_species_13bb262a6702d167",
+      "common_name": "Common Ostrich",
+      "scientific_name": "Struthio camelus",
+      "rank": "species",
+      "order": "Struthioniformes",
+      "family": "Struthionidae",
+      "genus": "Struthio",
+      "aliases": [
+        "Common Ostrich",
+        "Struthio camelus"
+      ],
+      "source_doc_id": "bow_species_Struthio_camelus"
+    },
+    {
+      "canonical_taxon_id": "taxon_species_119cc32d25fd46bd",
+      "common_name": "Bare-faced Go-away-bird",
+      "scientific_name": "Crinifer personatus",
+      "rank": "species",
+      "order": "Musophagiformes",
+      "family": "Musophagidae",
+      "genus": "Crinifer",
+      "aliases": [
+        "Bare-faced Go-away-bird",
+        "Crinifer personatus"
+      ],
+      "source_doc_id": "bow_species_Crinifer_personatus"
+    },
+    {
+      "canonical_taxon_id": "taxon_species_f0d2951dd7a3c702",
+      "common_name": "Sunbittern",
+      "scientific_name": "Eurypyga helias",
+      "rank": "species",
+      "order": "Eurypygiformes",
+      "family": "Eurypygidae",
+      "genus": "Eurypyga",
+      "aliases": [
+        "Sunbittern",
+        "Eurypyga helias"
+      ],
+      "source_doc_id": "bow_species_Eurypyga_helias"
+    },
+    {
+      "canonical_taxon_id": "taxon_species_b0745e7358e4bb48",
+      "common_name": "Australian Owlet-nightjar",
+      "scientific_name": "Aegotheles cristatus",
+      "rank": "species",
+      "order": "Aegotheliformes",
+      "family": "Aegothelidae",
+      "genus": "Aegotheles",
+      "aliases": [
+        "Australian Owlet-nightjar",
+        "Aegotheles cristatus"
+      ],
+      "source_doc_id": "bow_species_Aegotheles_cristatus"
+    },
+    {
+      "canonical_taxon_id": "taxon_species_8713e46468619789",
+      "common_name": "Speckled Mousebird",
+      "scientific_name": "Colius striatus",
+      "rank": "species",
+      "order": "Coliiformes",
+      "family": "Coliidae",
+      "genus": "Colius",
+      "aliases": [
+        "Speckled Mousebird",
+        "Colius striatus"
+      ],
+      "source_doc_id": "bow_species_Colius_striatus"
+    },
+    {
+      "canonical_taxon_id": "taxon_species_5264f869c8ecadb1",
+      "common_name": "Cuckoo-roller",
+      "scientific_name": "Leptosomus discolor",
+      "rank": "species",
+      "order": "Leptosomiformes",
+      "family": "Leptosomidae",
+      "genus": "Leptosomus",
+      "aliases": [
+        "Cuckoo-roller",
+        "Leptosomus discolor"
+      ],
+      "source_doc_id": "bow_species_Leptosomus_discolor"
+    },
+    {
+      "canonical_taxon_id": "taxon_species_d96ae3773fa48ff5",
+      "common_name": "Pin-tailed Sandgrouse",
+      "scientific_name": "Pterocles alchata",
+      "rank": "species",
+      "order": "Pterocliformes",
+      "family": "Pteroclidae",
+      "genus": "Pterocles",
+      "aliases": [
+        "Pin-tailed Sandgrouse",
+        "Pterocles alchata"
+      ],
+      "source_doc_id": "bow_species_Pterocles_alchata"
+    },
+    {
+      "canonical_taxon_id": "taxon_species_c7bc75508483e5a7",
+      "common_name": "Common Potoo",
+      "scientific_name": "Nyctibius griseus",
+      "rank": "species",
+      "order": "Nyctibiiformes",
+      "family": "Nyctibiidae",
+      "genus": "Nyctibius",
+      "aliases": [
+        "Common Potoo",
+        "Nyctibius griseus"
+      ],
+      "source_doc_id": "bow_species_Nyctibius_griseus"
+    },
+    {
+      "canonical_taxon_id": "taxon_species_dc584f44555e3f6e",
+      "common_name": "Subdesert Mesite",
+      "scientific_name": "Monias benschi",
+      "rank": "species",
+      "order": "Mesitornithiformes",
+      "family": "Mesitornithidae",
+      "genus": "Monias",
+      "aliases": [
+        "Subdesert Mesite",
+        "Monias benschi"
+      ],
+      "source_doc_id": "bow_species_Monias_benschi"
+    },
+    {
+      "canonical_taxon_id": "taxon_species_7adfbb61e1e03c46",
+      "common_name": "Black-legged Seriema",
+      "scientific_name": "Chunga burmeisteri",
+      "rank": "species",
+      "order": "Cariamiformes",
+      "family": "Cariamidae",
+      "genus": "Chunga",
+      "aliases": [
+        "Black-legged Seriema",
+        "Chunga burmeisteri"
+      ],
+      "source_doc_id": "bow_species_Chunga_burmeisteri"
+    },
+    {
+      "canonical_taxon_id": "taxon_species_28df8cb4c7a788fe",
+      "common_name": "Heermann's Gull",
+      "scientific_name": "Larus heermanni",
+      "rank": "species",
+      "order": "Charadriiformes",
+      "family": "Laridae",
+      "genus": "Larus",
+      "aliases": [
+        "Heermann's Gull",
+        "Larus heermanni"
+      ],
+      "source_doc_id": "bow_species_Larus_heermanni"
+    },
+    {
+      "canonical_taxon_id": "taxon_species_4181e0195e3539a6",
+      "common_name": "Least Auklet",
+      "scientific_name": "Aethia pusilla",
+      "rank": "species",
+      "order": "Charadriiformes",
+      "family": "Alcidae",
+      "genus": "Aethia",
+      "aliases": [
+        "Least Auklet",
+        "Aethia pusilla"
+      ],
+      "source_doc_id": "bow_species_Aethia_pusilla"
+    },
+    {
+      "canonical_taxon_id": "taxon_species_3c51e5178d0d33e3",
+      "common_name": "Eastern Bluebird",
+      "scientific_name": "Sialia sialis",
+      "rank": "species",
+      "order": "Passeriformes",
+      "family": "Turdidae",
+      "genus": "Sialia",
+      "aliases": [
+        "Eastern Bluebird",
+        "Sialia sialis"
+      ],
+      "source_doc_id": "bow_species_Sialia_sialis"
+    },
+    {
+      "canonical_taxon_id": "taxon_species_910688dffcc975df",
+      "common_name": "Great Frigatebird",
+      "scientific_name": "Fregata minor",
+      "rank": "species",
+      "order": "Suliformes",
+      "family": "Fregatidae",
+      "genus": "Fregata",
+      "aliases": [
+        "Great Frigatebird",
+        "Fregata minor"
+      ],
+      "source_doc_id": "bow_species_Fregata_minor"
+    },
+    {
+      "canonical_taxon_id": "taxon_species_e3633f8d7296b7e3",
+      "common_name": "American Oystercatcher",
+      "scientific_name": "Haematopus palliatus",
+      "rank": "species",
+      "order": "Charadriiformes",
+      "family": "Haematopodidae",
+      "genus": "Haematopus",
+      "aliases": [
+        "American Oystercatcher",
+        "Haematopus palliatus"
+      ],
+      "source_doc_id": "bow_species_Haematopus_palliatus"
+    },
+    {
+      "canonical_taxon_id": "taxon_species_33972136fe1b164c",
+      "common_name": "Redpoll",
+      "scientific_name": "Acanthis flammea",
+      "rank": "species",
+      "order": "Passeriformes",
+      "family": "Fringillidae",
+      "genus": "Acanthis",
+      "aliases": [
+        "Redpoll",
+        "Acanthis flammea"
+      ],
+      "source_doc_id": "bow_species_Acanthis_flammea"
+    },
+    {
+      "canonical_taxon_id": "taxon_species_2671fb323b9ab724",
+      "common_name": "Bobolink",
+      "scientific_name": "Dolichonyx oryzivorus",
+      "rank": "species",
+      "order": "Passeriformes",
+      "family": "Icteridae",
+      "genus": "Dolichonyx",
+      "aliases": [
+        "Bobolink",
+        "Dolichonyx oryzivorus"
+      ],
+      "source_doc_id": "bow_species_Dolichonyx_oryzivorus"
+    },
+    {
+      "canonical_taxon_id": "taxon_species_ad0f90a72c0f34f6",
+      "common_name": "Northern Shrike",
+      "scientific_name": "Lanius borealis",
+      "rank": "species",
+      "order": "Passeriformes",
+      "family": "Laniidae",
+      "genus": "Lanius",
+      "aliases": [
+        "Northern Shrike",
+        "Lanius borealis"
+      ],
+      "source_doc_id": "bow_species_Lanius_borealis"
+    },
+    {
+      "canonical_taxon_id": "taxon_species_8ae32de96bd828a4",
+      "common_name": "Indigo Bunting",
+      "scientific_name": "Passerina cyanea",
+      "rank": "species",
+      "order": "Passeriformes",
+      "family": "Cardinalidae",
+      "genus": "Passerina",
+      "aliases": [
+        "Indigo Bunting",
+        "Passerina cyanea"
+      ],
+      "source_doc_id": "bow_species_Passerina_cyanea"
+    },
+    {
+      "canonical_taxon_id": "taxon_species_a9e8e28ba81a1948",
+      "common_name": "Double-crested Cormorant",
+      "scientific_name": "Nannopterum auritum",
+      "rank": "species",
+      "order": "Suliformes",
+      "family": "Phalacrocoracidae",
+      "genus": "Nannopterum",
+      "aliases": [
+        "Double-crested Cormorant",
+        "Nannopterum auritum"
+      ],
+      "source_doc_id": "bow_species_Nannopterum_auritum"
+    },
+    {
+      "canonical_taxon_id": "taxon_species_ce57352e60baf029",
+      "common_name": "Lapland Longspur",
+      "scientific_name": "Calcarius lapponicus",
+      "rank": "species",
+      "order": "Passeriformes",
+      "family": "Calcariidae",
+      "genus": "Calcarius",
+      "aliases": [
+        "Lapland Longspur",
+        "Calcarius lapponicus"
+      ],
+      "source_doc_id": "bow_species_Calcarius_lapponicus"
+    },
+    {
+      "canonical_taxon_id": "taxon_species_0da493d63048249b",
+      "common_name": "Golden-crowned Kinglet",
+      "scientific_name": "Regulus satrapa",
+      "rank": "species",
+      "order": "Passeriformes",
+      "family": "Regulidae",
+      "genus": "Regulus",
+      "aliases": [
+        "Golden-crowned Kinglet",
+        "Regulus satrapa"
+      ],
+      "source_doc_id": "bow_species_Regulus_satrapa"
+    },
+    {
+      "canonical_taxon_id": "taxon_species_d469b4eb8c84713a",
+      "common_name": "Hawaiian Crow",
+      "scientific_name": "Corvus hawaiiensis",
+      "rank": "species",
+      "order": "Passeriformes",
+      "family": "Corvidae",
+      "genus": "Corvus",
+      "aliases": [
+        "Hawaiian Crow",
+        "Corvus hawaiiensis"
+      ],
+      "source_doc_id": "bow_species_Corvus_hawaiiensis"
+    },
+    {
+      "canonical_taxon_id": "taxon_species_e45e285285fbde02",
+      "common_name": "Common Chiffchaff",
+      "scientific_name": "Phylloscopus collybita",
+      "rank": "species",
+      "order": "Passeriformes",
+      "family": "Phylloscopidae",
+      "genus": "Phylloscopus",
+      "aliases": [
+        "Common Chiffchaff",
+        "Phylloscopus collybita"
+      ],
+      "source_doc_id": "bow_species_Phylloscopus_collybita"
+    },
+    {
+      "canonical_taxon_id": "taxon_species_e9c1e09d9e599aa9",
+      "common_name": "Gray Vireo",
+      "scientific_name": "Vireo vicinior",
+      "rank": "species",
+      "order": "Passeriformes",
+      "family": "Vireonidae",
+      "genus": "Vireo",
+      "aliases": [
+        "Gray Vireo",
+        "Vireo vicinior"
+      ],
+      "source_doc_id": "bow_species_Vireo_vicinior"
+    },
+    {
+      "canonical_taxon_id": "taxon_species_c7f8f1864352ab0f",
+      "common_name": "Semipalmated Plover",
+      "scientific_name": "Charadrius semipalmatus",
+      "rank": "species",
+      "order": "Charadriiformes",
+      "family": "Charadriidae",
+      "genus": "Charadrius",
+      "aliases": [
+        "Semipalmated Plover",
+        "Charadrius semipalmatus"
+      ],
+      "source_doc_id": "bow_species_Charadrius_semipalmatus"
+    },
+    {
+      "canonical_taxon_id": "taxon_species_6edd20f0d070e34d",
+      "common_name": "Willow Tit",
+      "scientific_name": "Poecile montanus",
+      "rank": "species",
+      "order": "Passeriformes",
+      "family": "Paridae",
+      "genus": "Poecile",
+      "aliases": [
+        "Willow Tit",
+        "Poecile montanus"
+      ],
+      "source_doc_id": "bow_species_Poecile_montanus"
+    },
+    {
+      "canonical_taxon_id": "taxon_species_e13e24c74728c5c0",
+      "common_name": "Ringed Storm-Petrel",
+      "scientific_name": "Hydrobates hornbyi",
+      "rank": "species",
+      "order": "Procellariiformes",
+      "family": "Hydrobatidae",
+      "genus": "Hydrobates",
+      "aliases": [
+        "Ringed Storm-Petrel",
+        "Hydrobates hornbyi"
+      ],
+      "source_doc_id": "bow_species_Hydrobates_hornbyi"
+    },
+    {
+      "canonical_taxon_id": "taxon_species_bb6938930c8cb589",
+      "common_name": "Parasitic Jaeger",
+      "scientific_name": "Stercorarius parasiticus",
+      "rank": "species",
+      "order": "Charadriiformes",
+      "family": "Stercorariidae",
+      "genus": "Stercorarius",
+      "aliases": [
+        "Parasitic Jaeger",
+        "Stercorarius parasiticus"
+      ],
+      "source_doc_id": "bow_species_Stercorarius_parasiticus"
+    },
+    {
+      "canonical_taxon_id": "taxon_species_4f36b27ace2c219b",
+      "common_name": "Bewick's Wren",
+      "scientific_name": "Thryomanes bewickii",
+      "rank": "species",
+      "order": "Passeriformes",
+      "family": "Troglodytidae",
+      "genus": "Thryomanes",
+      "aliases": [
+        "Bewick's Wren",
+        "Thryomanes bewickii"
+      ],
+      "source_doc_id": "bow_species_Thryomanes_bewickii"
+    },
+    {
+      "canonical_taxon_id": "taxon_species_c51e42e7d218bcc2",
+      "common_name": "Black-necked Stilt",
+      "scientific_name": "Himantopus mexicanus",
+      "rank": "species",
+      "order": "Charadriiformes",
+      "family": "Recurvirostridae",
+      "genus": "Himantopus",
+      "aliases": [
+        "Black-necked Stilt",
+        "Himantopus mexicanus"
+      ],
+      "source_doc_id": "bow_species_Himantopus_mexicanus"
+    },
+    {
+      "canonical_taxon_id": "taxon_species_384896dc8fb78c95",
+      "common_name": "White-throated Sparrow",
+      "scientific_name": "Zonotrichia albicollis",
+      "rank": "species",
+      "order": "Passeriformes",
+      "family": "Passerellidae",
+      "genus": "Zonotrichia",
+      "aliases": [
+        "White-throated Sparrow",
+        "Zonotrichia albicollis"
+      ],
+      "source_doc_id": "bow_species_Zonotrichia_albicollis"
+    },
+    {
+      "canonical_taxon_id": "taxon_species_b6614b7d6c914c4e",
+      "common_name": "Scissor-tailed Flycatcher",
+      "scientific_name": "Tyrannus forficatus",
+      "rank": "species",
+      "order": "Passeriformes",
+      "family": "Tyrannidae",
+      "genus": "Tyrannus",
+      "aliases": [
+        "Scissor-tailed Flycatcher",
+        "Tyrannus forficatus"
+      ],
+      "source_doc_id": "bow_species_Tyrannus_forficatus"
+    },
+    {
+      "canonical_taxon_id": "taxon_species_d2595bcbea4f2c64",
+      "common_name": "Java Sparrow",
+      "scientific_name": "Padda oryzivora",
+      "rank": "species",
+      "order": "Passeriformes",
+      "family": "Estrildidae",
+      "genus": "Padda",
+      "aliases": [
+        "Java Sparrow",
+        "Padda oryzivora"
+      ],
+      "source_doc_id": "bow_species_Padda_oryzivora"
+    },
+    {
+      "canonical_taxon_id": "taxon_species_c00ddbcb338b7177",
+      "common_name": "Mountain Quail",
+      "scientific_name": "Oreortyx pictus",
+      "rank": "species",
+      "order": "Galliformes",
+      "family": "Odontophoridae",
+      "genus": "Oreortyx",
+      "aliases": [
+        "Mountain Quail",
+        "Oreortyx pictus"
+      ],
+      "source_doc_id": "bow_species_Oreortyx_pictus"
+    },
+    {
+      "canonical_taxon_id": "taxon_species_ab2a7e31df41a2bd",
+      "common_name": "Eurasian Skylark",
+      "scientific_name": "Alauda arvensis",
+      "rank": "species",
+      "order": "Passeriformes",
+      "family": "Alaudidae",
+      "genus": "Alauda",
+      "aliases": [
+        "Eurasian Skylark",
+        "Alauda arvensis"
+      ],
+      "source_doc_id": "bow_species_Alauda_arvensis"
+    },
+    {
+      "canonical_taxon_id": "taxon_species_6b75b1195d517e5b",
+      "common_name": "Brown Creeper",
+      "scientific_name": "Certhia americana",
+      "rank": "species",
+      "order": "Passeriformes",
+      "family": "Certhiidae",
+      "genus": "Certhia",
+      "aliases": [
+        "Brown Creeper",
+        "Certhia americana"
+      ],
+      "source_doc_id": "bow_species_Certhia_americana"
+    },
+    {
+      "canonical_taxon_id": "taxon_species_80c70ea4a37df903",
+      "common_name": "House Sparrow",
+      "scientific_name": "Passer domesticus",
+      "rank": "species",
+      "order": "Passeriformes",
+      "family": "Passeridae",
+      "genus": "Passer",
+      "aliases": [
+        "House Sparrow",
+        "Passer domesticus"
+      ],
+      "source_doc_id": "bow_species_Passer_domesticus"
+    },
+    {
+      "canonical_taxon_id": "taxon_species_7e976447363634fa",
+      "common_name": "Northern Mockingbird",
+      "scientific_name": "Mimus polyglottos",
+      "rank": "species",
+      "order": "Passeriformes",
+      "family": "Mimidae",
+      "genus": "Mimus",
+      "aliases": [
+        "Northern Mockingbird",
+        "Mimus polyglottos"
+      ],
+      "source_doc_id": "bow_species_Mimus_polyglottos"
+    },
+    {
+      "canonical_taxon_id": "taxon_species_492952accf6988e8",
+      "common_name": "Eastern Yellow Wagtail",
+      "scientific_name": "Motacilla tschutschensis",
+      "rank": "species",
+      "order": "Passeriformes",
+      "family": "Motacillidae",
+      "genus": "Motacilla",
+      "aliases": [
+        "Eastern Yellow Wagtail",
+        "Motacilla tschutschensis"
+      ],
+      "source_doc_id": "bow_species_Motacilla_tschutschensis"
+    },
+    {
+      "canonical_taxon_id": "taxon_species_6a257c2d4cc7ff21",
+      "common_name": "Tree Swallow",
+      "scientific_name": "Tachycineta bicolor",
+      "rank": "species",
+      "order": "Passeriformes",
+      "family": "Hirundinidae",
+      "genus": "Tachycineta",
+      "aliases": [
+        "Tree Swallow",
+        "Tachycineta bicolor"
+      ],
+      "source_doc_id": "bow_species_Tachycineta_bicolor"
+    },
+    {
+      "canonical_taxon_id": "taxon_species_8c6897f137ab0b96",
+      "common_name": "Brown-headed Nuthatch",
+      "scientific_name": "Sitta pusilla",
+      "rank": "species",
+      "order": "Passeriformes",
+      "family": "Sittidae",
+      "genus": "Sitta",
+      "aliases": [
+        "Brown-headed Nuthatch",
+        "Sitta pusilla"
+      ],
+      "source_doc_id": "bow_species_Sitta_pusilla"
+    },
+    {
+      "canonical_taxon_id": "taxon_species_f60e68400331563d",
+      "common_name": "European Starling",
+      "scientific_name": "Sturnus vulgaris",
+      "rank": "species",
+      "order": "Passeriformes",
+      "family": "Sturnidae",
+      "genus": "Sturnus",
+      "aliases": [
+        "European Starling",
+        "Sturnus vulgaris"
+      ],
+      "source_doc_id": "bow_species_Sturnus_vulgaris"
+    },
+    {
+      "canonical_taxon_id": "taxon_species_1d14cf30406be207",
+      "common_name": "Limpkin",
+      "scientific_name": "Aramus guarauna",
+      "rank": "species",
+      "order": "Gruiformes",
+      "family": "Aramidae",
+      "genus": "Aramus",
+      "aliases": [
+        "Limpkin",
+        "Aramus guarauna"
+      ],
+      "source_doc_id": "bow_species_Aramus_guarauna"
+    },
+    {
+      "canonical_taxon_id": "taxon_species_aae74aac89abbb5e",
+      "common_name": "Pine Bunting",
+      "scientific_name": "Emberiza leucocephalos",
+      "rank": "species",
+      "order": "Passeriformes",
+      "family": "Emberizidae",
+      "genus": "Emberiza",
+      "aliases": [
+        "Pine Bunting",
+        "Emberiza leucocephalos"
+      ],
+      "source_doc_id": "bow_species_Emberiza_leucocephalos"
+    },
+    {
+      "canonical_taxon_id": "taxon_species_33cafd27c64bc4c6",
+      "common_name": "Chimney Swift",
+      "scientific_name": "Chaetura pelagica",
+      "rank": "species",
+      "order": "Apodiformes",
+      "family": "Apodidae",
+      "genus": "Chaetura",
+      "aliases": [
+        "Chimney Swift",
+        "Chaetura pelagica"
+      ],
+      "source_doc_id": "bow_species_Chaetura_pelagica"
+    },
+    {
+      "canonical_taxon_id": "taxon_species_d8fc886f8e66d624",
+      "common_name": "Yellow-breasted Chat",
+      "scientific_name": "Icteria virens",
+      "rank": "species",
+      "order": "Passeriformes",
+      "family": "Icteriidae",
+      "genus": "Icteria",
+      "aliases": [
+        "Yellow-breasted Chat",
+        "Icteria virens"
+      ],
+      "source_doc_id": "bow_species_Icteria_virens"
+    },
+    {
+      "canonical_taxon_id": "taxon_species_1b862e60bbe1877c",
+      "common_name": "Anhinga",
+      "scientific_name": "Anhinga anhinga",
+      "rank": "species",
+      "order": "Suliformes",
+      "family": "Anhingidae",
+      "genus": "Anhinga",
+      "aliases": [
+        "Anhinga",
+        "Anhinga anhinga"
+      ],
+      "source_doc_id": "bow_species_Anhinga_anhinga"
+    },
+    {
+      "canonical_taxon_id": "taxon_species_be29fdb4e60b4c8b",
+      "common_name": "Temminck's Courser",
+      "scientific_name": "Cursorius temminckii",
+      "rank": "species",
+      "order": "Charadriiformes",
+      "family": "Glareolidae",
+      "genus": "Cursorius",
+      "aliases": [
+        "Temminck's Courser",
+        "Cursorius temminckii"
+      ],
+      "source_doc_id": "bow_species_Cursorius_temminckii"
+    },
+    {
+      "canonical_taxon_id": "taxon_species_03c9bf88647b8b69",
+      "common_name": "Sooty Owl",
+      "scientific_name": "Tyto tenebricosa",
+      "rank": "species",
+      "order": "Strigiformes",
+      "family": "Tytonidae",
+      "genus": "Tyto",
+      "aliases": [
+        "Sooty Owl",
+        "Tyto tenebricosa"
+      ],
+      "source_doc_id": "bow_species_Tyto_tenebricosa"
+    },
+    {
+      "canonical_taxon_id": "taxon_species_b102751f581b8e6e",
+      "common_name": "Blue-gray Gnatcatcher",
+      "scientific_name": "Polioptila caerulea",
+      "rank": "species",
+      "order": "Passeriformes",
+      "family": "Polioptilidae",
+      "genus": "Polioptila",
+      "aliases": [
+        "Blue-gray Gnatcatcher",
+        "Polioptila caerulea"
+      ],
+      "source_doc_id": "bow_species_Polioptila_caerulea"
+    },
+    {
+      "canonical_taxon_id": "taxon_species_82c5fad55b50e2b8",
+      "common_name": "American White Pelican",
+      "scientific_name": "Pelecanus erythrorhynchos",
+      "rank": "species",
+      "order": "Pelecaniformes",
+      "family": "Pelecanidae",
+      "genus": "Pelecanus",
+      "aliases": [
+        "American White Pelican",
+        "Pelecanus erythrorhynchos"
+      ],
+      "source_doc_id": "bow_species_Pelecanus_erythrorhynchos"
+    },
+    {
+      "canonical_taxon_id": "taxon_species_08a3a2a1fb9baed5",
+      "common_name": "Roseate Spoonbill",
+      "scientific_name": "Platalea ajaja",
+      "rank": "species",
+      "order": "Pelecaniformes",
+      "family": "Threskiornithidae",
+      "genus": "Platalea",
+      "aliases": [
+        "Roseate Spoonbill",
+        "Platalea ajaja"
+      ],
+      "source_doc_id": "bow_species_Platalea_ajaja"
+    },
+    {
+      "canonical_taxon_id": "taxon_species_581932ad33030286",
+      "common_name": "Cape Weaver",
+      "scientific_name": "Ploceus capensis",
+      "rank": "species",
+      "order": "Passeriformes",
+      "family": "Ploceidae",
+      "genus": "Ploceus",
+      "aliases": [
+        "Cape Weaver",
+        "Ploceus capensis"
+      ],
+      "source_doc_id": "bow_species_Ploceus_capensis"
+    },
+    {
+      "canonical_taxon_id": "taxon_species_ed73c5dfac478b3e",
+      "common_name": "African Finfoot",
+      "scientific_name": "Podica senegalensis",
+      "rank": "species",
+      "order": "Gruiformes",
+      "family": "Heliornithidae",
+      "genus": "Podica",
+      "aliases": [
+        "African Finfoot",
+        "Podica senegalensis"
+      ],
+      "source_doc_id": "bow_species_Podica_senegalensis"
+    },
+    {
+      "canonical_taxon_id": "taxon_species_06ed11be55ed440e",
+      "common_name": "Marsh Warbler",
+      "scientific_name": "Acrocephalus palustris",
+      "rank": "species",
+      "order": "Passeriformes",
+      "family": "Acrocephalidae",
+      "genus": "Acrocephalus",
+      "aliases": [
+        "Marsh Warbler",
+        "Acrocephalus palustris"
+      ],
+      "source_doc_id": "bow_species_Acrocephalus_palustris"
+    },
+    {
+      "canonical_taxon_id": "taxon_species_16ba158e5730d10b",
+      "common_name": "Cedar Waxwing",
+      "scientific_name": "Bombycilla cedrorum",
+      "rank": "species",
+      "order": "Passeriformes",
+      "family": "Bombycillidae",
+      "genus": "Bombycilla",
+      "aliases": [
+        "Cedar Waxwing",
+        "Bombycilla cedrorum"
+      ],
+      "source_doc_id": "bow_species_Bombycilla_cedrorum"
+    },
+    {
+      "canonical_taxon_id": "taxon_species_1231d14617f55b2c",
+      "common_name": "Northern Jacana",
+      "scientific_name": "Jacana spinosa",
+      "rank": "species",
+      "order": "Charadriiformes",
+      "family": "Jacanidae",
+      "genus": "Jacana",
+      "aliases": [
+        "Northern Jacana",
+        "Jacana spinosa"
+      ],
+      "source_doc_id": "bow_species_Jacana_spinosa"
+    },
+    {
+      "canonical_taxon_id": "taxon_species_b32781bd428d514c",
+      "common_name": "Laysan Albatross",
+      "scientific_name": "Phoebastria immutabilis",
+      "rank": "species",
+      "order": "Procellariiformes",
+      "family": "Diomedeidae",
+      "genus": "Phoebastria",
+      "aliases": [
+        "Laysan Albatross",
+        "Phoebastria immutabilis"
+      ],
+      "source_doc_id": "bow_species_Phoebastria_immutabilis"
+    },
+    {
+      "canonical_taxon_id": "taxon_species_9be14fba264bf3aa",
+      "common_name": "King Rail",
+      "scientific_name": "Rallus elegans",
+      "rank": "species",
+      "order": "Gruiformes",
+      "family": "Rallidae",
+      "genus": "Rallus",
+      "aliases": [
+        "King Rail",
+        "Rallus elegans"
+      ],
+      "source_doc_id": "bow_species_Rallus_elegans"
+    },
+    {
+      "canonical_taxon_id": "taxon_species_acd4d4eb54a5ff40",
+      "common_name": "Hawaii Elepaio",
+      "scientific_name": "Chasiempis sandwichensis",
+      "rank": "species",
+      "order": "Passeriformes",
+      "family": "Monarchidae",
+      "genus": "Chasiempis",
+      "aliases": [
+        "Hawaii Elepaio",
+        "Chasiempis sandwichensis"
+      ],
+      "source_doc_id": "bow_species_Chasiempis_sandwichensis"
+    },
+    {
+      "canonical_taxon_id": "taxon_species_c97cccbd5b0202af",
+      "common_name": "Bluethroat",
+      "scientific_name": "Luscinia svecica",
+      "rank": "species",
+      "order": "Passeriformes",
+      "family": "Muscicapidae",
+      "genus": "Luscinia",
+      "aliases": [
+        "Bluethroat",
+        "Luscinia svecica"
+      ],
+      "source_doc_id": "bow_species_Luscinia_svecica"
+    },
+    {
+      "canonical_taxon_id": "taxon_species_2efb1f39a3e7c111",
+      "common_name": "Phainopepla",
+      "scientific_name": "Phainopepla nitens",
+      "rank": "species",
+      "order": "Passeriformes",
+      "family": "Ptiliogonatidae",
+      "genus": "Phainopepla",
+      "aliases": [
+        "Phainopepla",
+        "Phainopepla nitens"
+      ],
+      "source_doc_id": "bow_species_Phainopepla_nitens"
+    },
+    {
+      "canonical_taxon_id": "taxon_species_9b9b9062b151cbd2",
+      "common_name": "Osprey",
+      "scientific_name": "Pandion haliaetus",
+      "rank": "species",
+      "order": "Accipitriformes",
+      "family": "Pandionidae",
+      "genus": "Pandion",
+      "aliases": [
+        "Osprey",
+        "Pandion haliaetus"
+      ],
+      "source_doc_id": "bow_species_Pandion_haliaetus"
+    }
+  ],
+  "mandatory_taxa_resolved": {
+    "Southern Cassowary": "taxon_species_bdb2fed421116900",
+    "Casuarius casuarius": "taxon_species_bdb2fed421116900",
+    "Hawaiian Duck": "taxon_species_a3736ebf17fe5b22",
+    "Crested Partridge": "taxon_species_678bcda8f67a155a",
+    "Rollulus rouloul": "taxon_species_678bcda8f67a155a",
+    "Pink-headed Duck": "taxon_species_9bb745d14be32e34",
+    "Okarito Brown Kiwi": "taxon_species_6f3cf1fb12cff900"
+  },
+  "mandatory_taxa_missing": [],
+  "max_chunk_preview_chars": 700,
+  "data_usage_note": "This demo graph exports structured facts, evidence quotes, and short chunk previews only. It does not redistribute full BOW raw text or the complete local KG artifacts."
+}

@@ -27,6 +27,16 @@ KIMI_MODEL_NAME = "kimi-k2.5"
 SUBJECTIVE_ALLOWED_TYPES: Dict[str, set[str]] = {
     "Bird-Classify": {"Taxonomic Hierarchy", "Taxon-to-Feature"},
 }
+TARGET_AWARE_SUBJECTIVE_DATASETS = {
+    "Bird-Comp",
+    "Bird-Life",
+    "Bird-Eco",
+    "Bird-Con",
+    "Bird-Reason",
+    "Bird-Plan",
+}
+LEAKAGE_SENSITIVE_DATASETS = {"Bird-ID"}
+LEAKAGE_SENSITIVE_CLASSIFY_TYPES = {"Feature-to-Family", "Feature-to-Order", "Order-to-Family"}
 FAIL_FAST_PATTERNS = (
     "insufficient_balance",
     "insufficient balance",
@@ -43,6 +53,7 @@ class SubjectiveQuestion:
     qid: str
     dataset: str
     type: str
+    target_entity: str
     question: str
     gold_answer: str
     evidence_quotes: list[str]
@@ -117,6 +128,7 @@ def standardize_subjective_row(row: Dict[str, Any]) -> SubjectiveQuestion:
         qid=str(row.get("question_id", "")).strip(),
         dataset=str(row.get("dataset", "")).strip(),
         type=str(row.get("type", "")).strip(),
+        target_entity=str(row.get("target_entity", "")).strip(),
         question=str(row.get("question", "")).strip(),
         gold_answer=str(row.get("answer", "")).strip(),
         evidence_quotes=_to_str_list(provenance.get("exact_quote")),
@@ -175,6 +187,20 @@ def should_inject_constraint(question: str, constraint: Optional[str]) -> bool:
     normalized_question = normalize_whitespace(question).lower()
     normalized_constraint = normalize_whitespace(constraint).lower()
     return bool(normalized_constraint) and normalized_constraint not in normalized_question
+
+
+def is_leakage_sensitive_subjective_item(item: Any) -> bool:
+    dataset = str(getattr(item, "dataset", "") or "").strip()
+    item_type = str(getattr(item, "type", "") or "").strip()
+    return dataset in LEAKAGE_SENSITIVE_DATASETS or (
+        dataset == "Bird-Classify" and item_type in LEAKAGE_SENSITIVE_CLASSIFY_TYPES
+    )
+
+
+def should_inject_target_entity(item: Any) -> bool:
+    dataset = str(getattr(item, "dataset", "") or "").strip()
+    target = str(getattr(item, "target_entity", "") or "").strip()
+    return bool(target) and dataset in TARGET_AWARE_SUBJECTIVE_DATASETS and not is_leakage_sensitive_subjective_item(item)
 
 
 def prepare_candidate_question(item: SubjectiveQuestion) -> str:
@@ -347,13 +373,16 @@ def build_candidate_messages(
     ]
     if item.knowledge_domain:
         instructions.append(f"Knowledge domain: {item.knowledge_domain}")
+    if should_inject_target_entity(item):
+        instructions.append(f"Target entity: {str(getattr(item, 'target_entity', '')).strip()}")
     instructions.extend(
         [
             f"Question: {question_for_model}",
-            "Do not reveal or guess any hidden target species name.",
             'Return only: {"answer": "..."}',
         ]
     )
+    if is_leakage_sensitive_subjective_item(item):
+        instructions.insert(-1, "Do not reveal or guess any hidden target species name.")
     if mode == "cot":
         instructions.append("You may reason privately, but the output must still contain only the final answer JSON.")
 

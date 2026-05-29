@@ -1,0 +1,895 @@
+{
+  "question_root": "question",
+  "backup_root": "question_anonymized_backup",
+  "backup_status": "existing",
+  "placeholders": [
+    "[the bird]",
+    "[The bird]",
+    "[this bird]",
+    "[This bird]",
+    "[This Bird]",
+    "[target species]",
+    "[Target Species]",
+    "[the species]",
+    "[The species]"
+  ],
+  "datasets": [
+    {
+      "dataset": "Bird-Classify",
+      "path": "question\\Bird-Classify\\Bird-Classify_questions.jsonl",
+      "total_rows": 500,
+      "replaced_rows": 0,
+      "skipped_rows": 500,
+      "rows_still_containing_placeholders": 0,
+      "removed_prompt_ready_fields_rows": 0,
+      "warnings": [],
+      "examples": []
+    },
+    {
+      "dataset": "Bird-Comp",
+      "path": "question\\Bird-Comp\\Bird-Comp_questions.jsonl",
+      "total_rows": 986,
+      "replaced_rows": 985,
+      "skipped_rows": 1,
+      "rows_still_containing_placeholders": 0,
+      "removed_prompt_ready_fields_rows": 0,
+      "warnings": [],
+      "examples": [
+        {
+          "question_id": "bird_comp_0001",
+          "target_entity": "Nothoprocta taczanowskii",
+          "question_before": "Based on the provided text, how can [the bird] be distinguished from the form described as 'N. godmani' in terms of its taxonomic relationship and morphological characteristics?",
+          "question_after": "Based on the provided text, how can Nothoprocta taczanowskii be distinguished from the form described as 'N. godmani' in terms of its taxonomic relationship and morphological characteristics?",
+          "answer_before": "[The bird] is distinguished from the form described as 'N. godmani' primarily through taxonomic classification and life stage differences. According to the text, 'N. godmani' is considered an immature form of [the bird], indicating that it is not a separate species but rather a younger version of the same species. Morphologically, this suggests that 'N. godmani' likely exhibits characteristics typical of immature individuals, such as browner chest and upperparts, light brown flacks with black spotting, and more ochraceous bars on the remiges, as described for immature [the bird]. In contrast, adult [the bird] has a distinctive long curved bill, dull breast, pale abdomen, and specific plumage patterns including dark cap, barred upperparts, and light tawny underparts with whitish central abdomen. The key distinction lies in the developmental stage, with 'N. godmani' representing the immature phase, which may show less defined or different coloration compared to the adult form.",
+          "answer_after": "Nothoprocta taczanowskii is distinguished from the form described as 'N. godmani' primarily through taxonomic classification and life stage differences. According to the text, 'N. godmani' is considered an immature form of Nothoprocta taczanowskii, indicating that it is not a separate species but rather a younger version of the same species. Morphologically, this suggests that 'N. godmani' likely exhibits characteristics typical of immature individuals, such as browner chest and upperparts, light brown flacks with black spotting, and more ochraceous bars on the remiges, as described for immature Nothoprocta taczanowskii. In contrast, adult Nothoprocta taczanowskii has a distinctive long curved bill, dull breast, pale abdomen, and specific plumage patterns including dark cap, barred upperparts, and light tawny underparts with whitish central abdomen. The key distinction lies in the developmental stage, with 'N. godmani' representing the immature phase, which may show less defined or different coloration compared to the adult form."
+        },
+        {
+          "question_id": "bird_comp_0002",
+          "target_entity": "Nothura boraquira",
+          "question_before": "Based on the Identification section, how can [the bird] be distinguished from N. maculosa in terms of morphological features?",
+          "question_after": "Based on the Identification section, how can Nothura boraquira be distinguished from N. maculosa in terms of morphological features?",
+          "answer_before": "[The bird] can be distinguished from N. maculosa by the arrangement of streaks over the neck, where [the bird] has three visible rows or stripes: one on the central hindneck, a second and often boldest row from the ear-coverts to the sides of the lower neck, and a usually less obvious third along the mid-foreneck. Additionally, [the bird] differs from congeners in having lesser underwing-coverts barred, which is a specific feature not mentioned for N. maculosa in this context.",
+          "answer_after": "Nothura boraquira can be distinguished from N. maculosa by the arrangement of streaks over the neck, where Nothura boraquira has three visible rows or stripes: one on the central hindneck, a second and often boldest row from the ear-coverts to the sides of the lower neck, and a usually less obvious third along the mid-foreneck. Additionally, Nothura boraquira differs from congeners in having lesser underwing-coverts barred, which is a specific feature not mentioned for N. maculosa in this context."
+        },
+        {
+          "question_id": "bird_comp_0003",
+          "target_entity": "Mareca marecula",
+          "question_before": "Based on the systematics history, what is the taxonomic relationship of [the bird] to other species, and what major physical distinctions are implied from its classification?",
+          "question_after": "Based on the systematics history, what is the taxonomic relationship of Mareca marecula to other species, and what major physical distinctions are implied from its classification?",
+          "answer_before": "[The bird] is described as monotypic, meaning it has no recognized subspecies and is considered a distinct species without close phylogenetic relatives mentioned in the text. This classification implies that it lacks sister species or subspecies for direct comparison, and its major physical distinctions are not detailed in the provided text, as it is treated as a unique entity in its systematics.",
+          "answer_after": "Mareca marecula is described as monotypic, meaning it has no recognized subspecies and is considered a distinct species without close phylogenetic relatives mentioned in the text. This classification implies that it lacks sister species or subspecies for direct comparison, and its major physical distinctions are not detailed in the provided text, as it is treated as a unique entity in its systematics."
+        },
+        {
+          "question_id": "bird_comp_0004",
+          "target_entity": "Branta ruficollis",
+          "question_before": "Based on the provided text, how can [the bird] be distinguished from its juvenile form in terms of morphology and plumage?",
+          "question_after": "Based on the provided text, how can Branta ruficollis be distinguished from its juvenile form in terms of morphology and plumage?",
+          "answer_before": "The adult [the bird] has distinct chestnut-red patches on the head-sides, foreneck, and breast, contrasting with black crown, nape, back, wings, tail, and belly, along with white lores and barring on wing-coverts and flanks, white borders to the red cheek and neck patches, a white ventral region, and a broad white band on the flanks. In contrast, the juvenile is duller with white spotting on the sides and mantle; its chestnut markings are weaker and less clearly defined, the cheek patch is smaller and greyer, and it has less barring on the flanks.",
+          "answer_after": "The adult Branta ruficollis has distinct chestnut-red patches on the head-sides, foreneck, and breast, contrasting with black crown, nape, back, wings, tail, and belly, along with white lores and barring on wing-coverts and flanks, white borders to the red cheek and neck patches, a white ventral region, and a broad white band on the flanks. In contrast, the juvenile is duller with white spotting on the sides and mantle; its chestnut markings are weaker and less clearly defined, the cheek patch is smaller and greyer, and it has less barring on the flanks."
+        },
+        {
+          "question_id": "bird_comp_0005",
+          "target_entity": "Sarkidiornis melanotos",
+          "question_before": "How can [the bird] be distinguished from Asarcornis scutulata in terms of morphology, size, or behavior?",
+          "question_after": "How can Sarkidiornis melanotos be distinguished from Asarcornis scutulata in terms of morphology, size, or behavior?",
+          "answer_before": "[The bird] can be distinguished from Asarcornis scutulata primarily by size and plumage characteristics. Asarcornis scutulata is larger than [the bird] and has a darker breast and white wings, whereas [the bird] does not have these specific features as described in the text. This comparison is relevant in areas where the two species are sympatric in Asia.",
+          "answer_after": "Sarkidiornis melanotos can be distinguished from Asarcornis scutulata primarily by size and plumage characteristics. Asarcornis scutulata is larger than Sarkidiornis melanotos and has a darker breast and white wings, whereas Sarkidiornis melanotos does not have these specific features as described in the text. This comparison is relevant in areas where the two species are sympatric in Asia."
+        },
+        {
+          "question_id": "bird_comp_0006",
+          "target_entity": "Aythya baeri",
+          "question_before": "Based on the identification details provided, how can [the bird] be distinguished from A. nyroca in terms of morphology and size?",
+          "question_after": "Based on the identification details provided, how can Aythya baeri be distinguished from A. nyroca in terms of morphology and size?",
+          "answer_before": "[The bird] can be distinguished from A. nyroca by being overall larger with a larger bill, and having a distinctive large white wingbar in flight that is duller, especially on the primaries, compared to A. nyroca. In breeding plumage, the male [the bird] has a green-glossed head and neck, blackish-brown upperparts, dark chestnut breast, paler chestnut and white flanks, and a white vent, whereas A. nyroca is described as more rufescent and smaller, with the white vent recalling that of [the bird] but in a generally smaller and more rufescent bird.",
+          "answer_after": "Aythya baeri can be distinguished from A. nyroca by being overall larger with a larger bill, and having a distinctive large white wingbar in flight that is duller, especially on the primaries, compared to A. nyroca. In breeding plumage, the male Aythya baeri has a green-glossed head and neck, blackish-brown upperparts, dark chestnut breast, paler chestnut and white flanks, and a white vent, whereas A. nyroca is described as more rufescent and smaller, with the white vent recalling that of Aythya baeri but in a generally smaller and more rufescent bird."
+        },
+        {
+          "question_id": "bird_comp_0007",
+          "target_entity": "Dendrocygna arborea",
+          "question_before": "Based on the identification details, how can [the bird] be distinguished from D. bicolor in terms of morphology, size, and plumage?",
+          "question_after": "Based on the identification details, how can Dendrocygna arborea be distinguished from D. bicolor in terms of morphology, size, and plumage?",
+          "answer_before": "[the bird] is slightly larger than D. bicolor. In terms of plumage, [the bird] has black-and-white ventral speckling that becomes more streaky on the flanks, while D. bicolor has tawny-coloured underparts with distinct white flank streaking and unspotted white tail-coverts. Additionally, D. bicolor exhibits dark upperwings in flight, a feature not mentioned for [the bird].",
+          "answer_after": "Dendrocygna arborea is slightly larger than D. bicolor. In terms of plumage, Dendrocygna arborea has black-and-white ventral speckling that becomes more streaky on the flanks, while D. bicolor has tawny-coloured underparts with distinct white flank streaking and unspotted white tail-coverts. Additionally, D. bicolor exhibits dark upperwings in flight, a feature not mentioned for Dendrocygna arborea."
+        },
+        {
+          "question_id": "bird_comp_0008",
+          "target_entity": "Anser cygnoides",
+          "question_before": "Based on the provided text, what are the specific morphological differences between the adult and juvenile forms of [the bird]?",
+          "question_after": "Based on the provided text, what are the specific morphological differences between the adult and juvenile forms of Anser cygnoides?",
+          "answer_before": "The adult [the bird] is easily recognized by its pattern and shape of head and bill, while the juvenile lacks the white band around the bill and has duller flank markings. Additionally, the juvenile has duller irides and upperparts that are dull grayish brown, whereas adults have more distinct plumage features.",
+          "answer_after": "The adult Anser cygnoides is easily recognized by its pattern and shape of head and bill, while the juvenile lacks the white band around the bill and has duller flank markings. Additionally, the juvenile has duller irides and upperparts that are dull grayish brown, whereas adults have more distinct plumage features."
+        }
+      ]
+    },
+    {
+      "dataset": "Bird-Con",
+      "path": "question\\Bird-Con\\Bird-Con_questions.jsonl",
+      "total_rows": 217,
+      "replaced_rows": 217,
+      "skipped_rows": 0,
+      "rows_still_containing_placeholders": 0,
+      "removed_prompt_ready_fields_rows": 0,
+      "warnings": [],
+      "examples": [
+        {
+          "question_id": "bird_con_0001",
+          "target_entity": "Rhynchotus maculicollis",
+          "question_before": "What is the current IUCN conservation status and overall population trend for [the bird]?",
+          "question_after": "What is the current IUCN conservation status and overall population trend for Rhynchotus maculicollis?",
+          "answer_before": "Grade: Least Concern (LC). Trend: Population may be declining, but not so rapidly as to give cause for immediate concern.",
+          "answer_after": "Grade: Least Concern (LC). Trend: Population may be declining, but not so rapidly as to give cause for immediate concern."
+        },
+        {
+          "question_id": "bird_con_0002",
+          "target_entity": "Hymenolaimus malacorhynchos",
+          "question_before": "Based on the provided monograph, what are the primary anthropogenic and environmental threats to [the bird]?",
+          "question_after": "Based on the provided monograph, what are the primary anthropogenic and environmental threats to Hymenolaimus malacorhynchos?",
+          "answer_before": "The key threats to [the bird] include: 1. Predation by introduced mammals, especially stoats, which cause high nest failure and adult mortality, particularly during beech mast years. 2. Habitat degradation from hydroelectric schemes and mining activities, which alter clear, fast-flowing water systems. 3. Historical habitat loss due to grazing and clearance of riparian vegetation, reducing water quality. 4. Potential competition from introduced trout and habitat quality reduction from introduced algae like Didymo. 5. Increased frequency of major floods due to anthropogenic climate change, which destroy nests, reduce food resources, and displace juveniles.",
+          "answer_after": "The key threats to Hymenolaimus malacorhynchos include: 1. Predation by introduced mammals, especially stoats, which cause high nest failure and adult mortality, particularly during beech mast years. 2. Habitat degradation from hydroelectric schemes and mining activities, which alter clear, fast-flowing water systems. 3. Historical habitat loss due to grazing and clearance of riparian vegetation, reducing water quality. 4. Potential competition from introduced trout and habitat quality reduction from introduced algae like Didymo. 5. Increased frequency of major floods due to anthropogenic climate change, which destroy nests, reduce food resources, and displace juveniles."
+        },
+        {
+          "question_id": "bird_con_0003",
+          "target_entity": "Mareca marecula",
+          "question_before": "What historical events led to the extinction of [the bird], and when was it last reported?",
+          "question_after": "What historical events led to the extinction of Mareca marecula, and when was it last reported?",
+          "answer_before": "The [the bird] was hunted to extinction by whalers and sealers, with its last report from St Paul I in 1793.",
+          "answer_after": "The Mareca marecula was hunted to extinction by whalers and sealers, with its last report from St Paul I in 1793."
+        },
+        {
+          "question_id": "bird_con_0004",
+          "target_entity": "Nothura minor",
+          "question_before": "What is the current IUCN conservation status and overall population trend for [the bird]?",
+          "question_after": "What is the current IUCN conservation status and overall population trend for Nothura minor?",
+          "answer_before": "Vulnerable (VU) with a decreasing trend.",
+          "answer_after": "Vulnerable (VU) with a decreasing trend."
+        },
+        {
+          "question_id": "bird_con_0005",
+          "target_entity": "Penelope perspicax",
+          "question_before": "What are the primary anthropogenic threats to the conservation of [the bird]?",
+          "question_after": "What are the primary anthropogenic threats to the conservation of Penelope perspicax?",
+          "answer_before": "The primary threats are: 1. Habitat destruction and fragmentation, which is ongoing and has reduced its historical range significantly. 2. Direct human persecution, including hunting and poaching, even within protected areas.",
+          "answer_after": "The primary threats are: 1. Habitat destruction and fragmentation, which is ongoing and has reduced its historical range significantly. 2. Direct human persecution, including hunting and poaching, even within protected areas."
+        },
+        {
+          "question_id": "bird_con_0006",
+          "target_entity": "Macrocephalon maleo",
+          "question_before": "What are the primary threats to the conservation of [the bird], as identified in recent studies?",
+          "question_after": "What are the primary threats to the conservation of Macrocephalon maleo, as identified in recent studies?",
+          "answer_before": "The primary threats include: 1. Excessive egg collecting by villagers and unauthorized persons, often on an intensive and illegal scale. 2. Habitat loss and fragmentation due to agricultural development, such as coconut plantations, and human population pressure. 3. Predation by village dogs and hunting by people. 4. Degradation of nesting sites, leading to abandonment and severe threats to active sites.",
+          "answer_after": "The primary threats include: 1. Excessive egg collecting by villagers and unauthorized persons, often on an intensive and illegal scale. 2. Habitat loss and fragmentation due to agricultural development, such as coconut plantations, and human population pressure. 3. Predation by village dogs and hunting by people. 4. Degradation of nesting sites, leading to abandonment and severe threats to active sites."
+        },
+        {
+          "question_id": "bird_con_0007",
+          "target_entity": "Pipile jacutinga",
+          "question_before": "What is the current IUCN conservation status and overall population trend for [the bird]?",
+          "question_after": "What is the current IUCN conservation status and overall population trend for Pipile jacutinga?",
+          "answer_before": "IUCN Grade: Endangered (EN). Trend: Decreasing.",
+          "answer_after": "IUCN Grade: Endangered (EN). Trend: Decreasing."
+        },
+        {
+          "question_id": "bird_con_0008",
+          "target_entity": "Somateria fischeri",
+          "question_before": "Based on the provided monograph, what are the primary anthropogenic threats to [the bird] populations, particularly in western Alaska?",
+          "question_after": "Based on the provided monograph, what are the primary anthropogenic threats to Somateria fischeri populations, particularly in western Alaska?",
+          "answer_before": "The key anthropogenic threats include: 1. Lead poisoning from ingestion of lead shot in breeding habitats, which reduces adult female survival rates. 2. Subsistence and sport hunting, with estimated takes in western Alaska and potential impacts in Russia. 3. Habitat degradation from human activities such as village expansion, oil and gas development, and potential fuel spills or trawling at sea. 4. Disturbance at nest sites from human activities, though effects on nest success are considered minor.",
+          "answer_after": "The key anthropogenic threats include: 1. Lead poisoning from ingestion of lead shot in breeding habitats, which reduces adult female survival rates. 2. Subsistence and sport hunting, with estimated takes in western Alaska and potential impacts in Russia. 3. Habitat degradation from human activities such as village expansion, oil and gas development, and potential fuel spills or trawling at sea. 4. Disturbance at nest sites from human activities, though effects on nest success are considered minor."
+        }
+      ]
+    },
+    {
+      "dataset": "Bird-Eco",
+      "path": "question\\Bird-Eco\\Bird-Eco_questions.jsonl",
+      "total_rows": 216,
+      "replaced_rows": 216,
+      "skipped_rows": 0,
+      "rows_still_containing_placeholders": 0,
+      "removed_prompt_ready_fields_rows": 0,
+      "warnings": [],
+      "examples": [
+        {
+          "question_id": "bird_eco_0001",
+          "target_entity": "Apteryx mantelli",
+          "question_before": "Based on the provided monograph, categorize the primary diet of [the bird] and list the specific taxonomic groups of invertebrates it consumes.",
+          "question_after": "Based on the provided monograph, categorize the primary diet of Apteryx mantelli and list the specific taxonomic groups of invertebrates it consumes.",
+          "answer_before": "The primary diet of [the bird] is insectivorous and invertivorous, as it predominantly feeds on invertebrates from soil and leaf litter, with a minor inclusion of plant material. Specific taxonomic groups of invertebrates consumed include insects such as bugs (Hemiptera), larval and adult beetles (Coleoptera), and cranefly larvae (Tipulidae), as well as earthworms (Oligochaeta), spiders (Araneae), snails (Mollusca), amphipods, millipedes (Diplopoda), and centipedes (Chilopoda).",
+          "answer_after": "The primary diet of Apteryx mantelli is insectivorous and invertivorous, as it predominantly feeds on invertebrates from soil and leaf litter, with a minor inclusion of plant material. Specific taxonomic groups of invertebrates consumed include insects such as bugs (Hemiptera), larval and adult beetles (Coleoptera), and cranefly larvae (Tipulidae), as well as earthworms (Oligochaeta), spiders (Araneae), snails (Mollusca), amphipods, millipedes (Diplopoda), and centipedes (Chilopoda)."
+        },
+        {
+          "question_id": "bird_eco_0002",
+          "target_entity": "Stictonetta naevosa",
+          "question_before": "Based on the provided monograph, what is the primary dietary niche of [the bird], and what specific food items does it consume according to the text?",
+          "question_after": "Based on the provided monograph, what is the primary dietary niche of Stictonetta naevosa, and what specific food items does it consume according to the text?",
+          "answer_before": "The primary dietary niche of [the bird] is herbivorous, specifically categorized as vegetarian with a focus on plant-based materials. According to the text, it consumes algae, seeds, and green parts of aquatic plants and grasses, along with minor quantities of aquatic invertebrates such as insects.",
+          "answer_after": "The primary dietary niche of Stictonetta naevosa is herbivorous, specifically categorized as vegetarian with a focus on plant-based materials. According to the text, it consumes algae, seeds, and green parts of aquatic plants and grasses, along with minor quantities of aquatic invertebrates such as insects."
+        },
+        {
+          "question_id": "bird_eco_0003",
+          "target_entity": "Taoniscus nanus",
+          "question_before": "Based on its diet, what ecological role does [the bird] play in its ecosystem, and what specific evidence from its feeding behavior supports this role?",
+          "question_after": "Based on its diet, what ecological role does Taoniscus nanus play in its ecosystem, and what specific evidence from its feeding behavior supports this role?",
+          "answer_before": "[The bird] plays a role in natural pest control and potentially seed dispersal within its ecosystem. Its diet includes various arthropods, particularly termites (Isoptera), which it actively digs out of their mounds, indicating it helps regulate termite populations. Additionally, it consumes seeds, such as those from grasses, suggesting it may contribute to seed dispersal, though the text does not specify if seeds are dispersed intact. The combination of insectivory and granivory positions [the bird] as an omnivore that influences both invertebrate populations and plant dynamics.",
+          "answer_after": "Taoniscus nanus plays a role in natural pest control and potentially seed dispersal within its ecosystem. Its diet includes various arthropods, particularly termites (Isoptera), which it actively digs out of their mounds, indicating it helps regulate termite populations. Additionally, it consumes seeds, such as those from grasses, suggesting it may contribute to seed dispersal, though the text does not specify if seeds are dispersed intact. The combination of insectivory and granivory positions Taoniscus nanus as an omnivore that influences both invertebrate populations and plant dynamics."
+        },
+        {
+          "question_id": "bird_eco_0004",
+          "target_entity": "Branta ruficollis",
+          "question_before": "Based on its diet, if [the bird] were to disappear from its ecosystem, what would be a logical ecological consequence for the plant species it consumes?",
+          "question_after": "Based on its diet, if Branta ruficollis were to disappear from its ecosystem, what would be a logical ecological consequence for the plant species it consumes?",
+          "answer_before": "If [the bird] were to disappear, a logical ecological consequence would be reduced grazing pressure on the grasses, sedges, aquatic plants, and cereals it consumes, potentially leading to overgrowth of these plants in its habitats. Specifically, grasses like Potamogeton fluitans, sedges such as Carex, and cereals like wheat and barley might experience unchecked growth, altering vegetation structure and competition dynamics in tundra and wintering agricultural areas.",
+          "answer_after": "If Branta ruficollis were to disappear, a logical ecological consequence would be reduced grazing pressure on the grasses, sedges, aquatic plants, and cereals it consumes, potentially leading to overgrowth of these plants in its habitats. Specifically, grasses like Potamogeton fluitans, sedges such as Carex, and cereals like wheat and barley might experience unchecked growth, altering vegetation structure and competition dynamics in tundra and wintering agricultural areas."
+        },
+        {
+          "question_id": "bird_eco_0005",
+          "target_entity": "Lophodytes cucullatus",
+          "question_before": "Based on the text, categorize the primary diet of [the bird] and list the specific prey taxa mentioned.",
+          "question_after": "Based on the text, categorize the primary diet of Lophodytes cucullatus and list the specific prey taxa mentioned.",
+          "answer_before": "The primary diet of [the bird] is carnivorous, specifically piscivorous and insectivorous, with a strong emphasis on aquatic prey. The text explicitly states that [the bird]s have a diverse diet compared to other mergansers, diving to capture small fish, aquatic insects, and crustaceans, particularly crayfish. Specific prey taxa mentioned include fish (unspecified species), crayfish (Cambarus spp.), aquatic insects such as dragonfly nymphs (Odonata), caddisfly larvae (Trichoptera), back swimmers (Notonectidae), water boatmen (Corixidae), diving beetles (Dytiscidae), and other crustaceans like mud crabs (Xanthidae). Additionally, amphibians (mostly Rana spp.) and incidental vegetation are noted, but these are secondary. The diet is adapted for underwater foraging, with visual adaptations and serrated bills for grasping mobile prey.",
+          "answer_after": "The primary diet of Lophodytes cucullatus is carnivorous, specifically piscivorous and insectivorous, with a strong emphasis on aquatic prey. The text explicitly states that Lophodytes cucullatuss have a diverse diet compared to other mergansers, diving to capture small fish, aquatic insects, and crustaceans, particularly crayfish. Specific prey taxa mentioned include fish (unspecified species), crayfish (Cambarus spp.), aquatic insects such as dragonfly nymphs (Odonata), caddisfly larvae (Trichoptera), back swimmers (Notonectidae), water boatmen (Corixidae), diving beetles (Dytiscidae), and other crustaceans like mud crabs (Xanthidae). Additionally, amphibians (mostly Rana spp.) and incidental vegetation are noted, but these are secondary. The diet is adapted for underwater foraging, with visual adaptations and serrated bills for grasping mobile prey."
+        },
+        {
+          "question_id": "bird_eco_0006",
+          "target_entity": "Lophophorus lhuysii",
+          "question_before": "Based on the dietary information provided, what is the primary foraging strategy of [the bird] in terms of dietary niche and specific food items consumed?",
+          "question_after": "Based on the dietary information provided, what is the primary foraging strategy of Lophophorus lhuysii in terms of dietary niche and specific food items consumed?",
+          "answer_before": "The primary foraging strategy of [the bird] is herbivorous with a focus on plant material consumption, specifically categorized as a folivore, rhizovore, and florivore. Its diet consists primarily of roots, bulbs, leaves, and flowers from various alpine plant species, with Fritillaria bulbs noted as a significant food source in some studies. Additionally, it consumes some insects, making it secondarily insectivorous. In winter, it shifts to roots of perennial herbs, seeds, and occasionally mosses. This strategy indicates adaptation to high-altitude environments where it forages on ground-level and below-ground plant parts.",
+          "answer_after": "The primary foraging strategy of Lophophorus lhuysii is herbivorous with a focus on plant material consumption, specifically categorized as a folivore, rhizovore, and florivore. Its diet consists primarily of roots, bulbs, leaves, and flowers from various alpine plant species, with Fritillaria bulbs noted as a significant food source in some studies. Additionally, it consumes some insects, making it secondarily insectivorous. In winter, it shifts to roots of perennial herbs, seeds, and occasionally mosses. This strategy indicates adaptation to high-altitude environments where it forages on ground-level and below-ground plant parts."
+        },
+        {
+          "question_id": "bird_eco_0007",
+          "target_entity": "Melanoperdix niger",
+          "question_before": "Based on the available information, what can be inferred about the potential ecological role of [the bird] in its habitat, particularly regarding seed dispersal or other plant-animal interactions?",
+          "question_after": "Based on the available information, what can be inferred about the potential ecological role of Melanoperdix niger in its habitat, particularly regarding seed dispersal or other plant-animal interactions?",
+          "answer_before": "The text provides no direct information about the diet or foraging behavior of [the bird], only stating 'No information available, although strong bill suggests that it feeds on hard seeds.' Therefore, no specific ecological role such as seed dispersal, pollination, or pest control can be confirmed. The inference about hard seeds is speculative based on bill morphology, not observed behavior. Without evidence of seed consumption or specific plant interactions, the ecological role remains unknown and cannot be analytically determined from the provided text.",
+          "answer_after": "The text provides no direct information about the diet or foraging behavior of Melanoperdix niger, only stating 'No information available, although strong bill suggests that it feeds on hard seeds.' Therefore, no specific ecological role such as seed dispersal, pollination, or pest control can be confirmed. The inference about hard seeds is speculative based on bill morphology, not observed behavior. Without evidence of seed consumption or specific plant interactions, the ecological role remains unknown and cannot be analytically determined from the provided text."
+        },
+        {
+          "question_id": "bird_eco_0008",
+          "target_entity": "Megapodius pritchardii",
+          "question_before": "Based on its diet, what would be a logical ecological consequence if [the bird] were to disappear from its habitat on Niuafo'ou?",
+          "question_after": "Based on its diet, what would be a logical ecological consequence if Megapodius pritchardii were to disappear from its habitat on Niuafo'ou?",
+          "answer_before": "If [the bird] were to disappear, a logical ecological consequence would be a trophic cascade leading to an overpopulation of its primary prey items, specifically insects, land snails, centipedes, and worms, due to the loss of a major predator. This could result in increased herbivory and soil disturbance, potentially altering plant community dynamics and nutrient cycling in the forest ecosystem.",
+          "answer_after": "If Megapodius pritchardii were to disappear, a logical ecological consequence would be a trophic cascade leading to an overpopulation of its primary prey items, specifically insects, land snails, centipedes, and worms, due to the loss of a major predator. This could result in increased herbivory and soil disturbance, potentially altering plant community dynamics and nutrient cycling in the forest ecosystem."
+        }
+      ]
+    },
+    {
+      "dataset": "Bird-Geo",
+      "path": "question\\Bird-Geo\\Bird-Geo_questions.jsonl",
+      "total_rows": 448,
+      "replaced_rows": 448,
+      "skipped_rows": 0,
+      "rows_still_containing_placeholders": 0,
+      "removed_prompt_ready_fields_rows": 0,
+      "warnings": [],
+      "examples": [
+        {
+          "question_id": "bird_geo_0001",
+          "target_entity": "Dendrocygna javanica",
+          "question_before": "Based on its distribution, which of the following best describes the primary geographic range of [the bird]?",
+          "question_after": "Based on its distribution, which of the following best describes the primary geographic range of Dendrocygna javanica?",
+          "answer_before": "C",
+          "answer_after": "C"
+        },
+        {
+          "question_id": "bird_geo_0002",
+          "target_entity": "Anas bernieri",
+          "question_before": "Based on its habitat description, which of the following best characterizes the primary breeding and non-breeding habitats of [the bird]?",
+          "question_after": "Based on its habitat description, which of the following best characterizes the primary breeding and non-breeding habitats of Anas bernieri?",
+          "answer_before": "B",
+          "answer_after": "B"
+        },
+        {
+          "question_id": "bird_geo_0003",
+          "target_entity": "Asarcornis scutulata",
+          "question_before": "Based on the provided text, what is the primary migration pattern of [the bird]?",
+          "question_after": "Based on the provided text, what is the primary migration pattern of Asarcornis scutulata?",
+          "answer_before": "C",
+          "answer_after": "C"
+        },
+        {
+          "question_id": "bird_geo_0004",
+          "target_entity": "Anas albogularis",
+          "question_before": "Based on its distribution, which geographic region is [the bird] endemic to?",
+          "question_after": "Based on its distribution, which geographic region is Anas albogularis endemic to?",
+          "answer_before": "B",
+          "answer_after": "B"
+        },
+        {
+          "question_id": "bird_geo_0005",
+          "target_entity": "Chenonetta jubata",
+          "question_before": "According to the monograph, what is the primary macro-habitat and typical elevation range for [the bird]?",
+          "question_after": "According to the monograph, what is the primary macro-habitat and typical elevation range for Chenonetta jubata?",
+          "answer_before": "B",
+          "answer_after": "B"
+        },
+        {
+          "question_id": "bird_geo_0006",
+          "target_entity": "Tachyeres leucocephalus",
+          "question_before": "Based on its distribution, what is the migration pattern of [the bird]?",
+          "question_after": "Based on its distribution, what is the migration pattern of Tachyeres leucocephalus?",
+          "answer_before": "B",
+          "answer_after": "B"
+        },
+        {
+          "question_id": "bird_geo_0007",
+          "target_entity": "Nothocercus julius",
+          "question_before": "In which mountain range is [the bird] primarily distributed?",
+          "question_after": "In which mountain range is Nothocercus julius primarily distributed?",
+          "answer_before": "B",
+          "answer_after": "B"
+        },
+        {
+          "question_id": "bird_geo_0008",
+          "target_entity": "Rhodonessa caryophyllacea",
+          "question_before": "Based on historical accounts, what was the primary macro-habitat and elevation range of [the bird]?",
+          "question_after": "Based on historical accounts, what was the primary macro-habitat and elevation range of Rhodonessa caryophyllacea?",
+          "answer_before": "C",
+          "answer_after": "C"
+        }
+      ]
+    },
+    {
+      "dataset": "Bird-ID",
+      "path": "question\\Bird-ID\\Bird-ID_questions.jsonl",
+      "total_rows": 990,
+      "replaced_rows": 0,
+      "skipped_rows": 990,
+      "rows_still_containing_placeholders": 0,
+      "removed_prompt_ready_fields_rows": 0,
+      "warnings": [],
+      "examples": []
+    },
+    {
+      "dataset": "Bird-Life",
+      "path": "question\\Bird-Life\\Bird-Life_questions.jsonl",
+      "total_rows": 446,
+      "replaced_rows": 446,
+      "skipped_rows": 0,
+      "rows_still_containing_placeholders": 0,
+      "removed_prompt_ready_fields_rows": 0,
+      "warnings": [],
+      "examples": [
+        {
+          "question_id": "bird_life_0001",
+          "target_entity": "Bernier's Teal",
+          "question_before": "Based on the provided monograph, describe the courtship and mating system of [the bird], including details on sexual behaviors, vocalizations, and pair-bond dynamics.",
+          "question_after": "Based on the provided monograph, describe the courtship and mating system of Bernier's Teal, including details on sexual behaviors, vocalizations, and pair-bond dynamics.",
+          "answer_before": "The courtship and mating system of [the bird] is characterized by monogamy with persistent pair-bonds, specific vocalizations, and territorial defense. [The bird] is monogamous, with pairs likely remaining together throughout the year, and the pair-bond persists across multiple seasons, indicating long-term commitment. During the breeding season, which starts as early as September with copulation observed in July, the male exhibits distinct vocalizations as part of courtship behavior: he gives short, quiet, multisyllabic whistles consisting of 3–10 notes over 2–5 seconds, described as 'crik-crik-crik', and also produces a loud 'whee-oo' call while standing or swimming. In contrast, the female utters sharp, harsh, croaking 'quack' sounds lasting about 1 second and repeated every few seconds, along with soft clucking notes and a loud, medium-pitched 'criiiiiik ... criiiiik...' lasting 1.5 seconds and repeated every 2–4 seconds. These vocalizations likely play a role in pair formation and maintenance. The male vigorously defends the territory around the nest-site, and he remains close to the female during the incubation period, also accompanying the brood after hatching, which underscores his involvement in parental care and pair-bond reinforcement. The mating system does not involve polygamy or courtship feeding as described in the text, focusing instead on vocal displays and territoriality to secure and maintain monogamous pairs.",
+          "answer_after": "The courtship and mating system of Bernier's Teal is characterized by monogamy with persistent pair-bonds, specific vocalizations, and territorial defense. Bernier's Teal is monogamous, with pairs likely remaining together throughout the year, and the pair-bond persists across multiple seasons, indicating long-term commitment. During the breeding season, which starts as early as September with copulation observed in July, the male exhibits distinct vocalizations as part of courtship behavior: he gives short, quiet, multisyllabic whistles consisting of 3–10 notes over 2–5 seconds, described as 'crik-crik-crik', and also produces a loud 'whee-oo' call while standing or swimming. In contrast, the female utters sharp, harsh, croaking 'quack' sounds lasting about 1 second and repeated every few seconds, along with soft clucking notes and a loud, medium-pitched 'criiiiiik ... criiiiik...' lasting 1.5 seconds and repeated every 2–4 seconds. These vocalizations likely play a role in pair formation and maintenance. The male vigorously defends the territory around the nest-site, and he remains close to the female during the incubation period, also accompanying the brood after hatching, which underscores his involvement in parental care and pair-bond reinforcement. The mating system does not involve polygamy or courtship feeding as described in the text, focusing instead on vocal displays and territoriality to secure and maintain monogamous pairs."
+        },
+        {
+          "question_id": "bird_life_0002",
+          "target_entity": "Swan Goose",
+          "question_before": "Based on the breeding timeline of [the bird], describe the key phenological events from the start of the breeding season through to when most young have fledged, including the typical months for egg-laying and hatching.",
+          "question_after": "Based on the breeding timeline of Swan Goose, describe the key phenological events from the start of the breeding season through to when most young have fledged, including the typical months for egg-laying and hatching.",
+          "answer_before": "The breeding season of [the bird] begins in the latter half of April, sometimes extending to late May, marking the onset of egg-laying. Hatching primarily occurs in late May and June, following an incubation period of approximately 28 days. By late August, most young have fledged, completing the breeding cycle. This timeline indicates that breeding activities are concentrated from mid-spring through late summer, with peak hatching in early summer and fledging by the end of summer.",
+          "answer_after": "The breeding season of Swan Goose begins in the latter half of April, sometimes extending to late May, marking the onset of egg-laying. Hatching primarily occurs in late May and June, following an incubation period of approximately 28 days. By late August, most young have fledged, completing the breeding cycle. This timeline indicates that breeding activities are concentrated from mid-spring through late summer, with peak hatching in early summer and fledging by the end of summer."
+        },
+        {
+          "question_id": "bird_life_0003",
+          "target_entity": "Blue Duck",
+          "question_before": "Based on the provided monograph, describe the nest ecology of [the bird], including details on nest site selection, construction materials, and the physical structure of the nest.",
+          "question_after": "Based on the provided monograph, describe the nest ecology of Blue Duck, including details on nest site selection, construction materials, and the physical structure of the nest.",
+          "answer_before": "The nest ecology of [the bird] involves specific site selection, minimal construction materials, and a simple physical structure. Nest sites are typically located in damp depressions on the ground, natural cavities, hollow logs, crevices among rocks, dense vegetation such as fern clumps, or on cliff ledges, usually within 30 meters of a river edge. The nest is constructed with only a little down added to ground debris, sometimes supplemented with soft grass and twigs, resulting in a basic structure that relies on the natural substrate. The same nest site may be reused for up to seven years, indicating a preference for stable and secure locations.",
+          "answer_after": "The nest ecology of Blue Duck involves specific site selection, minimal construction materials, and a simple physical structure. Nest sites are typically located in damp depressions on the ground, natural cavities, hollow logs, crevices among rocks, dense vegetation such as fern clumps, or on cliff ledges, usually within 30 meters of a river edge. The nest is constructed with only a little down added to ground debris, sometimes supplemented with soft grass and twigs, resulting in a basic structure that relies on the natural substrate. The same nest site may be reused for up to seven years, indicating a preference for stable and secure locations."
+        },
+        {
+          "question_id": "bird_life_0004",
+          "target_entity": "Hawaiian Duck",
+          "question_before": "Based on the provided monograph, what are the specific numerical metrics for clutch size, incubation period, and fledging period in the reproductive development of [the bird]?",
+          "question_after": "Based on the provided monograph, what are the specific numerical metrics for clutch size, incubation period, and fledging period in the reproductive development of Hawaiian Duck?",
+          "answer_before": "The reproductive development of [the bird] involves specific numerical metrics across three key stages. The clutch size, which is the number of eggs laid per nesting attempt, averages 8.3 eggs in the wild, with a range of 8 to 10 eggs. In captivity, clutch size can vary more broadly from 2 to 10 eggs. After the female completes the clutch, she incubates the eggs alone. The incubation period, which is the time from the start of incubation to hatching, averages 28 days in captive birds, with a range of 26 to 30 days. Following hatching, the young birds undergo development until they are capable of flight. The fledging period, defined as the time from hatching to when the juvenile attains flight feathers, is approximately 65 to 70 days. This period corresponds to the completion of the prejuvenile molt, after which the juvenile plumage is fully developed and the birds can fly.",
+          "answer_after": "The reproductive development of Hawaiian Duck involves specific numerical metrics across three key stages. The clutch size, which is the number of eggs laid per nesting attempt, averages 8.3 eggs in the wild, with a range of 8 to 10 eggs. In captivity, clutch size can vary more broadly from 2 to 10 eggs. After the female completes the clutch, she incubates the eggs alone. The incubation period, which is the time from the start of incubation to hatching, averages 28 days in captive birds, with a range of 26 to 30 days. Following hatching, the young birds undergo development until they are capable of flight. The fledging period, defined as the time from hatching to when the juvenile attains flight feathers, is approximately 65 to 70 days. This period corresponds to the completion of the prejuvenile molt, after which the juvenile plumage is fully developed and the birds can fly."
+        },
+        {
+          "question_id": "bird_life_0005",
+          "target_entity": "Yellow-billed Pintail",
+          "question_before": "Based on the reproductive life cycle of [the bird], describe the division of labor between the sexes during the incubation and early post-hatching phases, including any specific behaviors related to nest defense or chick care.",
+          "question_after": "Based on the reproductive life cycle of Yellow-billed Pintail, describe the division of labor between the sexes during the incubation and early post-hatching phases, including any specific behaviors related to nest defense or chick care.",
+          "answer_before": "In [the bird], the division of parental care during incubation and early post-hatching is clearly defined, with specific roles for each sex. Incubation is performed solely by the female, with a period of approximately 26 days for the spinicauda subspecies and 24–28 days for the georgica subspecies. During this time, the male actively guards the nest, providing protection against potential threats. After hatching, the chicks immediately leave the nest and move to a nearby body of water. At this stage, both parents actively watch over the young, indicating a shared responsibility in chick care and vigilance. This cooperative behavior ensures the safety and survival of the offspring during their vulnerable early stages.",
+          "answer_after": "In Yellow-billed Pintail, the division of parental care during incubation and early post-hatching is clearly defined, with specific roles for each sex. Incubation is performed solely by the female, with a period of approximately 26 days for the spinicauda subspecies and 24–28 days for the georgica subspecies. During this time, the male actively guards the nest, providing protection against potential threats. After hatching, the chicks immediately leave the nest and move to a nearby body of water. At this stage, both parents actively watch over the young, indicating a shared responsibility in chick care and vigilance. This cooperative behavior ensures the safety and survival of the offspring during their vulnerable early stages."
+        },
+        {
+          "question_id": "bird_life_0006",
+          "target_entity": "Common Pochard",
+          "question_before": "Describe the complete reproductive life cycle of [the bird], from courtship and pair formation through to the independence of the young, including details on mating systems, nest construction, clutch characteristics, incubation, fledging, and parental care.",
+          "question_after": "Describe the complete reproductive life cycle of Common Pochard, from courtship and pair formation through to the independence of the young, including details on mating systems, nest construction, clutch characteristics, incubation, fledging, and parental care.",
+          "answer_before": "The reproductive life cycle of [the bird] begins with pair formation, which typically occurs in winter or spring, establishing seasonal monogamy where the pair-bond lasts until the first or second week of incubation, though some males may accompany broods. Courtship involves males uttering wheezy whistles in display, such as nasal 'wiwierr' and descending 'kil-kil-kil' calls. Breeding starts in April or May, depending on the region, with nests built in single pairs or loose groups, often associated with Black-headed Gulls for predator protection. The nest is a shallow depression in a thick heap of grass, reed stems, and leaves, lined with down, usually concealed in thick vegetation within 10 meters of water, with 77% over water, 16% on islets, and 7% on dry ground. The clutch size is typically 8–10 green-grey eggs, ranging from 3 to 22, with larger clutches often due to parasitism. Incubation lasts about 25 days (range 24–28 days), performed by the female. After hatching, chicks have brown down on upperparts and yellow on underparts, weighing 37.2 grams at hatching in captivity. The fledging period is 50–55 days, during which the young are cared for primarily by the female, who deserts them at the onset of her wing moult. Some young may leave their brood to join other females early on. The species exhibits high rates of conspecific and interspecific brood parasitism, but this has minimal impact on host fitness. Sexual maturity is reached at about one year, occasionally two, with individuals capable of breeding into old age, as evidenced by a 20-year-old captive bird remaining fertile.",
+          "answer_after": "The reproductive life cycle of Common Pochard begins with pair formation, which typically occurs in winter or spring, establishing seasonal monogamy where the pair-bond lasts until the first or second week of incubation, though some males may accompany broods. Courtship involves males uttering wheezy whistles in display, such as nasal 'wiwierr' and descending 'kil-kil-kil' calls. Breeding starts in April or May, depending on the region, with nests built in single pairs or loose groups, often associated with Black-headed Gulls for predator protection. The nest is a shallow depression in a thick heap of grass, reed stems, and leaves, lined with down, usually concealed in thick vegetation within 10 meters of water, with 77% over water, 16% on islets, and 7% on dry ground. The clutch size is typically 8–10 green-grey eggs, ranging from 3 to 22, with larger clutches often due to parasitism. Incubation lasts about 25 days (range 24–28 days), performed by the female. After hatching, chicks have brown down on upperparts and yellow on underparts, weighing 37.2 grams at hatching in captivity. The fledging period is 50–55 days, during which the young are cared for primarily by the female, who deserts them at the onset of her wing moult. Some young may leave their brood to join other females early on. The species exhibits high rates of conspecific and interspecific brood parasitism, but this has minimal impact on host fitness. Sexual maturity is reached at about one year, occasionally two, with individuals capable of breeding into old age, as evidenced by a 20-year-old captive bird remaining fertile."
+        },
+        {
+          "question_id": "bird_life_0007",
+          "target_entity": "Brazilian Teal",
+          "question_before": "Based on the provided monograph, describe the mating system and any courtship behaviors of [the bird], including vocalizations and pair-bond characteristics.",
+          "question_after": "Based on the provided monograph, describe the mating system and any courtship behaviors of Brazilian Teal, including vocalizations and pair-bond characteristics.",
+          "answer_before": "[The bird] exhibits a monogamous mating system, forming pair bonds that are highly territorial during the breeding season. The species is described as 'Monogamous and highly territorial in breeding season,' indicating that pairs defend their nesting areas against conspecifics. While the text states 'no information concerning pair-bond duration,' it confirms the existence of a monogamous structure. Regarding courtship behaviors, the male has distinctive vocalizations: a 'strong, piercing whee-whee-whee whistle, or double-noted whe-wheeew given both in flight and at rest.' This vocal display likely functions in mate attraction or pair communication. The female also vocalizes with a 'typical loud, deep quack note, which may be repeated several times in rapid succession, often in response to disturbance or in flight,' which may play a role in pair coordination or alarm. The text notes that the bill color of adult males 'may also average pinker in nominate males than those of A. b. ipecutiri' and 'perhaps becoming brighter red during courting and prebreeding periods,' suggesting a possible visual signal in courtship. However, specific courtship displays or rituals are not detailed in the provided text.",
+          "answer_after": "Brazilian Teal exhibits a monogamous mating system, forming pair bonds that are highly territorial during the breeding season. The species is described as 'Monogamous and highly territorial in breeding season,' indicating that pairs defend their nesting areas against conspecifics. While the text states 'no information concerning pair-bond duration,' it confirms the existence of a monogamous structure. Regarding courtship behaviors, the male has distinctive vocalizations: a 'strong, piercing whee-whee-whee whistle, or double-noted whe-wheeew given both in flight and at rest.' This vocal display likely functions in mate attraction or pair communication. The female also vocalizes with a 'typical loud, deep quack note, which may be repeated several times in rapid succession, often in response to disturbance or in flight,' which may play a role in pair coordination or alarm. The text notes that the bill color of adult males 'may also average pinker in nominate males than those of A. b. ipecutiri' and 'perhaps becoming brighter red during courting and prebreeding periods,' suggesting a possible visual signal in courtship. However, specific courtship displays or rituals are not detailed in the provided text."
+        },
+        {
+          "question_id": "bird_life_0008",
+          "target_entity": "Meller's Duck",
+          "question_before": "Based on the provided monograph, describe the breeding season timeline of [the bird], including the extended nesting period and how it relates to local environmental factors.",
+          "question_after": "Based on the provided monograph, describe the breeding season timeline of Meller's Duck, including the extended nesting period and how it relates to local environmental factors.",
+          "answer_before": "The breeding season of [the bird] is characterized by an extended timeline, with nesting recorded from July to April. This broad period suggests flexibility in reproductive timing, likely influenced by local rainfall patterns. For instance, at Lake Alaotra, peak breeding activity occurs from November to January, indicating that specific months within the extended season may see heightened egg-laying. The variation in timing is probably determined by environmental factors such as rainfall, which affects habitat conditions and resource availability, aligning breeding with optimal periods for rearing young.",
+          "answer_after": "The breeding season of Meller's Duck is characterized by an extended timeline, with nesting recorded from July to April. This broad period suggests flexibility in reproductive timing, likely influenced by local rainfall patterns. For instance, at Lake Alaotra, peak breeding activity occurs from November to January, indicating that specific months within the extended season may see heightened egg-laying. The variation in timing is probably determined by environmental factors such as rainfall, which affects habitat conditions and resource availability, aligning breeding with optimal periods for rearing young."
+        }
+      ]
+    },
+    {
+      "dataset": "Bird-Plan",
+      "path": "question\\Bird-Plan\\Bird-Plan_questions.jsonl",
+      "total_rows": 63,
+      "replaced_rows": 63,
+      "skipped_rows": 0,
+      "rows_still_containing_placeholders": 0,
+      "removed_prompt_ready_fields_rows": 0,
+      "warnings": [],
+      "examples": [
+        {
+          "question_id": "bird_plan_0001",
+          "target_entity": "Crypturellus boucardi",
+          "question_before": "The [Target Species] faces severe population decline primarily due to habitat loss from deforestation and conversion to agriculture, as indicated in its conservation status. In a critical region, 90% of the remaining suitable habitat is on privately owned land, making traditional protected area establishment impossible. As a conservation biologist, draft a specific conservation plan that addresses the core threat of habitat loss while working within this severe constraint of predominantly private land ownership.",
+          "question_after": "The Crypturellus boucardi faces severe population decline primarily due to habitat loss from deforestation and conversion to agriculture, as indicated in its conservation status. In a critical region, 90% of the remaining suitable habitat is on privately owned land, making traditional protected area establishment impossible. As a conservation biologist, draft a specific conservation plan that addresses the core threat of habitat loss while working within this severe constraint of predominantly private land ownership.",
+          "answer_before": "Gold Standard Rubric for LLM-as-a-Judge Evaluation:\n- [Threat Priority]: The #1 deadliest threat to tackle first is habitat loss from deforestation and conversion to agriculture, as this directly reduces the forest floor habitat with dense understory that [Target Species] requires for foraging and nesting.\n- [Constraint Satisfaction]: The plan must utilize voluntary landowner agreements, conservation easements, or incentive-based programs (e.g., payments for ecosystem services) rather than government acquisition or protected area designation, to work within the 90% private land ownership constraint.\n- [Biological Specificity]: The plan must account for [Target Species]'s unique biological trait of being a ground-foraging bird that feeds on fallen fruits and seeds (e.g., Protium copal, Pseudolmedia spuria) and nests on the ground without building a nest, often between tree buttresses. Habitat management should focus on maintaining or restoring forest floor conditions with dense understory and leaf litter for foraging and nesting sites.",
+          "answer_after": "Gold Standard Rubric for LLM-as-a-Judge Evaluation:\n- [Threat Priority]: The #1 deadliest threat to tackle first is habitat loss from deforestation and conversion to agriculture, as this directly reduces the forest floor habitat with dense understory that Crypturellus boucardi requires for foraging and nesting.\n- [Constraint Satisfaction]: The plan must utilize voluntary landowner agreements, conservation easements, or incentive-based programs (e.g., payments for ecosystem services) rather than government acquisition or protected area designation, to work within the 90% private land ownership constraint.\n- [Biological Specificity]: The plan must account for Crypturellus boucardi's unique biological trait of being a ground-foraging bird that feeds on fallen fruits and seeds (e.g., Protium copal, Pseudolmedia spuria) and nests on the ground without building a nest, often between tree buttresses. Habitat management should focus on maintaining or restoring forest floor conditions with dense understory and leaf litter for foraging and nesting sites."
+        },
+        {
+          "question_id": "bird_plan_0002",
+          "target_entity": "Penelope ortoni",
+          "question_before": "The [Target Species] is an endangered bird severely threatened by hunting, as it does not flee from human approach and is easily shot. Its habitat in the Chocó region includes steep slopes, making traditional ground-based predator control methods challenging. Given the constraint of inaccessible steep terrain, draft a specific conservation plan to address the hunting threat while accounting for the bird's unique biological traits.",
+          "question_after": "The Penelope ortoni is an endangered bird severely threatened by hunting, as it does not flee from human approach and is easily shot. Its habitat in the Chocó region includes steep slopes, making traditional ground-based predator control methods challenging. Given the constraint of inaccessible steep terrain, draft a specific conservation plan to address the hunting threat while accounting for the bird's unique biological traits.",
+          "answer_before": "Gold Standard Rubric:\n- [Threat Priority]: The #1 deadliest threat to tackle first is hunting, as the species is easily shot due to its behavior of not fleeing from human approach, leading to direct mortality.\n- [Constraint Satisfaction]: To address inaccessible steep terrain, the plan must avoid ground-based patrols or physical barriers that require extensive on-foot access. Instead, implement aerial surveillance (e.g., drones) or community-based monitoring from accessible vantage points to detect and deter hunters.\n- [Biological Specificity]: The plan must account for the [Target Species]'s reliance on tall primary forest and its foraging behavior in the upper strata for fruits, particularly Humiriastrum procerum. Conservation efforts should focus on protecting these specific forest areas and food sources, as habitat loss exacerbates hunting pressure by concentrating birds in remaining fragments.",
+          "answer_after": "Gold Standard Rubric:\n- [Threat Priority]: The #1 deadliest threat to tackle first is hunting, as the species is easily shot due to its behavior of not fleeing from human approach, leading to direct mortality.\n- [Constraint Satisfaction]: To address inaccessible steep terrain, the plan must avoid ground-based patrols or physical barriers that require extensive on-foot access. Instead, implement aerial surveillance (e.g., drones) or community-based monitoring from accessible vantage points to detect and deter hunters.\n- [Biological Specificity]: The plan must account for the Penelope ortoni's reliance on tall primary forest and its foraging behavior in the upper strata for fruits, particularly Humiriastrum procerum. Conservation efforts should focus on protecting these specific forest areas and food sources, as habitat loss exacerbates hunting pressure by concentrating birds in remaining fragments."
+        },
+        {
+          "question_id": "bird_plan_0003",
+          "target_entity": "Columba torringtoniae",
+          "question_before": "The [Target Species] in Sri Lanka's hill country is declining primarily due to habitat loss and degradation, with native forests being replaced by unsuitable monocultures. As a conservation planner, you must design an intervention plan under the severe constraint that 90% of the land in its range is privately owned, limiting direct habitat protection. Draft a specific conservation plan that addresses this threat while working within this land ownership constraint.",
+          "question_after": "The Columba torringtoniae in Sri Lanka's hill country is declining primarily due to habitat loss and degradation, with native forests being replaced by unsuitable monocultures. As a conservation planner, you must design an intervention plan under the severe constraint that 90% of the land in its range is privately owned, limiting direct habitat protection. Draft a specific conservation plan that addresses this threat while working within this land ownership constraint.",
+          "answer_before": "Gold Standard Rubric:\n- [Threat Priority]: The #1 deadliest threat to tackle first is habitat loss and degradation, specifically the replacement of native evergreen and moist deciduous forests by monocultures unsuitable for the species, as this is identified as the chief cause of decline.\n- [Constraint Satisfaction]: To satisfy the constraint that 90% of land is privately owned, the plan must avoid relying on direct habitat acquisition or government-led protection. Instead, it should focus on incentivizing private landowners through conservation easements, agroforestry programs that incorporate fruiting trees, or community-based management agreements to preserve or restore suitable habitat on private lands.\n- [Biological Specificity]: The plan must account for the unique biological trait that the [Target Species] feeds mostly on fruits and berries taken from branches, and its survival depends on preservation of remaining natural habitat with adequate fruiting trees. Interventions should prioritize maintaining or planting fruiting tree species in private lands to support its diet and foraging needs.",
+          "answer_after": "Gold Standard Rubric:\n- [Threat Priority]: The #1 deadliest threat to tackle first is habitat loss and degradation, specifically the replacement of native evergreen and moist deciduous forests by monocultures unsuitable for the species, as this is identified as the chief cause of decline.\n- [Constraint Satisfaction]: To satisfy the constraint that 90% of land is privately owned, the plan must avoid relying on direct habitat acquisition or government-led protection. Instead, it should focus on incentivizing private landowners through conservation easements, agroforestry programs that incorporate fruiting trees, or community-based management agreements to preserve or restore suitable habitat on private lands.\n- [Biological Specificity]: The plan must account for the unique biological trait that the Columba torringtoniae feeds mostly on fruits and berries taken from branches, and its survival depends on preservation of remaining natural habitat with adequate fruiting trees. Interventions should prioritize maintaining or planting fruiting tree species in private lands to support its diet and foraging needs."
+        },
+        {
+          "question_id": "bird_plan_0004",
+          "target_entity": "Pampusana rubescens",
+          "question_before": "The [Target Species] is an endangered bird restricted to two small uninhabited islands, Hatutu and Fatu Huku, in the Marquesas Islands. Its population is highly vulnerable to introduced predators like rats and cats, which likely caused its extermination on other inhabited islands. The terrain on these islands includes cliffs and steep areas, making traditional predator control methods challenging. Given the severe predation threat and the constraint of inaccessible steep terrain, draft a specific conservation plan to protect the [Target Species] from invasive predators.",
+          "question_after": "The Pampusana rubescens is an endangered bird restricted to two small uninhabited islands, Hatutu and Fatu Huku, in the Marquesas Islands. Its population is highly vulnerable to introduced predators like rats and cats, which likely caused its extermination on other inhabited islands. The terrain on these islands includes cliffs and steep areas, making traditional predator control methods challenging. Given the severe predation threat and the constraint of inaccessible steep terrain, draft a specific conservation plan to protect the Pampusana rubescens from invasive predators.",
+          "answer_before": "Gold Standard Rubric for LLM-as-a-Judge Evaluator:\n- [Threat Priority]: The #1 deadliest threat to tackle first is introduced predators (rats and cats), as the text states that the species' extermination on other islands was probably caused by introduced predators, and it is extremely vulnerable to such introductions on its current islands.\n- [Constraint Satisfaction]: To satisfy the constraint of inaccessible steep terrain, the plan must avoid methods that require extensive ground access or infrastructure in steep areas. Instead, it should utilize aerial or remote techniques, such as drone-based monitoring, targeted baiting from helicopters, or deployment of predator-proof traps in accessible zones only, ensuring no reliance on foot patrols in cliffs.\n- [Biological Specificity]: The plan must account for the [Target Species]'s unique biological trait of being a ground-foraging bird that feeds almost entirely on the ground, as stated in the text. This makes it particularly susceptible to ground-dwelling predators, so protection measures should focus on securing ground habitats, such as using ground-level predator exclosures or enhancing natural cover in foraging areas.",
+          "answer_after": "Gold Standard Rubric for LLM-as-a-Judge Evaluator:\n- [Threat Priority]: The #1 deadliest threat to tackle first is introduced predators (rats and cats), as the text states that the species' extermination on other islands was probably caused by introduced predators, and it is extremely vulnerable to such introductions on its current islands.\n- [Constraint Satisfaction]: To satisfy the constraint of inaccessible steep terrain, the plan must avoid methods that require extensive ground access or infrastructure in steep areas. Instead, it should utilize aerial or remote techniques, such as drone-based monitoring, targeted baiting from helicopters, or deployment of predator-proof traps in accessible zones only, ensuring no reliance on foot patrols in cliffs.\n- [Biological Specificity]: The plan must account for the Pampusana rubescens's unique biological trait of being a ground-foraging bird that feeds almost entirely on the ground, as stated in the text. This makes it particularly susceptible to ground-dwelling predators, so protection measures should focus on securing ground habitats, such as using ground-level predator exclosures or enhancing natural cover in foraging areas."
+        },
+        {
+          "question_id": "bird_plan_0005",
+          "target_entity": "Didunculus strigirostris",
+          "question_before": "The [Target Species] is critically endangered with fewer than 50 mature individuals on each main island of Samoa, primarily due to severe habitat loss from logging, cyclones, and fragmentation. Its specialized diet depends on Dysoxylum fruits, and it is now restricted to mid-elevation forests above 300 m, with lowland habitats largely lost. Given that climate change will cause sea-level rise to inevitably submerge remaining lowland habitats, draft a specific conservation plan to rescue the species' habitat. Your plan must address the core threat of habitat loss and fragmentation while accounting for the constraint that lowland areas cannot be saved from submersion.",
+          "question_after": "The Didunculus strigirostris is critically endangered with fewer than 50 mature individuals on each main island of Samoa, primarily due to severe habitat loss from logging, cyclones, and fragmentation. Its specialized diet depends on Dysoxylum fruits, and it is now restricted to mid-elevation forests above 300 m, with lowland habitats largely lost. Given that climate change will cause sea-level rise to inevitably submerge remaining lowland habitats, draft a specific conservation plan to rescue the species' habitat. Your plan must address the core threat of habitat loss and fragmentation while accounting for the constraint that lowland areas cannot be saved from submersion.",
+          "answer_before": "Gold Standard Rubric for LLM-as-a-Judge Evaluator:\n- [Threat Priority]: The #1 deadliest threat to tackle first is habitat loss and fragmentation from logging and cyclones, as the text states it has reduced the population from thousands to fewer than 50 per island and restricted the species to mid-elevation forests, making remaining habitats critical for survival.\n- [Constraint Satisfaction]: To satisfy the constraint of inevitable lowland submersion, the plan must focus exclusively on protecting and restoring mid-elevation forests (above 300 m) and higher elevations, avoiding any investment in lowland areas. Methods should include securing land rights, reforesting with native species like Dysoxylum, and creating corridors between fragmented mid-elevation patches.\n- [Biological Specificity]: The plan must utilize the species' unique biological trait of feeding on Dysoxylum fruits using its specialized bill, by ensuring the conservation and planting of Dysoxylum maota and D. samoense trees in protected mid-elevation areas to support its diet and foraging behavior.",
+          "answer_after": "Gold Standard Rubric for LLM-as-a-Judge Evaluator:\n- [Threat Priority]: The #1 deadliest threat to tackle first is habitat loss and fragmentation from logging and cyclones, as the text states it has reduced the population from thousands to fewer than 50 per island and restricted the species to mid-elevation forests, making remaining habitats critical for survival.\n- [Constraint Satisfaction]: To satisfy the constraint of inevitable lowland submersion, the plan must focus exclusively on protecting and restoring mid-elevation forests (above 300 m) and higher elevations, avoiding any investment in lowland areas. Methods should include securing land rights, reforesting with native species like Dysoxylum, and creating corridors between fragmented mid-elevation patches.\n- [Biological Specificity]: The plan must utilize the species' unique biological trait of feeding on Dysoxylum fruits using its specialized bill, by ensuring the conservation and planting of Dysoxylum maota and D. samoense trees in protected mid-elevation areas to support its diet and foraging behavior."
+        },
+        {
+          "question_id": "bird_plan_0006",
+          "target_entity": "Otis tarda",
+          "question_before": "The [Target Species] population in a critical region is declining rapidly due to extremely low annual productivity, averaging only 0.14 chicks reared per adult female, with high interannual variability. This demographic crisis is compounded by habitat fragmentation from agricultural intensification. Conservationists want to implement a population intervention to boost reproductive output, but face a severe constraint: the species suffers from extreme capture stress/myopathy in captivity, making traditional captive breeding and translocation approaches highly risky. Given this constraint and the urgent need to address the low productivity, draft a specific conservation plan that prioritizes interventions to increase the population's reproductive success.",
+          "question_after": "The Otis tarda population in a critical region is declining rapidly due to extremely low annual productivity, averaging only 0.14 chicks reared per adult female, with high interannual variability. This demographic crisis is compounded by habitat fragmentation from agricultural intensification. Conservationists want to implement a population intervention to boost reproductive output, but face a severe constraint: the species suffers from extreme capture stress/myopathy in captivity, making traditional captive breeding and translocation approaches highly risky. Given this constraint and the urgent need to address the low productivity, draft a specific conservation plan that prioritizes interventions to increase the population's reproductive success.",
+          "answer_before": "Gold Standard Rubric:\n- [Threat Priority]: The #1 deadliest threat to tackle first is the extremely low annual productivity (0.14 chicks reared per adult female) with high interannual variability, as this directly limits population growth and recovery, especially when compounded by habitat fragmentation from agricultural intensification.\n- [Constraint Satisfaction]: To satisfy the constraint of extreme capture stress/myopathy in captivity, the plan must avoid traditional captive breeding, translocation, or any method requiring prolonged capture and confinement. Instead, focus on in-situ interventions that minimize handling, such as habitat management to improve nesting success and food availability, or non-invasive monitoring techniques.\n- [Biological Specificity]: The plan must account for the [Target Species]'s unique biological traits: (1) It nests on the ground with minimal lining, making nests vulnerable to destruction during crop treatment and harvesting, requiring targeted protection measures. (2) It relies on a diverse diet including legumes and insects, with increased planting of unirrigated legumes linked to population increases, so habitat management should promote these food sources. (3) Productivity is higher in areas with small fields and high interspersion of land uses, so interventions should enhance habitat heterogeneity.",
+          "answer_after": "Gold Standard Rubric:\n- [Threat Priority]: The #1 deadliest threat to tackle first is the extremely low annual productivity (0.14 chicks reared per adult female) with high interannual variability, as this directly limits population growth and recovery, especially when compounded by habitat fragmentation from agricultural intensification.\n- [Constraint Satisfaction]: To satisfy the constraint of extreme capture stress/myopathy in captivity, the plan must avoid traditional captive breeding, translocation, or any method requiring prolonged capture and confinement. Instead, focus on in-situ interventions that minimize handling, such as habitat management to improve nesting success and food availability, or non-invasive monitoring techniques.\n- [Biological Specificity]: The plan must account for the Otis tarda's unique biological traits: (1) It nests on the ground with minimal lining, making nests vulnerable to destruction during crop treatment and harvesting, requiring targeted protection measures. (2) It relies on a diverse diet including legumes and insects, with increased planting of unirrigated legumes linked to population increases, so habitat management should promote these food sources. (3) Productivity is higher in areas with small fields and high interspersion of land uses, so interventions should enhance habitat heterogeneity."
+        },
+        {
+          "question_id": "bird_plan_0007",
+          "target_entity": "Eleothreptus anomalus",
+          "question_before": "The [Target Species] is suspected to be partially migratory, leaving the southern portion of its range in the nonbreeding season, but very little is documented regarding its seasonal occurrence in most of its range. This lack of knowledge about its migration patterns and population dynamics poses a severe demographic threat, as it hinders effective conservation planning and could lead to unnoticed population declines. However, any intervention is constrained by the fact that the species suffers from extreme capture stress/myopathy in captivity, making traditional capture-based monitoring methods highly risky. Draft a specific conservation plan to address this demographic threat while strictly adhering to this constraint.",
+          "question_after": "The Eleothreptus anomalus is suspected to be partially migratory, leaving the southern portion of its range in the nonbreeding season, but very little is documented regarding its seasonal occurrence in most of its range. This lack of knowledge about its migration patterns and population dynamics poses a severe demographic threat, as it hinders effective conservation planning and could lead to unnoticed population declines. However, any intervention is constrained by the fact that the species suffers from extreme capture stress/myopathy in captivity, making traditional capture-based monitoring methods highly risky. Draft a specific conservation plan to address this demographic threat while strictly adhering to this constraint.",
+          "answer_before": "Gold Standard Rubric:\n- [Threat Priority]: The #1 deadliest threat to tackle first is the lack of documented seasonal occurrence and migration patterns, which prevents accurate population assessment and timely intervention for potential declines.\n- [Constraint Satisfaction]: The plan must avoid any capture-based methods (e.g., banding, tagging via physical restraint) that could induce stress or myopathy. Instead, use non-invasive techniques such as remote acoustic monitoring, camera traps, or observational surveys from a distance.\n- [Biological Specificity]: The plan must account for the species' suspected partial migratory behavior and occupancy of open habitats, utilizing its habitat preferences to deploy monitoring tools in appropriate open areas and track seasonal movements without direct contact.",
+          "answer_after": "Gold Standard Rubric:\n- [Threat Priority]: The #1 deadliest threat to tackle first is the lack of documented seasonal occurrence and migration patterns, which prevents accurate population assessment and timely intervention for potential declines.\n- [Constraint Satisfaction]: The plan must avoid any capture-based methods (e.g., banding, tagging via physical restraint) that could induce stress or myopathy. Instead, use non-invasive techniques such as remote acoustic monitoring, camera traps, or observational surveys from a distance.\n- [Biological Specificity]: The plan must account for the species' suspected partial migratory behavior and occupancy of open habitats, utilizing its habitat preferences to deploy monitoring tools in appropriate open areas and track seasonal movements without direct contact."
+        },
+        {
+          "question_id": "bird_plan_0008",
+          "target_entity": "Chaetura andrei",
+          "question_before": "The [Target Species] is a Vulnerable swift species endemic to lowland deciduous seasonal forest in eastern Venezuela. Its habitat is severely threatened by climate change-induced sea-level rise, which will inevitably submerge its lowland habitat within decades. Given this existential threat and the constraint that the lowland habitat will inevitably be submerged by sea-level rise, draft a specific conservation plan that addresses this habitat loss while accounting for the species' unique biological traits.",
+          "question_after": "The Chaetura andrei is a Vulnerable swift species endemic to lowland deciduous seasonal forest in eastern Venezuela. Its habitat is severely threatened by climate change-induced sea-level rise, which will inevitably submerge its lowland habitat within decades. Given this existential threat and the constraint that the lowland habitat will inevitably be submerged by sea-level rise, draft a specific conservation plan that addresses this habitat loss while accounting for the species' unique biological traits.",
+          "answer_before": "Gold Standard Rubric for LLM-as-a-Judge Evaluation:\n\n[Threat Priority]: The #1 deadliest threat to tackle first is the complete loss of lowland deciduous seasonal forest habitat due to sea-level rise, as this will eliminate the species' entire known range and cause extinction.\n\n[Constraint Satisfaction]: The plan must accept that lowland habitat restoration in current locations is futile due to inevitable submersion. Instead, it must focus on identifying and establishing new suitable habitats at higher elevations or inland areas that mimic the original lowland deciduous seasonal forest conditions but are safe from sea-level rise.\n\n[Biological Specificity]: The plan must account for the [Target Species]' unique biological trait of having a 'Small rounded tail, rectrices tipped with spines for support while perching on vertical surfaces at nesting and roosting sites.' This indicates the species requires specific vertical structures (e.g., trees, cliffs) for nesting and roosting, which must be present in any new habitat established. Additionally, as a swift, it presumably feeds on insects and spiders in flight, so the new habitat must support adequate aerial insect populations.",
+          "answer_after": "Gold Standard Rubric for LLM-as-a-Judge Evaluation:\n\n[Threat Priority]: The #1 deadliest threat to tackle first is the complete loss of lowland deciduous seasonal forest habitat due to sea-level rise, as this will eliminate the species' entire known range and cause extinction.\n\n[Constraint Satisfaction]: The plan must accept that lowland habitat restoration in current locations is futile due to inevitable submersion. Instead, it must focus on identifying and establishing new suitable habitats at higher elevations or inland areas that mimic the original lowland deciduous seasonal forest conditions but are safe from sea-level rise.\n\n[Biological Specificity]: The plan must account for the Chaetura andrei' unique biological trait of having a 'Small rounded tail, rectrices tipped with spines for support while perching on vertical surfaces at nesting and roosting sites.' This indicates the species requires specific vertical structures (e.g., trees, cliffs) for nesting and roosting, which must be present in any new habitat established. Additionally, as a swift, it presumably feeds on insects and spiders in flight, so the new habitat must support adequate aerial insect populations."
+        }
+      ]
+    },
+    {
+      "dataset": "Bird-Reason",
+      "path": "question\\Bird-Reason\\Bird-Reason_questions.jsonl",
+      "total_rows": 219,
+      "replaced_rows": 219,
+      "skipped_rows": 0,
+      "rows_still_containing_placeholders": 0,
+      "removed_prompt_ready_fields_rows": 0,
+      "warnings": [],
+      "examples": [
+        {
+          "question_id": "bird_reason_0001",
+          "target_entity": "Apteryx australis",
+          "question_before": "Hypothetically, if a severe drought were to drastically reduce the soil moisture and leaf litter in the habitats of [This Bird], predict the ecological consequence for its population viability based on its specific foraging traits and dietary needs.",
+          "question_after": "Hypothetically, if a severe drought were to drastically reduce the soil moisture and leaf litter in the habitats of Apteryx australis, predict the ecological consequence for its population viability based on its specific foraging traits and dietary needs.",
+          "answer_before": "The ecological consequence would likely be a significant decline in population viability due to reduced prey availability and foraging efficiency. [This Bird] is a nocturnal, flightless bird that detects prey mainly by smell and forages on invertebrates from soil and leaf litter, including insects, earthworms, spiders, snails, amphipods, millipedes, and centipedes. A severe drought reducing soil moisture and leaf litter would desiccate and diminish these invertebrate populations, directly impacting [This Bird]'s primary food source. This could lead to malnutrition, reduced reproductive success (e.g., lower clutch survival or fewer replacement clutches), and increased mortality, particularly for chicks and juveniles that rely on abundant prey for growth. Given its sedentary nature and territorial behavior (5–50 ha territories), individuals might struggle to find sufficient food within their established ranges, exacerbating population declines, especially in already vulnerable mainland populations.",
+          "answer_after": "The ecological consequence would likely be a significant decline in population viability due to reduced prey availability and foraging efficiency. Apteryx australis is a nocturnal, flightless bird that detects prey mainly by smell and forages on invertebrates from soil and leaf litter, including insects, earthworms, spiders, snails, amphipods, millipedes, and centipedes. A severe drought reducing soil moisture and leaf litter would desiccate and diminish these invertebrate populations, directly impacting Apteryx australis's primary food source. This could lead to malnutrition, reduced reproductive success (e.g., lower clutch survival or fewer replacement clutches), and increased mortality, particularly for chicks and juveniles that rely on abundant prey for growth. Given its sedentary nature and territorial behavior (5–50 ha territories), individuals might struggle to find sufficient food within their established ranges, exacerbating population declines, especially in already vulnerable mainland populations."
+        },
+        {
+          "question_id": "bird_reason_0002",
+          "target_entity": "Asarcornis scutulata",
+          "question_before": "The text notes that [This Bird] exhibits an unusual pattern of seasonal habitat use, shifting from more open wetlands during wet seasons to secluded forest ditches in dry seasons, and is sometimes hardly seen at all in late dry seasons. What is the most likely biological cause for this specific distributional constraint and behavioral anomaly, given its physiological traits and ecological requirements?",
+          "question_after": "The text notes that Asarcornis scutulata exhibits an unusual pattern of seasonal habitat use, shifting from more open wetlands during wet seasons to secluded forest ditches in dry seasons, and is sometimes hardly seen at all in late dry seasons. What is the most likely biological cause for this specific distributional constraint and behavioral anomaly, given its physiological traits and ecological requirements?",
+          "answer_before": "The most likely biological cause is [This Bird]'s dependence on secluded, permanent water sources for survival during dry periods, driven by its specific physiological and behavioral adaptations as a tropical forest duck. This species inhabits undisturbed, secluded pools and marshes in dense freshwater and peat swampy forests, and feeds by dabbling and head-dipping in shallow water on a diet including aquatic plants, molluscs, and small vertebrates. During wet seasons, abundant water allows use of more open wetlands, but as water levels recede in dry seasons, the bird must concentrate in the few remaining forest ditches that retain water. In late dry seasons, when even these become scarce, it likely moves to permanent swamps less accessible to humans, explaining its near-absence from observations. This behavior is an adaptation to maintain access to essential water for feeding and possibly predator avoidance, given its secretive nature and reliance on specific wetland habitats within forest ecosystems.",
+          "answer_after": "The most likely biological cause is Asarcornis scutulata's dependence on secluded, permanent water sources for survival during dry periods, driven by its specific physiological and behavioral adaptations as a tropical forest duck. This species inhabits undisturbed, secluded pools and marshes in dense freshwater and peat swampy forests, and feeds by dabbling and head-dipping in shallow water on a diet including aquatic plants, molluscs, and small vertebrates. During wet seasons, abundant water allows use of more open wetlands, but as water levels recede in dry seasons, the bird must concentrate in the few remaining forest ditches that retain water. In late dry seasons, when even these become scarce, it likely moves to permanent swamps less accessible to humans, explaining its near-absence from observations. This behavior is an adaptation to maintain access to essential water for feeding and possibly predator avoidance, given its secretive nature and reliance on specific wetland habitats within forest ecosystems."
+        },
+        {
+          "question_id": "bird_reason_0003",
+          "target_entity": "Anas bernieri",
+          "question_before": "A claim states that [This Bird] primarily nests in open, treeless areas near deep freshwater lakes during the breeding season, which is a strategy to avoid predators and facilitate easy access to aquatic insects. Identify the physiological and ecological errors in this claim and correct them based on the provided text.",
+          "question_after": "A claim states that Anas bernieri primarily nests in open, treeless areas near deep freshwater lakes during the breeding season, which is a strategy to avoid predators and facilitate easy access to aquatic insects. Identify the physiological and ecological errors in this claim and correct them based on the provided text.",
+          "answer_before": "The claim contains multiple errors. First, [This Bird] does not nest in open, treeless areas; it nests in holes in black mangrove (Avicennia marina) trees 1–3 m above the water line, always in larger trees, as stated in the text. This arboreal nesting strategy provides protection from ground predators and flooding, not open areas. Second, the breeding habitat is not near deep freshwater lakes but in seasonally flooded, non-tidal areas dominated by Avicennia marina mangrove on the landward side of littoral forest, which are shallow and saline or brackish. Third, the breeding season occurs during the W coast wet season (Dec–Mar), not in open areas, and nesting in trees aligns with monogamous pair behavior and territory defense. The diet includes aquatic and terrestrial insects, but nesting in trees does not primarily facilitate insect access; feeding occurs by dabbling, filtering mud, and wading in shallow water, not directly from nest sites. Correction: [This Bird] nests in tree holes in mangroves during the wet season, using elevated sites for safety, and forages in shallow wetlands, reflecting adaptations to specific saline habitats and predator avoidance.",
+          "answer_after": "The claim contains multiple errors. First, Anas bernieri does not nest in open, treeless areas; it nests in holes in black mangrove (Avicennia marina) trees 1–3 m above the water line, always in larger trees, as stated in the text. This arboreal nesting strategy provides protection from ground predators and flooding, not open areas. Second, the breeding habitat is not near deep freshwater lakes but in seasonally flooded, non-tidal areas dominated by Avicennia marina mangrove on the landward side of littoral forest, which are shallow and saline or brackish. Third, the breeding season occurs during the W coast wet season (Dec–Mar), not in open areas, and nesting in trees aligns with monogamous pair behavior and territory defense. The diet includes aquatic and terrestrial insects, but nesting in trees does not primarily facilitate insect access; feeding occurs by dabbling, filtering mud, and wading in shallow water, not directly from nest sites. Correction: Anas bernieri nests in tree holes in mangroves during the wet season, using elevated sites for safety, and forages in shallow wetlands, reflecting adaptations to specific saline habitats and predator avoidance."
+        },
+        {
+          "question_id": "bird_reason_0004",
+          "target_entity": "Apteryx mantelli",
+          "question_before": "Given that [This Bird] is flightless and nocturnal, and its diet consists mostly of invertebrates from soil and leaf litter, how does this combination of traits influence its role in nutrient cycling within its forest ecosystem?",
+          "question_after": "Given that Apteryx mantelli is flightless and nocturnal, and its diet consists mostly of invertebrates from soil and leaf litter, how does this combination of traits influence its role in nutrient cycling within its forest ecosystem?",
+          "answer_before": "[This Bird] plays a significant role in nutrient cycling by aerating soil and mixing organic matter through its foraging behavior. As a flightless bird, it is ground-bound, which concentrates its activities on the forest floor. Its nocturnal habits allow it to forage when many invertebrates are active, increasing predation efficiency. By consuming invertebrates like earthworms, beetles, and snails from the soil and leaf litter, it helps break down organic material and redistribute nutrients through excretion. This enhances soil fertility and supports plant growth, contributing to ecosystem health. The bird's specific foraging method—using smell to detect prey and inserting its bill with a levering motion—further disturbs the soil surface, promoting decomposition and nutrient release.",
+          "answer_after": "Apteryx mantelli plays a significant role in nutrient cycling by aerating soil and mixing organic matter through its foraging behavior. As a flightless bird, it is ground-bound, which concentrates its activities on the forest floor. Its nocturnal habits allow it to forage when many invertebrates are active, increasing predation efficiency. By consuming invertebrates like earthworms, beetles, and snails from the soil and leaf litter, it helps break down organic material and redistribute nutrients through excretion. This enhances soil fertility and supports plant growth, contributing to ecosystem health. The bird's specific foraging method—using smell to detect prey and inserting its bill with a levering motion—further disturbs the soil surface, promoting decomposition and nutrient release."
+        },
+        {
+          "question_id": "bird_reason_0005",
+          "target_entity": "Melanitta americana",
+          "question_before": "Based on the provided monograph, synthesize a holistic survival strategy profile for [This Bird] by integrating its physiological adaptations, behavioral patterns, and ecological interactions. Specifically, explain how these elements collectively enable [This Bird] to thrive in its specific environment, addressing challenges such as predation, resource acquisition, and environmental pressures.",
+          "question_after": "Based on the provided monograph, synthesize a holistic survival strategy profile for Melanitta americana by integrating its physiological adaptations, behavioral patterns, and ecological interactions. Specifically, explain how these elements collectively enable Melanitta americana to thrive in its specific environment, addressing challenges such as predation, resource acquisition, and environmental pressures.",
+          "answer_before": "The holistic survival strategy of [This Bird] integrates its specialized physiological adaptations, such as a robust body structure and efficient foraging mechanisms, with behavioral patterns like cooperative breeding or migratory habits, and ecological interactions including predator avoidance and niche specialization. This synthesis allows [This Bird] to effectively manage environmental challenges, optimize resource use, and maintain population stability in its habitat.",
+          "answer_after": "The holistic survival strategy of Melanitta americana integrates its specialized physiological adaptations, such as a robust body structure and efficient foraging mechanisms, with behavioral patterns like cooperative breeding or migratory habits, and ecological interactions including predator avoidance and niche specialization. This synthesis allows Melanitta americana to effectively manage environmental challenges, optimize resource use, and maintain population stability in its habitat."
+        },
+        {
+          "question_id": "bird_reason_0006",
+          "target_entity": "Arborophila rufipectus",
+          "question_before": "Hypothetically, if a severe drought in the subtropical forests of SC China causes a significant reduction in the density of the shrub layer and a decrease in leaf litter depth to less than 2 cm, predict the consequence for [This Bird]'s foraging efficiency and predator avoidance during the breeding season, based on its specific habitat preferences and behavioral traits.",
+          "question_after": "Hypothetically, if a severe drought in the subtropical forests of SC China causes a significant reduction in the density of the shrub layer and a decrease in leaf litter depth to less than 2 cm, predict the consequence for Arborophila rufipectus's foraging efficiency and predator avoidance during the breeding season, based on its specific habitat preferences and behavioral traits.",
+          "answer_before": "The predicted consequence for [This Bird] would be a decline in both foraging efficiency and predator avoidance during the breeding season. Foraging efficiency would decrease because [This Bird] prefers to forage on the ground in areas with substantial leaf litter (5–10 cm deep), which provides cover and access to invertebrates and fallen fruits; a reduction to less than 2 cm would expose the ground, reducing food availability and increasing vulnerability while foraging. Predator avoidance would also decline as [This Bird] relies on a denser shrub layer and greater tree cover for concealment from natural predators like the Eurasian Sparrowhawk and spotted linsang; a reduction in shrub density would make the birds more visible and susceptible to predation, especially during critical breeding activities such as nesting and caring for young. This dual impact could lead to decreased reproductive success and increased mortality, exacerbating its vulnerable conservation status.",
+          "answer_after": "The predicted consequence for Arborophila rufipectus would be a decline in both foraging efficiency and predator avoidance during the breeding season. Foraging efficiency would decrease because Arborophila rufipectus prefers to forage on the ground in areas with substantial leaf litter (5–10 cm deep), which provides cover and access to invertebrates and fallen fruits; a reduction to less than 2 cm would expose the ground, reducing food availability and increasing vulnerability while foraging. Predator avoidance would also decline as Arborophila rufipectus relies on a denser shrub layer and greater tree cover for concealment from natural predators like the Eurasian Sparrowhawk and spotted linsang; a reduction in shrub density would make the birds more visible and susceptible to predation, especially during critical breeding activities such as nesting and caring for young. This dual impact could lead to decreased reproductive success and increased mortality, exacerbating its vulnerable conservation status."
+        },
+        {
+          "question_id": "bird_reason_0007",
+          "target_entity": "Penelope pileata",
+          "question_before": "What is the most likely biological cause for [This Bird]'s unusual ability to hybridize in captivity with multiple species from different genera, including Crax alberti, despite being a Brazilian endemic with a relatively small population and specific habitat preferences?",
+          "question_after": "What is the most likely biological cause for Penelope pileata's unusual ability to hybridize in captivity with multiple species from different genera, including Crax alberti, despite being a Brazilian endemic with a relatively small population and specific habitat preferences?",
+          "answer_before": "The most likely biological cause for [This Bird]'s unusual hybridization ability is its close evolutionary relationship and genetic compatibility with other members of its genus and related genera, as evidenced by its historical conspecific status with P. ochrogaster and P. jacucaca, combined with captive conditions that remove natural reproductive barriers. This suggests that [This Bird] retains ancestral genetic traits that allow for interspecific breeding when geographical and behavioral isolation mechanisms are absent, indicating a recent divergence or conserved reproductive physiology within the curassow family.",
+          "answer_after": "The most likely biological cause for Penelope pileata's unusual hybridization ability is its close evolutionary relationship and genetic compatibility with other members of its genus and related genera, as evidenced by its historical conspecific status with P. ochrogaster and P. jacucaca, combined with captive conditions that remove natural reproductive barriers. This suggests that Penelope pileata retains ancestral genetic traits that allow for interspecific breeding when geographical and behavioral isolation mechanisms are absent, indicating a recent divergence or conserved reproductive physiology within the curassow family."
+        },
+        {
+          "question_id": "bird_reason_0008",
+          "target_entity": "Centrocercus minimus",
+          "question_before": "A conservationist claims that [This Bird] has a highly specialized digestive system adapted for consuming insects and seeds, which explains its dependence on sagebrush ecosystems for foraging. Identify the physiological and ecological errors in this claim, and correct it based on the specific traits of [This Bird] described in the text.",
+          "question_after": "A conservationist claims that Centrocercus minimus has a highly specialized digestive system adapted for consuming insects and seeds, which explains its dependence on sagebrush ecosystems for foraging. Identify the physiological and ecological errors in this claim, and correct it based on the specific traits of Centrocercus minimus described in the text.",
+          "answer_before": "The claim contains two key errors: (1) It incorrectly states that [This Bird] has a digestive system specialized for insects and seeds, when the text specifies it is uniquely adapted for consuming sagebrush leaves. (2) It misattributes the dependence on sagebrush ecosystems to this digestive adaptation for insects/seeds, whereas the actual dependence is due to the bird's reliance on sagebrush as a primary food source across seasons, supported by its digestive adaptation for sagebrush leaves. Correction: [This Bird] has a digestive system uniquely adapted for consumption of sagebrush leaves, not insects or seeds. This adaptation, along with sagebrush being a main food in all seasons (e.g., leaves of big sagebrush, black sagebrush), underpins its close association with sagebrush ecosystems, as it forages on sagebrush at ground level or above snow, selecting plants based on nutritive value and low toxins.",
+          "answer_after": "The claim contains two key errors: (1) It incorrectly states that Centrocercus minimus has a digestive system specialized for insects and seeds, when the text specifies it is uniquely adapted for consuming sagebrush leaves. (2) It misattributes the dependence on sagebrush ecosystems to this digestive adaptation for insects/seeds, whereas the actual dependence is due to the bird's reliance on sagebrush as a primary food source across seasons, supported by its digestive adaptation for sagebrush leaves. Correction: Centrocercus minimus has a digestive system uniquely adapted for consumption of sagebrush leaves, not insects or seeds. This adaptation, along with sagebrush being a main food in all seasons (e.g., leaves of big sagebrush, black sagebrush), underpins its close association with sagebrush ecosystems, as it forages on sagebrush at ground level or above snow, selecting plants based on nutritive value and low toxins."
+        }
+      ]
+    },
+    {
+      "dataset": "Bird-Taxonomy",
+      "path": "question\\Bird-Taxonomy\\Bird-Taxonomy_questions.jsonl",
+      "total_rows": 840,
+      "replaced_rows": 836,
+      "skipped_rows": 4,
+      "rows_still_containing_placeholders": 4,
+      "removed_prompt_ready_fields_rows": 0,
+      "warnings": [],
+      "examples": [
+        {
+          "question_id": "bird_taxonomy_0001",
+          "target_entity": "Asarcornis scutulata",
+          "question_before": "True or False: [the bird] is currently classified in the genus Cairina.",
+          "question_after": "True or False: Asarcornis scutulata is currently classified in the genus Cairina.",
+          "answer_before": "False",
+          "answer_after": "False"
+        },
+        {
+          "question_id": "bird_taxonomy_0002",
+          "target_entity": "Rhodonessa caryophyllacea",
+          "question_before": "Does [the bird] have any recognized subspecies?",
+          "question_after": "Does Rhodonessa caryophyllacea have any recognized subspecies?",
+          "answer_before": "Monotypic",
+          "answer_after": "Monotypic"
+        },
+        {
+          "question_id": "bird_taxonomy_0003",
+          "target_entity": "Tinamus guttatus",
+          "question_before": "Does [the bird] have any recognized subspecies?",
+          "question_after": "Does Tinamus guttatus have any recognized subspecies?",
+          "answer_before": "Monotypic",
+          "answer_after": "Monotypic"
+        },
+        {
+          "question_id": "bird_taxonomy_0004",
+          "target_entity": "Anas theodori",
+          "question_before": "Does [the bird] have any recognized subspecies?",
+          "question_after": "Does Anas theodori have any recognized subspecies?",
+          "answer_before": "Monotypic",
+          "answer_after": "Monotypic"
+        },
+        {
+          "question_id": "bird_taxonomy_0005",
+          "target_entity": "Anas melleri",
+          "question_before": "Is [the bird] currently classified in the infragenus Afranus?",
+          "question_after": "Is Anas melleri currently classified in the infragenus Afranus?",
+          "answer_before": "False",
+          "answer_after": "False"
+        },
+        {
+          "question_id": "bird_taxonomy_0006",
+          "target_entity": "Crypturellus boucardi",
+          "question_before": "True or False: The subspecies costaricensis of [the bird] was originally described in the genus Crypturus.",
+          "question_after": "True or False: The subspecies costaricensis of Crypturellus boucardi was originally described in the genus Crypturus.",
+          "answer_before": "True",
+          "answer_after": "True"
+        },
+        {
+          "question_id": "bird_taxonomy_0007",
+          "target_entity": "Anas andium",
+          "question_before": "Which of these are currently accepted as valid subspecies of [the bird]? Options: A. andium, B. altipetens, C. flavirostris, D. oxyptera.",
+          "question_after": "Which of these are currently accepted as valid subspecies of Anas andium? Options: A. andium, B. altipetens, C. flavirostris, D. oxyptera.",
+          "answer_before": "A. andium, B. altipetens",
+          "answer_after": "A. andium, B. altipetens"
+        },
+        {
+          "question_id": "bird_taxonomy_0008",
+          "target_entity": "Tinamus tao",
+          "question_before": "Which of these are currently accepted as valid subspecies of [the bird]: larensis, kleei, septentrionalis, tao, or intermedia?",
+          "question_after": "Which of these are currently accepted as valid subspecies of Tinamus tao: larensis, kleei, septentrionalis, tao, or intermedia?",
+          "answer_before": "larensis, kleei, septentrionalis, tao",
+          "answer_after": "larensis, kleei, septentrionalis, tao"
+        }
+      ]
+    },
+    {
+      "dataset": "List-Global",
+      "path": "question\\List-Global\\List-Global_questions.jsonl",
+      "total_rows": 200,
+      "replaced_rows": 0,
+      "skipped_rows": 200,
+      "rows_still_containing_placeholders": 0,
+      "removed_prompt_ready_fields_rows": 0,
+      "warnings": [],
+      "examples": []
+    },
+    {
+      "dataset": "QA-MC",
+      "path": "question\\QA-MC\\QA-MC_questions.jsonl",
+      "total_rows": 1235,
+      "replaced_rows": 1235,
+      "skipped_rows": 0,
+      "rows_still_containing_placeholders": 0,
+      "removed_prompt_ready_fields_rows": 0,
+      "warnings": [],
+      "examples": [
+        {
+          "question_id": "qa_mc_0001",
+          "target_entity": "Pink-headed Duck",
+          "question_before": "Based on historical records, which of the following modern-day countries or regions were part of [the bird]'s known distribution?",
+          "question_after": "Based on historical records, which of the following modern-day countries or regions were part of Pink-headed Duck's known distribution?",
+          "answer_before": "A, B, C, D",
+          "answer_after": "A, B, C, D"
+        },
+        {
+          "question_id": "qa_mc_0002",
+          "target_entity": "Choco Tinamou",
+          "question_before": "Based on the provided text, which of the following statements accurately describe the distribution or known localities of [the bird]?",
+          "question_after": "Based on the provided text, which of the following statements accurately describe the distribution or known localities of Choco Tinamou?",
+          "answer_before": "B, C, D",
+          "answer_after": "B, C, D"
+        },
+        {
+          "question_id": "qa_mc_0003",
+          "target_entity": "Swan Goose",
+          "question_before": "Based on the provided monograph, which of the following are documented threats to [the bird] populations? Select ALL correct options.",
+          "question_after": "Based on the provided monograph, which of the following are documented threats to Swan Goose populations? Select ALL correct options.",
+          "answer_before": "A, B, C",
+          "answer_after": "A, B, C"
+        },
+        {
+          "question_id": "qa_mc_0004",
+          "target_entity": "Solitary Tinamou",
+          "question_before": "Based on the provided monograph, which of the following statements accurately describe the distribution of [the bird]?",
+          "question_after": "Based on the provided monograph, which of the following statements accurately describe the distribution of Solitary Tinamou?",
+          "answer_before": "A, C, E",
+          "answer_after": "A, C, E"
+        },
+        {
+          "question_id": "qa_mc_0005",
+          "target_entity": "Okarito Brown Kiwi",
+          "question_before": "Based on the provided text, which of the following statements accurately describe conservation aspects of [the bird]?",
+          "question_after": "Based on the provided text, which of the following statements accurately describe conservation aspects of Okarito Brown Kiwi?",
+          "answer_before": "A, C, D",
+          "answer_after": "A, C, D"
+        },
+        {
+          "question_id": "qa_mc_0006",
+          "target_entity": "White-winged Duck",
+          "question_before": "Based on the provided text, which of the following countries are listed as having relict populations of [the bird]?",
+          "question_after": "Based on the provided text, which of the following countries are listed as having relict populations of White-winged Duck?",
+          "answer_before": "A, B, D, E",
+          "answer_after": "A, B, D, E"
+        },
+        {
+          "question_id": "qa_mc_0001",
+          "target_entity": "Chenonetta finschi",
+          "question_before": "Based on the provided text, which of the following statements about the taxonomy and phylogeny of [the bird] are correct?",
+          "question_after": "Based on the provided text, which of the following statements about the taxonomy and phylogeny of Chenonetta finschi are correct?",
+          "answer_before": "A, C, E",
+          "answer_after": "A, C, E"
+        },
+        {
+          "question_id": "qa_mc_0002",
+          "target_entity": "Anser cygnoides",
+          "question_before": "Based on the provided text, which of the following are described as threats to [the bird] populations? Select ALL correct options.",
+          "question_after": "Based on the provided text, which of the following are described as threats to Anser cygnoides populations? Select ALL correct options.",
+          "answer_before": "A, B, C, E",
+          "answer_after": "A, B, C, E"
+        }
+      ]
+    },
+    {
+      "dataset": "QA-SA",
+      "path": "question\\QA-SA\\QA-SA_questions.jsonl",
+      "total_rows": 1232,
+      "replaced_rows": 1232,
+      "skipped_rows": 0,
+      "rows_still_containing_placeholders": 0,
+      "removed_prompt_ready_fields_rows": 0,
+      "warnings": [],
+      "examples": [
+        {
+          "question_id": "qa_sa_0001",
+          "target_entity": "Aythya ferina",
+          "question_before": "What is the maximum recorded elevation in meters for [the bird] in Ethiopia during winter?",
+          "question_after": "What is the maximum recorded elevation in meters for Aythya ferina in Ethiopia during winter?",
+          "answer_before": "2690",
+          "answer_after": "2690"
+        },
+        {
+          "question_id": "qa_sa_0002",
+          "target_entity": "Rhodonessa caryophyllacea",
+          "question_before": "How many valid subspecies are recognized for [the bird]?",
+          "question_after": "How many valid subspecies are recognized for Rhodonessa caryophyllacea?",
+          "answer_before": "Monotypic",
+          "answer_after": "Monotypic"
+        },
+        {
+          "question_id": "qa_sa_0003",
+          "target_entity": "Hymenolaimus malacorhynchos",
+          "question_before": "How many subspecies of [the bird] are recognized?",
+          "question_after": "How many subspecies of Hymenolaimus malacorhynchos are recognized?",
+          "answer_before": "Two",
+          "answer_after": "Two"
+        },
+        {
+          "question_id": "qa_sa_0004",
+          "target_entity": "Crypturellus boucardi",
+          "question_before": "How many valid subspecies are recognized for [the bird]?",
+          "question_after": "How many valid subspecies are recognized for Crypturellus boucardi?",
+          "answer_before": "Two",
+          "answer_after": "Two"
+        },
+        {
+          "question_id": "qa_sa_0005",
+          "target_entity": "Crypturellus noctivagus",
+          "question_before": "What is the maximum recorded elevation in meters for [the bird]?",
+          "question_after": "What is the maximum recorded elevation in meters for Crypturellus noctivagus?",
+          "answer_before": "300 m",
+          "answer_after": "300 m"
+        },
+        {
+          "question_id": "qa_sa_0006",
+          "target_entity": "Aythya americana",
+          "question_before": "How many valid subspecies are recognized for [the bird]?",
+          "question_after": "How many valid subspecies are recognized for Aythya americana?",
+          "answer_before": "Monotypic",
+          "answer_after": "Monotypic"
+        },
+        {
+          "question_id": "qa_sa_0007",
+          "target_entity": "Netta rufina",
+          "question_before": "How many valid subspecies are recognized for [the bird]?",
+          "question_after": "How many valid subspecies are recognized for Netta rufina?",
+          "answer_before": "Monotypic",
+          "answer_after": "Monotypic"
+        },
+        {
+          "question_id": "qa_sa_0008",
+          "target_entity": "Anas laysanensis",
+          "question_before": "How many valid subspecies of [the bird] are recognized?",
+          "question_after": "How many valid subspecies of Anas laysanensis are recognized?",
+          "answer_before": "Monotypic",
+          "answer_after": "Monotypic"
+        }
+      ]
+    },
+    {
+      "dataset": "QA-SC",
+      "path": "question\\QA-SC\\QA-SC_questions.jsonl",
+      "total_rows": 2450,
+      "replaced_rows": 2421,
+      "skipped_rows": 29,
+      "rows_still_containing_placeholders": 26,
+      "removed_prompt_ready_fields_rows": 0,
+      "warnings": [],
+      "examples": [
+        {
+          "question_id": "qa_sc_0001",
+          "target_entity": "Yellow-legged Tinamou",
+          "question_before": "According to the text, what is the primary reason for the decline in [the bird]'s population throughout eastern Brazil?",
+          "question_after": "According to the text, what is the primary reason for the decline in Yellow-legged Tinamou's population throughout eastern Brazil?",
+          "answer_before": "C",
+          "answer_after": "C"
+        },
+        {
+          "question_id": "qa_sc_0002",
+          "target_entity": "White-headed Steamer-Duck",
+          "question_before": "According to the text, what is the primary geographic distribution of [the bird]?",
+          "question_after": "According to the text, what is the primary geographic distribution of White-headed Steamer-Duck?",
+          "answer_before": "B",
+          "answer_after": "B"
+        },
+        {
+          "question_id": "qa_sc_0003",
+          "target_entity": "Philippine Duck",
+          "question_before": "Based on the provided text, where is the primary distribution range of [the bird]?",
+          "question_after": "Based on the provided text, where is the primary distribution range of Philippine Duck?",
+          "answer_before": "B",
+          "answer_after": "B"
+        },
+        {
+          "question_id": "qa_sc_0004",
+          "target_entity": "Baer's Pochard",
+          "question_before": "According to the provided text, what is the approximate wingspan range of [the bird]?",
+          "question_after": "According to the provided text, what is the approximate wingspan range of Baer's Pochard?",
+          "answer_before": "B",
+          "answer_after": "B"
+        },
+        {
+          "question_id": "qa_sc_0005",
+          "target_entity": "Taiga Bean-Goose",
+          "question_before": "Based on the provided text, which of the following best describes the bill coloration of [the bird] compared to the Tundra Bean-Goose?",
+          "question_after": "Based on the provided text, which of the following best describes the bill coloration of Taiga Bean-Goose compared to the Tundra Bean-Goose?",
+          "answer_before": "B",
+          "answer_after": "B"
+        },
+        {
+          "question_id": "qa_sc_0006",
+          "target_entity": "Madagascar Pochard",
+          "question_before": "According to the text, what is the current IUCN conservation status of [the bird]?",
+          "question_after": "According to the text, what is the current IUCN conservation status of Madagascar Pochard?",
+          "answer_before": "B",
+          "answer_after": "B"
+        },
+        {
+          "question_id": "qa_sc_0007",
+          "target_entity": "Meller's Duck",
+          "question_before": "According to the text, which of the following is a key morphological feature that distinguishes the male [the bird] from the female?",
+          "question_after": "According to the text, which of the following is a key morphological feature that distinguishes the male Meller's Duck from the female?",
+          "answer_before": "A",
+          "answer_after": "A"
+        },
+        {
+          "question_id": "qa_sc_0008",
+          "target_entity": "Campbell Islands Teal",
+          "question_before": "According to the text, what is a key physical characteristic of the breeding male [the bird]?",
+          "question_after": "According to the text, what is a key physical characteristic of the breeding male Campbell Islands Teal?",
+          "answer_before": "A",
+          "answer_after": "A"
+        }
+      ]
+    }
+  ],
+  "totals": {
+    "total_rows": 10042,
+    "replaced_rows": 8318,
+    "skipped_rows": 1724,
+    "rows_still_containing_placeholders": 30,
+    "warnings": 0,
+    "removed_prompt_ready_fields_rows": 0
+  }
+}

@@ -787,10 +787,10 @@ orniscient/
 
 # 快速开始
 
-## 安装
+## 1. 安装环境
 
 ```bash
-git clone https://github.com/<your-username>/Orniscient.git
+git clone https://github.com/Xiao0731/Orniscient.git
 cd Orniscient
 python -m venv .venv
 pip install -r requirements.txt
@@ -803,99 +803,116 @@ Windows PowerShell：
 Copy-Item .env.example .env
 ```
 
-在 `.env` 中配置本地数据路径和模型 API key。
+## 2. 配置 API Key
 
-## 运行评测
+在本地 `.env` 中配置 API key。不要提交真实 key。
 
-客观题：
-
-```bash
-python evaluation/objective_eval.py \
-  --models deepseek qwen kimi \
-  --datasets QA-SC QA-MC QA-SA Bird-Geo Bird-Taxonomy \
-  --question-root question
+```env
+DEEPSEEK_API_KEY=your_api_key_here
+DEEPSEEK_BASE_URL=https://api.deepseek.com/v1
 ```
 
-开放生成题：
+脚本也支持 OpenAI-compatible API 配置，可通过 `OPENAI_API_KEY` / `OPENAI_BASE_URL` 或命令行参数覆盖。
+
+## 3. 使用题库进行评测
+
+`question/` 包含公开可用的 benchmark questions。对非泄漏型 target-aware 任务，`question` 和 `answer` 中的 `[the bird]` 等占位符已经解析为 `target_entity`；对 `Bird-ID`、反向识别、`List-Global` 等泄漏敏感任务，题面仍按设计保持匿名。
+
+默认 `--knowledge-mode none` 表示裸模型评测，只依赖题库和模型 API。`kg_v3` / `hybrid` 等知识增强模式需要本地完整授权 KG 产物；公开仓库不随附完整 BOW 原文与全量 KG。
+
+常用字段：
+
+- `question_id`：题目 ID；
+- `dataset`：任务数据集；
+- `question`：可直接用于模型输入的公开题面；
+- `answer`：参考答案；
+- `target_entity`：目标物种或目标分类单元，如适用；
+- `provenance`：证据来源信息，如适用；
+- `type` / `knowledge_domain`：任务类型和知识领域，如适用。
+
+客观题 / objective：
 
 ```bash
-python evaluation/run_subjective_pipeline.py \
-  --models deepseek qwen kimi \
-  --datasets Bird-Life Bird-Eco Bird-Con Bird-Comp Bird-Reason Bird-Plan \
-  --modes zero_shot few_shot cot \
-  --question-root question \
-  --fewshot-root evaluation/fewshot_examples
+python evaluation/knowledge_RAG/cli/run_objective.py \
+  --models deepseek \
+  --datasets QA-MC
 ```
 
-结构化任务：
+知识增强客观题：
 
 ```bash
-python evaluation/run_remaining_four_eval.py \
-  --models deepseek qwen kimi \
-  --datasets Bird-ID List-Global Bird-Classify \
-  --question-root question
+python evaluation/knowledge_RAG/cli/run_objective.py \
+  --models deepseek \
+  --datasets Bird-Geo \
+  --knowledge-mode kg_v3
 ```
 
-构建知识库：
+主观题 / subjective：
 
 ```bash
-python kg_v2/run_build_kb_v2.py
+python evaluation/knowledge_RAG/cli/run_subjective.py \
+  --models deepseek \
+  --datasets Bird-Life \
+  --modes zero_shot
 ```
 
-裸模型 vs 知识增强一键对比 demo：
+结构化任务 / structured：
 
-`demo_compare.py` 不是正式评测脚本，不进行评分、judge 或聚合；正式 benchmark evaluation 仍使用 objective / subjective / structured pipelines。该脚本只用于展示同一问题在 vanilla 与 knowledge-augmented setting 下的输出差异。
+```bash
+python evaluation/knowledge_RAG/cli/run_structured.py \
+  --models deepseek \
+  --datasets Bird-ID
+```
 
-该 demo 支持两种模式：
+默认题库路径为 `question/`。结构化任务默认读取 `data/BIRDBASE.xlsx` 和 `data/Order.xlsx`；如果文件位于其他位置，可以通过 `--birdbase-xlsx` 和 `--order-xlsx` 覆盖。完整实验会通过统一 harness 产生中间输出、日志、预测和评分文件。
 
-- **full local mode**：需要本地 KG v2 artifacts，并可选传入 BOW chunk store；
-- **sample mode**：用于公开仓库接口展示，不依赖私有 KG/BOW artifacts。
+## 4. 使用 100 taxa demo 进行知识增强对比
+
+由于 BOW 原文和完整派生 chunks 受数据授权限制，本仓库不公开发布完整知识库产物。为了方便读者测试框架，Orniscient 提供一个 100 taxa 的小规模 demo graph，位于 `demo_data/sample_100_taxa/`。该 demo 子集包含 100 个 taxon 对应的 Taxon-Fact-Evidence-Chunk 结构化图谱信息和短文本 preview。
+
+`demo_compare.py` 不是正式评测脚本，不做评分、judge 或 benchmark aggregation。它用于展示同一个自由问题下的 Planner Result、Resolved Target、Vanilla Answer、KG-Augmented Answer、Retrieved Evidence / Chunks，以及 evidence-grounded prompt。
+
+无 API 预览：
 
 ```bash
 python evaluation/knowledge_RAG/demo_compare.py \
   --question "What are the main threats to the Southern Cassowary?" \
-  --target "Casuarius casuarius" \
-  --model deepseek-chat \
-  --knowledge-mode kg_v3 \
-  --top-k 5
-```
-
-无 API 预览命令：
-
-```bash
-python evaluation/knowledge_RAG/demo_compare.py \
-  --question "What are the main threats to the Southern Cassowary?" \
-  --target "Casuarius casuarius" \
-  --knowledge-mode kg_v3 \
-  --top-k 5 \
   --no-api
 ```
 
-sample mode 命令：
+API 完整对比：
+
+```bash
+python evaluation/knowledge_RAG/demo_compare.py \
+  --question "What are the main threats to the Southern Cassowary?"
+```
+
+显式 target：
+
+```bash
+python evaluation/knowledge_RAG/demo_compare.py \
+  --question "What does it eat?" \
+  --target "Southern Cassowary"
+```
+
+API 配置诊断：
 
 ```bash
 python evaluation/knowledge_RAG/demo_compare.py \
   --question "What are the main threats to the Southern Cassowary?" \
-  --target "Casuarius casuarius" \
-  --top-k 2 \
-  --sample-mode
+  --debug-api-config \
+  --ping-api
 ```
 
-输出格式示意：
+默认 demo 数据路径为 `demo_data/sample_100_taxa/`，默认模型为 `deepseek-chat`，默认 `top-k=6`。如需调整，可使用 `--demo-data`、`--model`、`--top-k`、`--planner`、`--target` 等参数。
 
-```text
-[Vanilla Answer]
-...
+公开 demo 只覆盖 `demo_data/sample_100_taxa/sample_taxa.jsonl` 中列出的 100 个 taxon；chunk preview 是截断文本，不是完整 BOW 原文。该 demo 只展示公开子集上的检索链路和知识增强方式，不代表完整授权知识库的全部能力。
 
-[Knowledge-Augmented Answer]
-...
+## 5. Demo 严谨性说明
 
-[Retrieved Evidence]
-1. predicate=THREATENED_BY, source_chunk_id=...
-2. predicate=INTERACTS_WITH_HUMANS, source_chunk_id=...
-```
+该 demo 中的 LLM planner 仅用于将专家自由问题解析为结构化检索请求，不接收标准答案、评测标签或隐藏题库元数据。实际检索由确定性脚本在 demo graph 上执行，并展示检索到的 evidence 供专家检查。planner 不直接回答问题，最终回答由 answer LLM 基于检索证据生成。
 
-Full execution requires local BOW-derived chunks and KG artifacts, which are not redistributed in this repository due to data usage restrictions. The script can still run without chunk text by using Evidence snippets as fallback context.
+公开 demo 是轻量演示版本，只展示 100 个 taxon 与截断证据 preview。完整本地授权环境可以连接完整 chunk store、vector index 或 Neo4j 图数据库，以支持更完整的长上下文知识增强。
 
 ---
 

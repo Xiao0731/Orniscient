@@ -16,7 +16,7 @@ def add_common_args(parser: argparse.ArgumentParser) -> None:
     parser.add_argument("--out-dir", type=str, default="")
     parser.add_argument("--out-root", type=str, default="evaluation/output")
     parser.add_argument("--dataset-group", choices=["objective", "subjective", "structured", "all"], default="")
-    parser.add_argument("--knowledge-mode", choices=["none", "text_rag", "kg_v1", "kg_v3", "hybrid"], default="hybrid")
+    parser.add_argument("--knowledge-mode", choices=["none", "text_rag", "kg_v1", "kg_v3", "hybrid"], default="none")
     parser.add_argument("--kg-backend", choices=["neo4j", "lightrag", "hybrid"], default="hybrid")
     parser.add_argument("--kg-version", choices=["v1_directed", "v3_fact_graph"], default="v3_fact_graph")
     parser.add_argument("--retrieval-backend", choices=["text", "graph", "table", "hybrid"], default="hybrid")

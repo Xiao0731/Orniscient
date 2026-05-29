@@ -1,0 +1,10 @@
+{"question_id": "demo_q_01", "intent": "conservation_threats", "question": "What are the main threats to the Southern Cassowary?"}
+{"question_id": "demo_q_02", "intent": "diet", "question": "What does the Southern Cassowary eat?"}
+{"question_id": "demo_q_03", "intent": "habitat", "question": "What habitats does Hawaiian Duck use?"}
+{"question_id": "demo_q_04", "intent": "breeding", "question": "Describe the breeding ecology of Crested Partridge."}
+{"question_id": "demo_q_05", "intent": "identification", "question": "How can Pink-headed Duck be identified from plumage features?"}
+{"question_id": "demo_q_06", "intent": "distribution", "question": "Where does Okarito Brown Kiwi occur?"}
+{"question_id": "demo_q_07", "intent": "vocal_behavior", "question": "What vocal or social behaviors are described for Crested Partridge?"}
+{"question_id": "demo_q_08", "intent": "taxonomy", "question": "What taxonomic notes are available for Southern Cassowary?"}
+{"question_id": "demo_q_09", "intent": "conservation_action", "question": "What conservation actions are mentioned for Hawaiian Duck?"}
+{"question_id": "demo_q_10", "intent": "movement", "question": "Does Southern Cassowary show movement or dispersal behavior?"}

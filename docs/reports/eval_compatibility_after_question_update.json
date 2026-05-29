@@ -1,0 +1,288 @@
+{
+  "question_root": "question",
+  "script_checks": {
+    "knowledge_cli_objective": {
+      "exists": true,
+      "help_ok": true,
+      "returncode": 0,
+      "stdout_preview": "usage: run_objective.py [-h] [--question-root QUESTION_ROOT]\n                        [--out-dir OUT_DIR] [--out-root OUT_ROOT]\n                        [--dataset-group {objective,subjective,structured,all}]\n                        [--knowledge-mode {none,text_rag,kg_v1,kg_v3,hybrid}]\n                        [--kg-backend {neo4j,lightrag,hybrid}]\n                        [--kg-version {v1_directed,v3_fact_graph}]\n                        [--retrieval-backend {text,graph,table,hybrid}]\n                        [--query-mode {local,global,hybrid,mix}]\n                        [--embedding-provider {bge_m3,api_compatible,disabled}]\n                        [--embedding-model EMBEDDING_MODEL]\n                        [--embedding-dim EMBEDDING_DIM]\n                        [--reranker-provider {bge_reranker,api_compatible,disabled}]\n                        [--reranker-model RERANKER_MODEL] [--enable-reranker]\n                        [--disable-reranker] [--reranker-top-n RERANKER_TOP_N]\n                        [--lightrag-working-dir LIGHTRAG_WORKING_DIR]\n                        [--rebuild-vector-index] [--models [MODELS ...]]\n                        [--datasets [DATASETS ...]] [--limit LIMIT]",
+      "stderr_preview": "",
+      "assumes_placeholder": false,
+      "path": "evaluation\\knowledge_RAG\\cli\\run_objective.py"
+    },
+    "knowledge_cli_subjective": {
+      "exists": true,
+      "help_ok": true,
+      "returncode": 0,
+      "stdout_preview": "usage: run_subjective.py [-h] [--question-root QUESTION_ROOT]\n                         [--out-dir OUT_DIR] [--out-root OUT_ROOT]\n                         [--dataset-group {objective,subjective,structured,all}]\n                         [--knowledge-mode {none,text_rag,kg_v1,kg_v3,hybrid}]\n                         [--kg-backend {neo4j,lightrag,hybrid}]\n                         [--kg-version {v1_directed,v3_fact_graph}]\n                         [--retrieval-backend {text,graph,table,hybrid}]\n                         [--query-mode {local,global,hybrid,mix}]\n                         [--embedding-provider {bge_m3,api_compatible,disabled}]\n                         [--embedding-model EMBEDDING_MODEL]\n                         [--embedding-dim EMBEDDING_DIM]\n                         [--reranker-provider {bge_reranker,api_compatible,disabled}]\n                         [--reranker-model RERANKER_MODEL] [--enable-reranker]\n                         [--disable-reranker]\n                         [--reranker-top-n RERANKER_TOP_N]\n                         [--lightrag-working-dir LIGHTRAG_WORKING_DIR]\n                         [--rebuild-vector-index] [--models [MODELS ...]]\n                         [",
+      "stderr_preview": "",
+      "assumes_placeholder": false,
+      "path": "evaluation\\knowledge_RAG\\cli\\run_subjective.py"
+    },
+    "knowledge_cli_structured": {
+      "exists": true,
+      "help_ok": true,
+      "returncode": 0,
+      "stdout_preview": "usage: run_structured.py [-h] [--question-root QUESTION_ROOT]\n                         [--out-dir OUT_DIR] [--out-root OUT_ROOT]\n                         [--dataset-group {objective,subjective,structured,all}]\n                         [--knowledge-mode {none,text_rag,kg_v1,kg_v3,hybrid}]\n                         [--kg-backend {neo4j,lightrag,hybrid}]\n                         [--kg-version {v1_directed,v3_fact_graph}]\n                         [--retrieval-backend {text,graph,table,hybrid}]\n                         [--query-mode {local,global,hybrid,mix}]\n                         [--embedding-provider {bge_m3,api_compatible,disabled}]\n                         [--embedding-model EMBEDDING_MODEL]\n                         [--embedding-dim EMBEDDING_DIM]\n                         [--reranker-provider {bge_reranker,api_compatible,disabled}]\n                         [--reranker-model RERANKER_MODEL] [--enable-reranker]\n                         [--disable-reranker]\n                         [--reranker-top-n RERANKER_TOP_N]\n                         [--lightrag-working-dir LIGHTRAG_WORKING_DIR]\n                         [--rebuild-vector-index] [--models [MODELS ...]]\n                         [",
+      "stderr_preview": "",
+      "assumes_placeholder": false,
+      "path": "evaluation\\knowledge_RAG\\cli\\run_structured.py"
+    },
+    "legacy_objective": {
+      "exists": true,
+      "help_ok": false,
+      "returncode": 1,
+      "stdout_preview": "",
+      "stderr_preview": "Traceback (most recent call last):\n  File \"D:\\软工作业\\鸟类文本库\\题目生成脚本\\Generation\\evaluation\\objective_eval.py\", line 12, in <module>\n    from dotenv import load_dotenv\nModuleNotFoundError: No module named 'dotenv'\n",
+      "assumes_placeholder": false,
+      "path": "evaluation\\objective_eval.py"
+    },
+    "legacy_subjective_pipeline": {
+      "exists": true,
+      "help_ok": false,
+      "returncode": 1,
+      "stdout_preview": "",
+      "stderr_preview": "Traceback (most recent call last):\n  File \"D:\\软工作业\\鸟类文本库\\题目生成脚本\\Generation\\evaluation\\subjective_aggregate.py\", line 9, in <module>\n    from subjective_common import load_existing_jsonl_map, load_jsonl, ensure_dir\n  File \"D:\\软工作业\\鸟类文本库\\题目生成脚本\\Generation\\evaluation\\subjective_common.py\", line 11, in <module>\n    from dotenv import load_dotenv\nModuleNotFoundError: No module named 'dotenv'\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"D:\\软工作业\\鸟类文本库\\题目生成脚本\\Generation\\evaluation\\run_subjective_pipeline.py\", line 7, in <module>\n    from subjective_aggregate import main as aggregate_main\n  File \"D:\\软工作业\\鸟类文本库\\题目生成脚本\\Generation\\evaluation\\subjective_aggregate.py\", line 12, in <module>\n    from evaluation.subjective_common import load_existing_jsonl_map, load_jsonl, ensure_dir\nModuleNotFoundError: No module named 'evaluation'\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"D:\\软工作业\\鸟类文本库\\题目生成脚本\\Generation\\evaluation\\run_subjective_pipeline.py\", line 13, in <module>\n    from evaluation.subjective_aggregate import main as aggregate_main\nModuleNotFoundError: No mod",
+      "assumes_placeholder": false,
+      "path": "evaluation\\run_subjective_pipeline.py"
+    },
+    "legacy_subjective_answer": {
+      "exists": true,
+      "help_ok": false,
+      "returncode": 1,
+      "stdout_preview": "",
+      "stderr_preview": "Traceback (most recent call last):\n  File \"D:\\软工作业\\鸟类文本库\\题目生成脚本\\Generation\\evaluation\\subjective_answer.py\", line 9, in <module>\n    from model_registry import subjective_candidate_specs\n  File \"D:\\软工作业\\鸟类文本库\\题目生成脚本\\Generation\\evaluation\\model_registry.py\", line 7, in <module>\n    from dotenv import load_dotenv\nModuleNotFoundError: No module named 'dotenv'\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"D:\\软工作业\\鸟类文本库\\题目生成脚本\\Generation\\evaluation\\subjective_answer.py\", line 29, in <module>\n    from evaluation.model_registry import subjective_candidate_specs\nModuleNotFoundError: No module named 'evaluation'\n",
+      "assumes_placeholder": false,
+      "path": "evaluation\\subjective_answer.py"
+    },
+    "legacy_structured": {
+      "exists": true,
+      "help_ok": false,
+      "returncode": 1,
+      "stdout_preview": "",
+      "stderr_preview": "Traceback (most recent call last):\n  File \"D:\\软工作业\\鸟类文本库\\题目生成脚本\\Generation\\evaluation\\structured_eval.py\", line 14, in <module>\n    from model_registry import enabled_specs, resolve_max_workers, resolve_objective_temperature\n  File \"D:\\软工作业\\鸟类文本库\\题目生成脚本\\Generation\\evaluation\\model_registry.py\", line 7, in <module>\n    from dotenv import load_dotenv\nModuleNotFoundError: No module named 'dotenv'\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"D:\\软工作业\\鸟类文本库\\题目生成脚本\\Generation\\evaluation\\structured_eval.py\", line 26, in <module>\n    from evaluation.model_registry import enabled_specs, resolve_max_workers, resolve_objective_temperature\nModuleNotFoundError: No module named 'evaluation'\n",
+      "assumes_placeholder": false,
+      "path": "evaluation\\structured_eval.py"
+    },
+    "legacy_remaining_four": {
+      "exists": true,
+      "help_ok": false,
+      "returncode": 1,
+      "stdout_preview": "",
+      "stderr_preview": "Traceback (most recent call last):\n  File \"D:\\软工作业\\鸟类文本库\\题目生成脚本\\Generation\\evaluation\\subjective_aggregate.py\", line 9, in <module>\n    from subjective_common import load_existing_jsonl_map, load_jsonl, ensure_dir\n  File \"D:\\软工作业\\鸟类文本库\\题目生成脚本\\Generation\\evaluation\\subjective_common.py\", line 11, in <module>\n    from dotenv import load_dotenv\nModuleNotFoundError: No module named 'dotenv'\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"D:\\软工作业\\鸟类文本库\\题目生成脚本\\Generation\\evaluation\\run_subjective_pipeline.py\", line 7, in <module>\n    from subjective_aggregate import main as aggregate_main\n  File \"D:\\软工作业\\鸟类文本库\\题目生成脚本\\Generation\\evaluation\\subjective_aggregate.py\", line 12, in <module>\n    from evaluation.subjective_common import load_existing_jsonl_map, load_jsonl, ensure_dir\nModuleNotFoundError: No module named 'evaluation'\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"D:\\软工作业\\鸟类文本库\\题目生成脚本\\Generation\\evaluation\\run_remaining_four_eval.py\", line 9, in <module>\n    from run_subjective_pipeline import main as subjective_pipeline_main\n  File \"D:\\软工作业\\鸟类文本库\\题目生成",
+      "assumes_placeholder": false,
+      "path": "evaluation\\run_remaining_four_eval.py"
+    },
+    "requested_non_cli_objective": {
+      "exists": false,
+      "help_ok": false,
+      "returncode": null,
+      "stderr": "missing",
+      "assumes_placeholder": false,
+      "path": "evaluation\\knowledge_RAG\\run_objective.py"
+    },
+    "requested_non_cli_subjective": {
+      "exists": false,
+      "help_ok": false,
+      "returncode": null,
+      "stderr": "missing",
+      "assumes_placeholder": false,
+      "path": "evaluation\\knowledge_RAG\\run_subjective.py"
+    },
+    "requested_non_cli_structured": {
+      "exists": false,
+      "help_ok": false,
+      "returncode": null,
+      "stderr": "missing",
+      "assumes_placeholder": false,
+      "path": "evaluation\\knowledge_RAG\\run_structured.py"
+    }
+  },
+  "dataset_placeholder_checks": [
+    {
+      "dataset": "Bird-Classify",
+      "rows": 500,
+      "rows_with_placeholders": 0,
+      "expected_anonymous": 0,
+      "unexpected_placeholder_rows": 0,
+      "warning": false,
+      "sample_question_ids": []
+    },
+    {
+      "dataset": "Bird-Comp",
+      "rows": 986,
+      "rows_with_placeholders": 0,
+      "expected_anonymous": 0,
+      "unexpected_placeholder_rows": 0,
+      "warning": false,
+      "sample_question_ids": []
+    },
+    {
+      "dataset": "Bird-Con",
+      "rows": 217,
+      "rows_with_placeholders": 0,
+      "expected_anonymous": 0,
+      "unexpected_placeholder_rows": 0,
+      "warning": false,
+      "sample_question_ids": []
+    },
+    {
+      "dataset": "Bird-Eco",
+      "rows": 216,
+      "rows_with_placeholders": 0,
+      "expected_anonymous": 0,
+      "unexpected_placeholder_rows": 0,
+      "warning": false,
+      "sample_question_ids": []
+    },
+    {
+      "dataset": "Bird-Geo",
+      "rows": 448,
+      "rows_with_placeholders": 0,
+      "expected_anonymous": 0,
+      "unexpected_placeholder_rows": 0,
+      "warning": false,
+      "sample_question_ids": []
+    },
+    {
+      "dataset": "Bird-ID",
+      "rows": 990,
+      "rows_with_placeholders": 0,
+      "expected_anonymous": 0,
+      "unexpected_placeholder_rows": 0,
+      "warning": false,
+      "sample_question_ids": []
+    },
+    {
+      "dataset": "Bird-Life",
+      "rows": 446,
+      "rows_with_placeholders": 0,
+      "expected_anonymous": 0,
+      "unexpected_placeholder_rows": 0,
+      "warning": false,
+      "sample_question_ids": []
+    },
+    {
+      "dataset": "Bird-Plan",
+      "rows": 63,
+      "rows_with_placeholders": 0,
+      "expected_anonymous": 0,
+      "unexpected_placeholder_rows": 0,
+      "warning": false,
+      "sample_question_ids": []
+    },
+    {
+      "dataset": "Bird-Reason",
+      "rows": 219,
+      "rows_with_placeholders": 0,
+      "expected_anonymous": 0,
+      "unexpected_placeholder_rows": 0,
+      "warning": false,
+      "sample_question_ids": []
+    },
+    {
+      "dataset": "Bird-Taxonomy",
+      "rows": 840,
+      "rows_with_placeholders": 4,
+      "expected_anonymous": 4,
+      "unexpected_placeholder_rows": 0,
+      "warning": false,
+      "sample_question_ids": [
+        "bird_taxonomy_0204",
+        "bird_taxonomy_0559",
+        "bird_taxonomy_0804",
+        "bird_taxonomy_0814"
+      ]
+    },
+    {
+      "dataset": "List-Global",
+      "rows": 200,
+      "rows_with_placeholders": 0,
+      "expected_anonymous": 0,
+      "unexpected_placeholder_rows": 0,
+      "warning": false,
+      "sample_question_ids": []
+    },
+    {
+      "dataset": "QA-MC",
+      "rows": 1235,
+      "rows_with_placeholders": 0,
+      "expected_anonymous": 0,
+      "unexpected_placeholder_rows": 0,
+      "warning": false,
+      "sample_question_ids": []
+    },
+    {
+      "dataset": "QA-SA",
+      "rows": 1232,
+      "rows_with_placeholders": 0,
+      "expected_anonymous": 0,
+      "unexpected_placeholder_rows": 0,
+      "warning": false,
+      "sample_question_ids": []
+    },
+    {
+      "dataset": "QA-SC",
+      "rows": 2450,
+      "rows_with_placeholders": 26,
+      "expected_anonymous": 26,
+      "unexpected_placeholder_rows": 0,
+      "warning": false,
+      "sample_question_ids": [
+        "qa_sc_0010",
+        "qa_sc_0036",
+        "qa_sc_0451",
+        "qa_sc_0454",
+        "qa_sc_0850"
+      ]
+    }
+  ],
+  "prompt_previews": {
+    "objective": {
+      "dataset": "QA-MC",
+      "question_id": "qa_mc_0001",
+      "target_entity": "Pink-headed Duck",
+      "contains_placeholder": false,
+      "contains_target": true,
+      "preview": "You are answering an ornithology benchmark question.\nAnswer using ONLY a compact JSON object.\nDo not include markdown, explanation, or extra keys.\nFor species-identification style questions, if needed, answer with a specific species-level name rather than a genus/family or vague category.\n\nDataset: QA-MC\nTarget entity: Pink-headed Duck\nQuestion: Based on historical records, which of the following modern-day countries or regions were part of Pink-headed Duck's known distribution?\nOptions:\nA. India\nB. Bangladesh\nC. Myanmar\nD. Nepal\nE. Bhutan"
+    },
+    "subjective": {
+      "dataset": "Bird-Life",
+      "question_id": "bird_life_0001",
+      "target_entity": "Bernier's Teal",
+      "contains_placeholder": false,
+      "contains_target": true,
+      "target_entity_label_count": 1,
+      "target_name_count": 2,
+      "note": "Target entity appears both as metadata and inside the cleaned public question. This is redundant but acceptable.",
+      "preview": "You are answering an ornithology benchmark question. Return strict JSON only with exactly one key: answer.\n\nTask: answer the following bird-related subjective question.\nDataset: Bird-Life\nQuestion type: Courtship & Mating\nKnowledge domain: Ecology and Life History\nTarget entity: Bernier's Teal\nQuestion: Based on the provided monograph, describe the courtship and mating system of Bernier's Teal, including details on sexual behaviors, vocalizations, and pair-bond dynamics.\nReturn only: {\"answer\": \"...\"}"
+    },
+    "structured": {
+      "bird_id": {
+        "question_id": "bird_id_0001",
+        "contains_target_entity": false,
+        "contains_placeholder": false,
+        "preview": "Identify the bird from the provided question and clue text.\nReturn a compact JSON object with the predicted species name.\nQuestion: Based on the detailed morphological description, identify this endangered duck species.\nClue text: This medium-sized dabbling duck, endemic to a large isolated tropical island archipelago, is one of the smallest members of the Mallard superspecies group. Adult males are dark brown with distinctive darker-brown chevrons on breast, flank, and back feathers, a dark speckled chin, and an olive bill. Some males exhibit greenish tints around the eyes and auricular regions. The speculum is emerald green to blue, bordered anteriorly by black and faint white bars, and distally by black and bold white bars. Adult females are similar but slightly lighter, with a plainer "
+      },
+      "bird_classify": {
+        "question_id": "bird_classify_0001",
+        "contains_target_entity": false,
+        "contains_placeholder": false,
+        "preview": "Identify the bird family or order from the provided feature description.\nReturn a compact JSON object.\nQuestion: Identify the Order and Family of a cosmopolitan group of diurnal birds characterized by strongly hooked bills, long talons, diverse flight styles (e.g., soaring, hovering), and a carnivorous diet that includes specialized feeders on items like palm fruit, snail larvae, and bone marrow. They are monogamous with biparental care, build stick platform nests, and face threats from habitat destruction and pesticides. This family is sister to Pandionidae and together they are sister to Sagittariidae."
+      },
+      "list_global": {
+        "question_id": "list_global_0003",
+        "contains_placeholder": false,
+        "preview": "Answer the list question.\nQuestion: Which bird species are classified as Critically Endangered and have riparian habitats as their primary habitat?"
+      }
+    }
+  },
+  "findings": [
+    "No evaluated entry point was found to require literal [the bird] placeholders.",
+    "Updated question and answer fields are still read through the same JSONL fields used before replacement.",
+    "target_entity remains available for objective prompts, subjective target metadata, and target-aware retrieval.",
+    "Subjective target-aware prompts may contain the target twice: once as Target entity metadata and once in the cleaned question. This is redundant but acceptable and does not change leakage behavior.",
+    "Bird-ID, Bird-Classify reverse identification, and List-Global remain anonymous by design.",
+    "The active knowledge_RAG entry points live under evaluation/knowledge_RAG/cli/, not directly under evaluation/knowledge_RAG/. README examples should use the cli paths."
+  ]
+}
